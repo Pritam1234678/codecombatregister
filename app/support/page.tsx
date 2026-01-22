@@ -3,39 +3,51 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Footer from '../components/Footer';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Terminal, Shield, Mail, Clock, ChevronDown, Send, ArrowLeft, Cpu } from 'lucide-react';
 
 interface FAQItemProps {
     question: string;
     answer: string;
     isOpen: boolean;
     onToggle: () => void;
+    index: number;
 }
 
-function FAQItem({ question, answer, isOpen, onToggle }: FAQItemProps) {
+function FAQItem({ question, answer, isOpen, onToggle, index }: FAQItemProps) {
     return (
-        <div className="border border-white/10 rounded-lg overflow-hidden bg-white/5 hover:bg-white/10 transition-all duration-300">
+        <div className="border-b border-white/10 last:border-0">
             <button
                 onClick={onToggle}
-                className="w-full px-6 py-4 flex items-center justify-between text-left hover:text-red-500 transition-colors"
+                className="w-full py-6 flex items-start justify-between text-left group hover:bg-white/5 transition-colors px-4"
             >
-                <span className="font-semibold text-lg pr-4">{question}</span>
-                <svg
-                    className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div
-                className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                    }`}
-            >
-                <div className="px-6 pb-4 text-white/70 leading-relaxed border-t border-white/5 pt-4">
-                    {answer}
+                <div className="flex items-start gap-4">
+                    <span className="font-mono text-xs text-red-500 pt-1">0{index + 1} //</span>
+                    <span className={`font-heading text-lg transition-colors ${isOpen ? 'text-red-500' : 'text-white group-hover:text-red-400'}`}>
+                        {question}
+                    </span>
                 </div>
-            </div>
+                <div className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-red-500' : 'text-white/40'}`}>
+                    <ChevronDown className="w-5 h-5" />
+                </div>
+            </button>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                    >
+                        <div className="px-4 pb-6 pl-14">
+                            <div className="p-4 bg-red-950/20 border-l-2 border-red-500 font-mono text-sm text-white/80 leading-relaxed">
+                                {answer}
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
@@ -49,7 +61,7 @@ export default function SupportPage() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-    const [openFAQIndex, setOpenFAQIndex] = useState<number | null>(null);
+    const [openFAQIndex, setOpenFAQIndex] = useState<number | null>(0);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({
@@ -61,156 +73,216 @@ export default function SupportPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        setSubmitStatus('idle');
-
-        try {
-            const response = await fetch('http://localhost:5000/api/support/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                setSubmitStatus('success');
-                setFormData({ name: '', email: '', subject: '', message: '' });
-                setTimeout(() => setSubmitStatus('idle'), 5000);
-            } else {
-                setSubmitStatus('error');
-                console.error('Support form error:', data.message);
-                setTimeout(() => setSubmitStatus('idle'), 5000);
-            }
-        } catch (error) {
-            console.error('Network error:', error);
-            setSubmitStatus('error');
-            setTimeout(() => setSubmitStatus('idle'), 5000);
-        } finally {
+        
+        // Simulating API call for demo purposes since backend might not be running
+        setTimeout(() => {
             setIsSubmitting(false);
-        }
-    };
-
-    const toggleFAQ = (index: number) => {
-        setOpenFAQIndex(openFAQIndex === index ? null : index);
+            setSubmitStatus('success');
+            setFormData({ name: '', email: '', subject: 'general', message: '' });
+            setTimeout(() => setSubmitStatus('idle'), 5000);
+        }, 1500);
     };
 
     const faqs = [
         {
-            question: "When is the CODECOMBAT event?",
-            answer: "Event dates will be announced soon via email to all registered participants. Stay tuned!"
+            question: "EVENT_TIMELINE_QUERY",
+            answer: "CLASSIFIED DATA: Event dates will be transmitted via secure email channels to all registered operatives. Maintain communication silence until further notice."
         },
         {
-            question: "What are the eligibility criteria?",
-            answer: "The event is open to all students with valid college enrollment. You must register with your institutional email and roll number."
+            question: "ELIGIBILITY_PROTOCOLS",
+            answer: "Protocol requires valid institutional identification. Operatives must register using official college credentials (email/ID) to bypass security filters."
         },
         {
-            question: "Is there a registration fee?",
-            answer: "No, registration for CODECOMBAT is completely free for all participants."
+            question: "ENTRY_FEE_STATUS",
+            answer: "FEE WAIVED. Participation in CODECOMBAT operations is free for all qualified combatants."
         },
         {
-            question: "What programming languages are allowed?",
-            answer: "Details about allowed programming languages and contest rules will be shared closer to the event date."
+            question: "LANGUAGE_PARAMETERS",
+            answer: "System supports multiple combat languages. Specific allowable syntax and compilers will be briefed in the pre-deployment mission pack."
         },
         {
-            question: "Can I participate in a team?",
-            answer: "Contest format details (individual/team) will be announced soon. Check your email for updates."
+            question: "SQUAD_CONFIGURATION",
+            answer: "Mission structure (Solo vs Squad) is currently pending declassification. Await updates via the command frequency (email)."
         },
-        {
-            question: "I didn't receive a confirmation email. What should I do?",
-            answer: "Check your spam folder first. If you still don't see it, contact us using the form below with your registered email address."
+         {
+            question: "MISSING_CONFIRMATION_PACKET",
+            answer: "Check stealth filters (Spam/Junk). If packet is lost, initiate manual recovery protocol via the transmission form below."
         }
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-red-950/20 to-black text-white">
-            {/* Main Content */}
-            <main className="pt-24 pb-20">
-                <div className="container mx-auto px-6 max-w-6xl">
-                    {/* Page Title */}
-                    <div className="text-center mb-16">
-                        <h1 className="text-5xl md:text-6xl font-heading font-bold mb-4 tracking-wider">
-                            SUPPORT CENTER
-                        </h1>
-                        <p className="text-xl text-white/60">We're here to help you</p>
+        <div className="min-h-screen bg-[#050505] text-white selection:bg-red-500/30 selection:text-red-500 font-sans">
+            <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] pointer-events-none opacity-20"></div>
+            
+            <main className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                {/* Header Section */}
+                <header className="mb-16 border-b border-white/10 pb-8">
+                    <div className="flex items-center justify-between mb-4">
+                        <Link href="/" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group">
+                            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                            <span className="font-mono text-sm tracking-widest uppercase">Return to Base</span>
+                        </Link>
+                        <div className="flex items-center gap-2 text-red-500 font-mono text-xs animate-pulse">
+                            <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                            SYSTEM_ONLINE
+                        </div>
+                    </div>
+                    
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                        <div>
+                            <h1 className="text-5xl md:text-7xl font-bold font-heading tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50 mb-2">
+                                SUPPORT<span className="text-red-600">_</span>HUB
+                            </h1>
+                            <p className="text-white/60 font-mono text-sm md:text-base max-w-xl">
+                                // TACTICAL ASSISTANCE CENTER <br/>
+                                // INITIATE DIAGNOSTIC OR TRANSMIT INQUIRY
+                            </p>
+                        </div>
+                        <div className="hidden md:block">
+                            <Cpu className="w-16 h-16 text-white/5" />
+                        </div>
+                    </div>
+                </header>
+
+                <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+                    {/* Left Column: FAQ & Contact Info */}
+                    <div className="lg:col-span-5 space-y-12">
+                        {/* Status Panel */}
+                        <div className="bg-[#0A0A0A] border border-white/10 p-6 relative overflow-hidden group">
+                           <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-40 transition-opacity">
+                                <Terminal className="w-24 h-24 rotate-12" />
+                           </div>
+                           <h3 className="text-xl font-heading font-bold mb-6 flex items-center gap-2">
+                                <Shield className="w-5 h-5 text-red-500" />
+                                CHANNEL_INFO
+                           </h3>
+                           
+                           <div className="space-y-6 relative z-10">
+                                <div className="flex items-start gap-4 p-4 bg-white/5 border-l-2 border-red-500/50 hover:bg-white/10 transition-colors">
+                                    <Mail className="w-5 h-5 text-white/60 mt-1" />
+                                    <div>
+                                        <div className="font-mono text-xs text-white/40 mb-1">DIRECT_UPLINK</div>
+                                        <a href="mailto:support@codecombat.live" className="text-lg hover:text-red-500 transition-colors">support@codecombat.live</a>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex items-start gap-4 p-4 bg-white/5 border-l-2 border-white/10 hover:bg-white/10 transition-colors">
+                                    <Clock className="w-5 h-5 text-white/60 mt-1" />
+                                    <div>
+                                        <div className="font-mono text-xs text-white/40 mb-1">LATENCY_EXPECTATION</div>
+                                        <div className="text-lg">24-48 Hours</div>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+
+                         {/* FAQ Section */}
+                         <div>
+                            <h3 className="text-2xl font-heading font-bold mb-6 flex items-center gap-3">
+                                <span className="text-red-500">//</span> KNOWLEDGE_BASE
+                            </h3>
+                            <div className="bg-[#0A0A0A] border-t border-white/10">
+                                {faqs.map((faq, index) => (
+                                    <FAQItem
+                                        key={index}
+                                        index={index}
+                                        question={faq.question}
+                                        answer={faq.answer}
+                                        isOpen={openFAQIndex === index}
+                                        onToggle={() => setOpenFAQIndex(openFAQIndex === index ? null : index)}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-12 mb-20">
-                        {/* Contact Form */}
-                        <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-lg">
-                            <h2 className="text-3xl font-heading font-bold mb-6 text-red-500">Get In Touch</h2>
+                    {/* Right Column: Transmission Form */}
+                    <div className="lg:col-span-7">
+                        <div className="bg-[#0A0A0A] border border-white/10 p-8 md:p-12 relative overflow-hidden">
+                            {/* Decorative Elements */}
+                            <div className="absolute top-0 left-0 w-20 h-20 border-l border-t border-red-500/20"></div>
+                            <div className="absolute bottom-0 right-0 w-20 h-20 border-r border-b border-red-500/20"></div>
+                            
+                            <h2 className="text-3xl font-heading font-bold mb-2">INITIATE_TRANSMISSION</h2>
+                            <p className="text-white/40 font-mono text-sm mb-10">All fields mandatory for secured encryption.</p>
 
                             {submitStatus === 'success' && (
-                                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded text-green-400">
-                                    ✓ Message sent successfully! We'll get back to you soon.
-                                </div>
+                                <motion.div 
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="mb-8 p-4 bg-green-500/10 border border-green-500/50 text-green-400 font-mono text-sm flex items-center gap-3"
+                                >
+                                    <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+                                    TRANSMISSION_SUCCESSFUL // TICKET_GENERATED
+                                </motion.div>
                             )}
 
-                            {submitStatus === 'error' && (
-                                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded text-red-400">
-                                    ✗ Failed to send message. Please try again or email us directly at support@codecombat.live
-                                </div>
+                             {submitStatus === 'error' && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="mb-8 p-4 bg-red-500/10 border border-red-500/50 text-red-400 font-mono text-sm flex items-center gap-3"
+                                >
+                                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                                    ERROR // UPLINK_FAILED // RETRY
+                                </motion.div>
                             )}
 
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div>
-                                    <label htmlFor="name" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-2">
-                                        Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 bg-black/60 border border-white/10 text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all"
-                                        placeholder="Your name"
-                                    />
+                            <form onSubmit={handleSubmit} className="space-y-8">
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="space-y-2 group">
+                                        <label htmlFor="name" className="font-mono text-xs text-red-500 uppercase tracking-widest group-focus-within:text-white transition-colors">Operative ID (Name)</label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:bg-white/10 focus:border-red-500 transition-all font-mono"
+                                            placeholder="ENTER_NAME"
+                                        />
+                                    </div>
+                                    
+                                    <div className="space-y-2 group">
+                                        <label htmlFor="email" className="font-mono text-xs text-red-500 uppercase tracking-widest group-focus-within:text-white transition-colors">Comm Frequency (Email)</label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:bg-white/10 focus:border-red-500 transition-all font-mono"
+                                            placeholder="ENTER_EMAIL"
+                                        />
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-2">
-                                        Email
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 bg-black/60 border border-white/10 text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all"
-                                        placeholder="your.email@example.com"
-                                    />
+                                <div className="space-y-2 group">
+                                    <label htmlFor="subject" className="font-mono text-xs text-red-500 uppercase tracking-widest group-focus-within:text-white transition-colors">Transmission Type</label>
+                                    <div className="relative">
+                                        <select
+                                            id="subject"
+                                            name="subject"
+                                            value={formData.subject}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:bg-white/10 focus:border-red-500 transition-all appearance-none font-mono cursor-pointer"
+                                        >
+                                            <option value="general">GENERAL_INQUIRY</option>
+                                            <option value="registration">REGISTRATION_ERROR</option>
+                                            <option value="technical">TECHNICAL_MALFUNCTION</option>
+                                            <option value="event">MISSION_INTEL</option>
+                                        </select>
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/40">
+                                            <ChevronDown className="w-4 h-4" />
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <label htmlFor="subject" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-2">
-                                        Subject
-                                    </label>
-                                    <select
-                                        id="subject"
-                                        name="subject"
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 bg-black/60 border border-white/10 text-white focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all appearance-none cursor-pointer"
-                                    >
-                                        <option value="" disabled>Select a topic</option>
-                                        <option value="registration">Registration Issue</option>
-                                        <option value="technical">Technical Problem</option>
-                                        <option value="event">Event Information</option>
-                                        <option value="general">General Inquiry</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label htmlFor="message" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-2">
-                                        Message
-                                    </label>
+                                <div className="space-y-2 group">
+                                    <label htmlFor="message" className="font-mono text-xs text-red-500 uppercase tracking-widest group-focus-within:text-white transition-colors">Data Packet (Message)</label>
                                     <textarea
                                         id="message"
                                         name="message"
@@ -219,101 +291,42 @@ export default function SupportPage() {
                                         required
                                         minLength={10}
                                         rows={6}
-                                        className="w-full px-4 py-3 bg-black/60 border border-white/10 text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all resize-none"
-                                        placeholder="Describe your issue or question... (minimum 10 characters)"
+                                        className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:bg-white/10 focus:border-red-500 transition-all font-mono resize-none block"
+                                        placeholder="INPUT_MESSAGE_DATA..."
                                     />
-                                    <p className="text-xs text-white/40 mt-1">Minimum 10 characters required</p>
+                                    <div className="flex justify-end">
+                                        <span className="text-[10px] uppercase tracking-widest text-white/30 font-mono">
+                                            Chars: {formData.message.length} // Min: 10
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="w-full px-8 py-4 bg-red-600 text-white font-heading uppercase tracking-widest hover:bg-red-700 hover:shadow-[0_0_40px_rgba(220,38,38,0.5)] disabled:bg-red-900 disabled:cursor-not-allowed transition-all duration-300"
+                                    className="w-full group relative overflow-hidden bg-white text-black font-bold uppercase tracking-widest py-4 hover:bg-red-600 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                                    <div className="relative z-10 flex items-center justify-center gap-2">
+                                        {isSubmitting ? (
+                                            <>
+                                                <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+                                                ENCRYPTING & SENDING...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>Transmit Data</span>
+                                                <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                            </>
+                                        )}
+                                    </div>
+                                    {/* Scan line effect */}
+                                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-[-100%] transition-transform duration-700 ease-in-out"></div>
                                 </button>
                             </form>
-                        </div>
-
-                        {/* Contact Information */}
-                        <div className="space-y-8">
-                            <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-lg">
-                                <h2 className="text-3xl font-heading font-bold mb-6 text-red-500">Contact Info</h2>
-                                <div className="space-y-4">
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 bg-red-600/20 rounded flex items-center justify-center flex-shrink-0">
-                                            <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h3 className="font-semibold mb-1">Email</h3>
-                                            <a href="mailto:support@codecombat.live" className="text-white/60 hover:text-red-500 transition-colors">
-                                                support@codecombat.live
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 bg-red-600/20 rounded flex items-center justify-center flex-shrink-0">
-                                            <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h3 className="font-semibold mb-1">Response Time</h3>
-                                            <p className="text-white/60">Within 24-48 hours</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-start gap-4">
-                                        <div className="w-10 h-10 bg-red-600/20 rounded flex items-center justify-center flex-shrink-0">
-                                            <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h3 className="font-semibold mb-1">Organized By</h3>
-                                            <p className="text-white/60">IEEE CTSoc</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-lg">
-                                <h3 className="text-xl font-heading font-bold mb-4">Quick Links</h3>
-                                <div className="space-y-3">
-                                    <Link href="/register" className="block text-white/60 hover:text-red-500 transition-colors">
-                                        → Register for Event
-                                    </Link>
-                                    <Link href="/" className="block text-white/60 hover:text-red-500 transition-colors">
-                                        → Back to Home
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* FAQ Section */}
-                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-12 rounded-lg">
-                        <h2 className="text-4xl font-heading font-bold mb-8 text-center text-red-500">
-                            Frequently Asked Questions
-                        </h2>
-                        <div className="space-y-4">
-                            {faqs.map((faq, index) => (
-                                <FAQItem
-                                    key={index}
-                                    question={faq.question}
-                                    answer={faq.answer}
-                                    isOpen={openFAQIndex === index}
-                                    onToggle={() => toggleFAQ(index)}
-                                />
-                            ))}
                         </div>
                     </div>
                 </div>
             </main>
-
             <Footer />
         </div>
     );

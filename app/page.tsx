@@ -9,6 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MarblingHover from './components/MarblingHover';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
+import Marquee from './components/Marquee';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -237,6 +238,9 @@ export default function Home() {
 
                 </div>
             </section>
+
+            {/* --- MARQUEE SECTION --- */}
+            <Marquee />
 
             {/* --- FOOTER SECTION --- */}
             <footer className="relative py-20 px-6 border-t border-white/10 bg-black overflow-hidden">

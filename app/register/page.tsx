@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { X } from 'lucide-react';
+import SearchableSelect from '../components/SearchableSelect';
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -17,6 +18,7 @@ export default function RegisterPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     // Page loading animation
     useEffect(() => {
@@ -31,14 +33,45 @@ export default function RegisterPage() {
             ...formData,
             [e.target.name]: e.target.value
         });
+        // Clear error when user types
+        if (errors[e.target.name]) {
+            setErrors({
+                ...errors,
+                [e.target.name]: ''
+            });
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        if (!formData.name.trim()) newErrors.name = "Name is required";
+        else if (formData.name.length < 2) newErrors.name = "Name must be at least 2 characters";
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email.trim()) newErrors.email = "Email is required";
+        else if (!emailRegex.test(formData.email)) newErrors.email = "Invalid email address";
+
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+        else if (!phoneRegex.test(formData.phone)) newErrors.phone = "Phone number must be exactly 10 digits";
+
+        if (!formData.rollNumber.trim()) newErrors.rollNumber = "Roll Number is required";
+        if (!formData.branch) newErrors.branch = "Please select a branch";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!validateForm()) return;
+
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('http://localhost:5000/api/registration/register', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/registration/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -145,10 +178,10 @@ export default function RegisterPage() {
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                required
-                                                className="w-full px-5 py-4 bg-black/60 border border-white/10 text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg"
+                                                className={`w-full px-5 py-4 bg-black/60 border ${errors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg`}
                                                 placeholder="Enter your full name"
                                             />
+                                            {errors.name && <p className="text-red-500 text-xs mt-1 font-mono">{errors.name}</p>}
                                         </div>
 
                                         {/* Email Field */}
@@ -162,10 +195,10 @@ export default function RegisterPage() {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                required
-                                                className="w-full px-5 py-4 bg-black/60 border border-white/10 text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg"
+                                                className={`w-full px-5 py-4 bg-black/60 border ${errors.email ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg`}
                                                 placeholder="your.email@example.com"
                                             />
+                                            {errors.email && <p className="text-red-500 text-xs mt-1 font-mono">{errors.email}</p>}
                                         </div>
 
                                         {/* Phone Number */}
@@ -179,11 +212,11 @@ export default function RegisterPage() {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                required
-                                                pattern="[0-9]{10}"
-                                                className="w-full px-5 py-4 bg-black/60 border border-white/10 text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg"
+                                                className={`w-full px-5 py-4 bg-black/60 border ${errors.phone ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg`}
                                                 placeholder="10-digit mobile number"
+                                                maxLength={10}
                                             />
+                                            {errors.phone && <p className="text-red-500 text-xs mt-1 font-mono">{errors.phone}</p>}
                                         </div>
 
                                         {/* Roll Number & Branch Row */}
@@ -199,10 +232,10 @@ export default function RegisterPage() {
                                                     name="rollNumber"
                                                     value={formData.rollNumber}
                                                     onChange={handleChange}
-                                                    required
-                                                    className="w-full px-5 py-4 bg-black/60 border border-white/10 text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg"
+                                                    className={`w-full px-5 py-4 bg-black/60 border ${errors.rollNumber ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg`}
                                                     placeholder="Your roll number"
                                                 />
+                                                {errors.rollNumber && <p className="text-red-500 text-xs mt-1 font-mono">{errors.rollNumber}</p>}
                                             </div>
 
                                             {/* Branch */}
@@ -210,23 +243,43 @@ export default function RegisterPage() {
                                                 <label htmlFor="branch" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-3 group-focus-within:text-red-400 transition-colors">
                                                     Branch
                                                 </label>
-                                                <select
-                                                    id="branch"
-                                                    name="branch"
+                                                <SearchableSelect
+                                                    options={[
+                                                        "Civil Engineering",
+                                                        "Construction Technology",
+                                                        "Mechanical Engineering",
+                                                        "Mechanical Engineering(Automobile)",
+                                                        "Aerospace Engineering",
+                                                        "Mechatronics Engineering",
+                                                        "Electrical Engineering",
+                                                        "Electrical and Computer Engineering",
+                                                        "Electronics & Tele-Communication Engineering",
+                                                        "Electronics & Electrical Engineering",
+                                                        "Electronics and Computer Science Engineering",
+                                                        "Electronics Engineering VLSI Design and Technology",
+                                                        "Electronics and Instrumentation",
+                                                        "Computer Science & Engineering",
+                                                        "Computer Science & Communication Engineering",
+                                                        "Computer Science and Engineering with specialization Artificial Intelligence",
+                                                        "Computer Science and Engineering with specialization Cyber Security",
+                                                        "Computer Science and Engineering with specialization Data Science",
+                                                        "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+                                                        "Computer Science and Engineering with specialization Internet of Things",
+                                                        "Computer Science & Systems Engineering",
+                                                        "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+                                                        "Information Technology",
+                                                        "Chemical Engineering",
+                                                        "Other"
+                                                    ]}
                                                     value={formData.branch}
-                                                    onChange={handleChange}
-                                                    required
-                                                    className="w-full px-5 py-4 bg-black/60 border border-white/10 text-white focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 appearance-none cursor-pointer text-lg"
-                                                >
-                                                    <option value="" disabled>Select your branch</option>
-                                                    <option value="CSE">Computer Science & Engineering</option>
-                                                    <option value="IT">Information Technology</option>
-                                                    <option value="ECE">Electronics & Communication</option>
-                                                    <option value="EEE">Electrical & Electronics</option>
-                                                    <option value="MECH">Mechanical Engineering</option>
-                                                    <option value="CIVIL">Civil Engineering</option>
-                                                    <option value="OTHER">Other</option>
-                                                </select>
+                                                    onChange={(value) => {
+                                                        setFormData({ ...formData, branch: value });
+                                                        if (errors.branch) setErrors({ ...errors, branch: '' });
+                                                    }}
+                                                    placeholder="Select your branch"
+                                                    className="text-lg"
+                                                />
+                                                {errors.branch && <p className="text-red-500 text-xs mt-1 font-mono">{errors.branch}</p>}
                                             </div>
                                         </div>
 
@@ -257,7 +310,7 @@ export default function RegisterPage() {
                                 {/* Footer Note */}
                                 <p className="text-center text-white/40 text-sm mt-8">
                                     By registering, you agree to our{' '}
-                                    <a href="#" className="text-red-500 hover:text-red-400 transition-colors">Terms & Conditions</a>
+                                    <a href="/terms" className="text-red-500 hover:text-red-400 transition-colors">Terms & Conditions</a>
                                 </p>
                             </div>
                         )}

@@ -24,13 +24,26 @@ export default function Footer() {
                     <div>
                         <h4 className="text-sm font-heading uppercase tracking-widest text-red-500 mb-4">Quick Links</h4>
                         <ul className="space-y-2">
-                            {['Home', 'Details', 'Support', 'Register'].map((link) => (
-                                <li key={link}>
-                                    <a href="#" className="text-white/60 hover:text-white transition-colors duration-300 text-sm">
-                                        {link}
-                                    </a>
-                                </li>
-                            ))}
+                            <li>
+                                <a href="/" className="text-white/60 hover:text-white transition-colors duration-300 text-sm">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/details" className="text-white/60 hover:text-white transition-colors duration-300 text-sm">
+                                    Details
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/support" className="text-white/60 hover:text-white transition-colors duration-300 text-sm">
+                                    Support
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/register" className="text-white/60 hover:text-white transition-colors duration-300 text-sm">
+                                    Register
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
@@ -38,9 +51,13 @@ export default function Footer() {
                     <div>
                         <h4 className="text-sm font-heading uppercase tracking-widest text-red-500 mb-4">Contact</h4>
                         <ul className="space-y-2 text-sm text-white/60">
-                            <li>support@codecombat.ieee</li>
-                            <li>Alex Mercer // Coordinator</li>
-                            <li>+91 98765 43210</li>
+                            <li>
+                                <a href="mailto:support@codecombat.ieee" className="hover:text-white transition-colors">
+                                    support@codecombat.ieee
+                                </a>
+                            </li>
+                            <li>Coordinator</li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -51,9 +68,8 @@ export default function Footer() {
                         © 2026 IEEE CTSoc. All rights reserved.
                     </p>
                     <div className="flex gap-6 text-xs text-white/40">
-                        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                        <a href="#" className="hover:text-white transition-colors">Code of Conduct</a>
+                        <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
                     </div>
                 </div>
             </div>

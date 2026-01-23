@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const registrationRoutes = require('./routes/registration');
 const supportRoutes = require('./routes/support');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -41,10 +42,24 @@ const globalLimiter = rateLimit({
 // Strict Registration Rate Limiting - 5 requests per hour per IP
 const registrationLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // Limit each IP to 5 registration attempts per hour
+  max: 50, // Limit each IP to 5 registration attempts per hour
   message: {
     success: false,
     message: 'Too many registration attempts from this IP, please try again after an hour.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Strict Admin Login Rate Limiting - 5 requests per 15 minutes per IP
+const adminLoginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 login attempts per windowMs
+  message: {
+    success: false,
+    message: 'Too many login attempts, please try again after 15 minutes.'
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -57,6 +72,8 @@ app.use('/api/', globalLimiter);
 // Apply strict limiter specifically to registration route
 app.use('/api/registration', registrationLimiter, registrationRoutes);
 app.use('/api/support', supportRoutes);
+app.use('/api/admin/login', adminLoginLimiter);
+app.use('/api/admin', adminRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

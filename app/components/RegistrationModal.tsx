@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import SearchableSelect from './SearchableSelect';
 
 interface RegistrationModalProps {
     isOpen: boolean;
@@ -171,23 +172,38 @@ export default function RegistrationModal({ isOpen, onClose }: RegistrationModal
                                     <label htmlFor="branch" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-2">
                                         Branch
                                     </label>
-                                    <select
-                                        id="branch"
-                                        name="branch"
+                                    <SearchableSelect
+                                        options={[
+                                            "Civil Engineering",
+                                            "Construction Technology",
+                                            "Mechanical Engineering",
+                                            "Mechanical Engineering(Automobile)",
+                                            "Aerospace Engineering",
+                                            "Mechatronics Engineering",
+                                            "Electrical Engineering",
+                                            "Electrical and Computer Engineering",
+                                            "Electronics & Tele-Communication Engineering",
+                                            "Electronics & Electrical Engineering",
+                                            "Electronics and Computer Science Engineering",
+                                            "Electronics Engineering VLSI Design and Technology",
+                                            "Electronics and Instrumentation",
+                                            "Computer Science & Engineering",
+                                            "Computer Science & Communication Engineering",
+                                            "Computer Science and Engineering with specialization Artificial Intelligence",
+                                            "Computer Science and Engineering with specialization Cyber Security",
+                                            "Computer Science and Engineering with specialization Data Science",
+                                            "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+                                            "Computer Science and Engineering with specialization Internet of Things",
+                                            "Computer Science & Systems Engineering",
+                                            "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+                                            "Information Technology",
+                                            "Chemical Engineering",
+                                            "Other"
+                                        ]}
                                         value={formData.branch}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-4 py-3 bg-black/50 border border-white/10 text-white focus:border-red-500 focus:outline-none transition-colors appearance-none cursor-pointer"
-                                    >
-                                        <option value="" disabled>Select your branch</option>
-                                        <option value="CSE">Computer Science & Engineering</option>
-                                        <option value="IT">Information Technology</option>
-                                        <option value="ECE">Electronics & Communication</option>
-                                        <option value="EEE">Electrical & Electronics</option>
-                                        <option value="MECH">Mechanical Engineering</option>
-                                        <option value="CIVIL">Civil Engineering</option>
-                                        <option value="OTHER">Other</option>
-                                    </select>
+                                        onChange={(value) => setFormData({ ...formData, branch: value })}
+                                        placeholder="Select your branch"
+                                    />
                                 </div>
                             </div>
 

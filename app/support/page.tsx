@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Footer from '../components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Shield, Mail, Clock, ChevronDown, Send, ArrowLeft, Cpu } from 'lucide-react';
+import SearchableSelect from '../components/SearchableSelect';
+
 
 interface FAQItemProps {
     question: string;
@@ -73,7 +74,7 @@ export default function SupportPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
+
         // Simulating API call for demo purposes since backend might not be running
         setTimeout(() => {
             setIsSubmitting(false);
@@ -104,7 +105,7 @@ export default function SupportPage() {
             question: "SQUAD_CONFIGURATION",
             answer: "Mission structure (Solo vs Squad) is currently pending declassification. Await updates via the command frequency (email)."
         },
-         {
+        {
             question: "MISSING_CONFIRMATION_PACKET",
             answer: "Check stealth filters (Spam/Junk). If packet is lost, initiate manual recovery protocol via the transmission form below."
         }
@@ -113,7 +114,7 @@ export default function SupportPage() {
     return (
         <div className="min-h-screen bg-[#050505] text-white selection:bg-red-500/30 selection:text-red-500 font-sans">
             <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] pointer-events-none opacity-20"></div>
-            
+
             <main className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 {/* Header Section */}
                 <header className="mb-16 border-b border-white/10 pb-8">
@@ -127,14 +128,14 @@ export default function SupportPage() {
                             SYSTEM_ONLINE
                         </div>
                     </div>
-                    
+
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div>
                             <h1 className="text-5xl md:text-7xl font-bold font-heading tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50 mb-2">
                                 SUPPORT<span className="text-red-600">_</span>HUB
                             </h1>
                             <p className="text-white/60 font-mono text-sm md:text-base max-w-xl">
-                                // TACTICAL ASSISTANCE CENTER <br/>
+                                // TACTICAL ASSISTANCE CENTER <br />
                                 // INITIATE DIAGNOSTIC OR TRANSMIT INQUIRY
                             </p>
                         </div>
@@ -149,15 +150,15 @@ export default function SupportPage() {
                     <div className="lg:col-span-5 space-y-12">
                         {/* Status Panel */}
                         <div className="bg-[#0A0A0A] border border-white/10 p-6 relative overflow-hidden group">
-                           <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-40 transition-opacity">
+                            <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-40 transition-opacity">
                                 <Terminal className="w-24 h-24 rotate-12" />
-                           </div>
-                           <h3 className="text-xl font-heading font-bold mb-6 flex items-center gap-2">
+                            </div>
+                            <h3 className="text-xl font-heading font-bold mb-6 flex items-center gap-2">
                                 <Shield className="w-5 h-5 text-red-500" />
                                 CHANNEL_INFO
-                           </h3>
-                           
-                           <div className="space-y-6 relative z-10">
+                            </h3>
+
+                            <div className="space-y-6 relative z-10">
                                 <div className="flex items-start gap-4 p-4 bg-white/5 border-l-2 border-red-500/50 hover:bg-white/10 transition-colors">
                                     <Mail className="w-5 h-5 text-white/60 mt-1" />
                                     <div>
@@ -165,7 +166,7 @@ export default function SupportPage() {
                                         <a href="mailto:support@codecombat.live" className="text-lg hover:text-red-500 transition-colors">support@codecombat.live</a>
                                     </div>
                                 </div>
-                                
+
                                 <div className="flex items-start gap-4 p-4 bg-white/5 border-l-2 border-white/10 hover:bg-white/10 transition-colors">
                                     <Clock className="w-5 h-5 text-white/60 mt-1" />
                                     <div>
@@ -173,11 +174,11 @@ export default function SupportPage() {
                                         <div className="text-lg">24-48 Hours</div>
                                     </div>
                                 </div>
-                           </div>
+                            </div>
                         </div>
 
-                         {/* FAQ Section */}
-                         <div>
+                        {/* FAQ Section */}
+                        <div>
                             <h3 className="text-2xl font-heading font-bold mb-6 flex items-center gap-3">
                                 <span className="text-red-500">//</span> KNOWLEDGE_BASE
                             </h3>
@@ -202,12 +203,12 @@ export default function SupportPage() {
                             {/* Decorative Elements */}
                             <div className="absolute top-0 left-0 w-20 h-20 border-l border-t border-red-500/20"></div>
                             <div className="absolute bottom-0 right-0 w-20 h-20 border-r border-b border-red-500/20"></div>
-                            
+
                             <h2 className="text-3xl font-heading font-bold mb-2">INITIATE_TRANSMISSION</h2>
                             <p className="text-white/40 font-mono text-sm mb-10">All fields mandatory for secured encryption.</p>
 
                             {submitStatus === 'success' && (
-                                <motion.div 
+                                <motion.div
                                     initial={{ opacity: 0, y: -20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     className="mb-8 p-4 bg-green-500/10 border border-green-500/50 text-green-400 font-mono text-sm flex items-center gap-3"
@@ -217,8 +218,8 @@ export default function SupportPage() {
                                 </motion.div>
                             )}
 
-                             {submitStatus === 'error' && (
-                                <motion.div 
+                            {submitStatus === 'error' && (
+                                <motion.div
                                     initial={{ opacity: 0, y: -20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     className="mb-8 p-4 bg-red-500/10 border border-red-500/50 text-red-400 font-mono text-sm flex items-center gap-3"
@@ -243,7 +244,7 @@ export default function SupportPage() {
                                             placeholder="ENTER_NAME"
                                         />
                                     </div>
-                                    
+
                                     <div className="space-y-2 group">
                                         <label htmlFor="email" className="font-mono text-xs text-red-500 uppercase tracking-widest group-focus-within:text-white transition-colors">Comm Frequency (Email)</label>
                                         <input
@@ -262,22 +263,29 @@ export default function SupportPage() {
                                 <div className="space-y-2 group">
                                     <label htmlFor="subject" className="font-mono text-xs text-red-500 uppercase tracking-widest group-focus-within:text-white transition-colors">Transmission Type</label>
                                     <div className="relative">
-                                        <select
-                                            id="subject"
-                                            name="subject"
-                                            value={formData.subject}
-                                            onChange={handleChange}
-                                            required
-                                            className="w-full bg-white/5 border border-white/10 px-4 py-3 text-white focus:outline-none focus:bg-white/10 focus:border-red-500 transition-all appearance-none font-mono cursor-pointer"
-                                        >
-                                            <option value="general">GENERAL_INQUIRY</option>
-                                            <option value="registration">REGISTRATION_ERROR</option>
-                                            <option value="technical">TECHNICAL_MALFUNCTION</option>
-                                            <option value="event">MISSION_INTEL</option>
-                                        </select>
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/40">
-                                            <ChevronDown className="w-4 h-4" />
-                                        </div>
+                                        <SearchableSelect
+                                            options={[
+                                                "GENERAL_INQUIRY",
+                                                "REGISTRATION_ERROR",
+                                                "TECHNICAL_MALFUNCTION",
+                                                "MISSION_INTEL"
+                                            ]}
+                                            value={formData.subject.toUpperCase().replace('GENERAL', 'GENERAL_INQUIRY').replace('REGISTRATION', 'REGISTRATION_ERROR').replace('TECHNICAL', 'TECHNICAL_MALFUNCTION').replace('EVENT', 'MISSION_INTEL') === "GENERAL_INQUIRY" ? "GENERAL_INQUIRY" :
+                                                (formData.subject === 'registration' ? "REGISTRATION_ERROR" :
+                                                    (formData.subject === 'technical' ? "TECHNICAL_MALFUNCTION" :
+                                                        (formData.subject === 'event' ? "MISSION_INTEL" : formData.subject)))}
+                                            onChange={(val) => {
+                                                const map: { [key: string]: string } = {
+                                                    "GENERAL_INQUIRY": "general",
+                                                    "REGISTRATION_ERROR": "registration",
+                                                    "TECHNICAL_MALFUNCTION": "technical",
+                                                    "MISSION_INTEL": "event"
+                                                };
+                                                setFormData({ ...formData, subject: map[val] || 'general' });
+                                            }}
+                                            placeholder="Select type"
+                                            searchable={false}
+                                        />
                                     </div>
                                 </div>
 
@@ -327,7 +335,7 @@ export default function SupportPage() {
                     </div>
                 </div>
             </main>
-            <Footer />
+            
         </div>
     );
 }

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter_Tight, Space_Grotesk } from 'next/font/google';
 import './globals.css';
-import SmoothScroll from './components/SmoothScroll';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 const interTight = Inter_Tight({
   subsets: ['latin'],
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   description: 'A premium competitive coding event by IEEE CTSoc.',
 };
 
-import CustomCursor from './components/CustomCursor';
+
 
 export default function RootLayout({
   children,
@@ -32,12 +32,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${interTight.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
-      <body className="antialiased selection:bg-red-900 selection:text-white cursor-none" suppressHydrationWarning>
-        <SmoothScroll>
-          <CustomCursor />
-          <Navbar />
-          {children}
-        </SmoothScroll>
+      <body className="antialiased selection:bg-red-900 selection:text-white" suppressHydrationWarning>
+        <Navbar />
+        {children}
+        <Footer />
       </body>
     </html>
   );

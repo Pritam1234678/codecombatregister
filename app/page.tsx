@@ -7,10 +7,11 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MarblingHover from './components/MarblingHover';
-import Footer from './components/Footer';
+
 import RegistrationModal from './components/RegistrationModal';
 import InfiniteMarquee from './components/InfiniteMarquee';
 import OurInitiatives from './components/OurInitiatives';
+import InteractiveDroplets from './components/interactive-droplets/InteractiveDroplets';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -153,6 +154,7 @@ export default function Home() {
 
     return (
         <main ref={container} className="relative w-full overflow-hidden bg-black text-center">
+            <InteractiveDroplets />
 
             {/* --- HERO SECTION --- */}
             <section className="hero-section relative h-screen flex flex-col items-center justify-center overflow-hidden">
@@ -176,7 +178,7 @@ export default function Home() {
                     </p>
 
                     <h1 ref={titleRef} className="text-6xl sm:text-8xl md:text-[9rem] font-sans font-bold tracking-tighter text-white leading-none uppercase mix-blend-screen">
-                        CODECOMBAT
+                        CODE COMBAT
                     </h1>
 
                     <p className="hero-subtitle text-lg sm:text-2xl font-heading font-light tracking-wide text-red-500 mt-4">
@@ -200,42 +202,95 @@ export default function Home() {
 
             {/* --- PRIZE SECTION --- */}
             <section className="prize-section relative py-32 px-6 flex flex-col items-center z-10 bg-black overflow-hidden">
-                <h2 className="prize-heading text-4xl sm:text-6xl font-heading uppercase tracking-tighter mb-20 text-white">
-                    Rewards of War
-                </h2>
+                <div className="prize-heading mb-20 text-center">
+                    <h2 className="text-5xl sm:text-7xl lg:text-7xl font-heading font-black uppercase tracking-tighter">
+                        <span className="text-white">Rewards of </span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-500 to-red-500">
+                            War
+                        </span>
+                    </h2>
+                    <div className="mt-6 flex items-center justify-center gap-4 opacity-50">
+                        <div className="h-[1px] w-32 bg-gradient-to-r from-transparent to-red-600" />
+                        <div className="w-2.5 h-2.5 bg-red-600 rotate-45" />
+                        <div className="h-[1px] w-32 bg-gradient-to-l from-transparent to-red-600" />
+                    </div>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl items-end justify-items-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full max-w-7xl items-end justify-items-center px-4">
 
                     {/* 2nd Place (Left) - Runner Up */}
-                    <div className="prize-card-left order-2 md:order-1 flex flex-col items-center w-full max-w-sm">
-                        <MarblingHover
-                            frontImage="/runner.png"
-                            backImage="/2nd.png"
-                            alt="Runner Up - ₹15k Silver Tier"
-                            className="h-[400px]"
-                        />
+                    <div className="prize-card-left order-2 md:order-1 flex flex-col items-center w-full max-w-sm group">
+                        <div className="relative w-full">
+                            <div className="absolute inset-0 bg-blue-500/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <MarblingHover
+                                frontImage="/runner.png"
+                                backImage="/2nd.png"
+                                alt="Runner Up - ₹15k Silver Tier"
+                                className="h-[400px] w-full border border-blue-500/30 rounded-lg overflow-hidden group-hover:border-blue-500 transition-colors duration-500"
+                            />
+                        </div>
+                        <div className="mt-6 text-center">
+                            <h3 className="text-2xl font-heading font-bold text-white uppercase tracking-wider mb-2 group-hover:text-blue-400 transition-colors">
+                                Runner Up
+                            </h3>
+                            <p className="text-blue-500 font-mono text-xl tracking-widest">
+                                ₹3,000
+                            </p>
+                            <div className="mt-2 text-white/40 text-sm font-light uppercase tracking-widest">
+                                Silver Tier
+                            </div>
+                        </div>
                     </div>
 
                     {/* 1st Place (Center) - Champion */}
-                    <div className="prize-card-center order-1 md:order-2 flex flex-col items-center w-full max-w-sm transform md:-translate-y-12">
-                        <MarblingHover
-                            frontImage="/champion.png"
-                            backImage="/1st.png"
-                            alt="Champion - ₹25k Gold Tier"
-                            className="h-[500px]"
-                        />
+                    <div className="prize-card-center order-1 md:order-2 flex flex-col items-center w-full max-w-sm transform md:-translate-y-16 group z-10">
+                        <div className="relative w-full">
+                            <div className="absolute inset-0 bg-yellow-500/30 blur-[80px] rounded-full opacity-20 group-hover:opacity-100 transition-opacity duration-500" />
+                            <MarblingHover
+                                frontImage="/champion.png"
+                                backImage="/1st.png"
+                                alt="Champion - ₹25k Gold Tier"
+                                className="h-[500px] w-full border border-yellow-500/30 rounded-lg overflow-hidden group-hover:border-yellow-500 transition-colors duration-500 shadow-[0_0_50px_rgba(234,179,8,0.1)]"
+                            />
+                        </div>
+                        <div className="mt-8 text-center scale-110">
+                            <h3 className="text-3xl font-heading font-black text-white uppercase tracking-wider mb-2 group-hover:text-yellow-400 transition-colors">
+                                Champion
+                            </h3>
+                            <p className="text-yellow-500 font-mono text-3xl font-bold tracking-widest text-shadow-gold">
+                                ₹5,000
+                            </p>
+                            <div className="mt-2 text-white/40 text-sm font-light uppercase tracking-widest flex items-center justify-center gap-2">
+                                <span className="inline-block w-2 h-2 bg-yellow-500 rounded-full animate-pulse" />
+                                Gold Tier
+                                <span className="inline-block w-2 h-2 bg-yellow-500 rounded-full animate-pulse" />
+                            </div>
+                        </div>
                     </div>
 
                     {/* 3rd Place (Right) - Second Runner Up */}
-                    <div className="prize-card-right order-3 flex flex-col items-center w-full max-w-sm">
-                        <MarblingHover
-                            frontImage="/bronze.png"
-                            backImage="/3rd.png"
-                            alt="Second Runner Up - ₹10k Bronze Tier"
-                            className="h-[400px]"
-                        />
+                    <div className="prize-card-right order-3 flex flex-col items-center w-full max-w-sm group">
+                        <div className="relative w-full">
+                            <div className="absolute inset-0 bg-orange-700/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <MarblingHover
+                                frontImage="/bronze.png"
+                                backImage="/3rd.png"
+                                alt="Second Runner Up - ₹10k Bronze Tier"
+                                className="h-[400px] w-full border border-orange-700/30 rounded-lg overflow-hidden group-hover:border-orange-500 transition-colors duration-500"
+                            />
+                        </div>
+                        <div className="mt-6 text-center">
+                            <h3 className="text-2xl font-heading font-bold text-white uppercase tracking-wider mb-2 group-hover:text-orange-500 transition-colors">
+                                2nd Runner Up
+                            </h3>
+                            <p className="text-orange-500 font-mono text-xl tracking-widest">
+                                ₹1,500
+                            </p>
+                            <div className="mt-2 text-white/40 text-sm font-light uppercase tracking-widest">
+                                Bronze Tier
+                            </div>
+                        </div>
                     </div>
-
 
                 </div>
             </section>
@@ -246,58 +301,7 @@ export default function Home() {
             {/* --- INFINITE MARQUEE --- */}
             <InfiniteMarquee />
 
-            {/* --- FOOTER SECTION --- */}
-            <footer className="relative py-20 px-6 border-t border-white/10 bg-black overflow-hidden">
-                {/* Background Glow */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-red-900/10 blur-[100px] rounded-full pointer-events-none" />
 
-                <div className="relative z-10 max-w-7xl mx-auto">
-                    {/* Top Section */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-
-                        {/* Brand Column */}
-                        <div>
-                            <h3 className="text-2xl font-heading font-bold uppercase tracking-tighter text-white mb-4">
-                                CODECOMBAT
-                            </h3>
-                            <p className="text-white/60 text-sm leading-relaxed">
-                                Where logic meets battle. Join the ultimate competitive coding arena organized by IEEE CTSoc.
-                            </p>
-                        </div>
-
-                        {/* Quick Links */}
-                        <div>
-                            <h4 className="text-sm font-heading uppercase tracking-widest text-red-500 mb-4">Quick Links</h4>
-                            <ul className="space-y-2">
-                                {['Home', 'Details', 'Support', 'Register'].map((link) => (
-                                    <li key={link}>
-                                        <a href="#" className="text-white/60 hover:text-white transition-colors duration-300 text-sm">
-                                            {link}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Contact Info */}
-                        <div>
-                            <h4 className="text-sm font-heading uppercase tracking-widest text-red-500 mb-4">Contact</h4>
-                            <ul className="space-y-2 text-sm text-white/60">
-                                <li>support@codecombat.live</li>
-                                <li>Alex Mercer || Coordinator</li>
-                                <li>+91 98765 43210</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Bottom Section */}
-                    <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center items-center gap-4">
-                        <p className="text-white/40 text-xs">
-                            © 2026 IEEE CTSoc. All rights reserved.
-                        </p>
-                    </div>
-                </div>
-            </footer>
 
             <RegistrationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 

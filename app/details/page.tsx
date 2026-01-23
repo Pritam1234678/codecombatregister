@@ -4,103 +4,353 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const eventSections = [
+  {
+    id: 1,
+    title: "About Code Combat",
+    content: "Welcome to Code Combat, a thrilling competitive programming hackathon designed to test your logic, speed, and problem-solving skills.",
+    highlights: [
+      "2 Hours of Intense Battle",
+      "6–8 Epic Coding Quests",
+      "Multiple Samurai Difficulty Tiers"
+    ]
+  },
+  {
+    id: 2,
+    title: "Battle Arena Setup",
+    content: "Step into our battle-ready atmosphere with dark aesthetics, where warriors face algorithmic challenges in an epic Samurai-inspired environment.",
+    highlights: [
+      "Premium Coding Stations",
+      "Real-time Leaderboard",
+      "Samurai Battle Zones"
+    ]
+  },
+  {
+    id: 3,
+    title: "Warrior's Toolkit",
+    content: "Equip yourself with the right weapons. Any modern programming language is your sword, logic is your shield, and speed is your ultimate advantage.",
+    highlights: [
+      "Multi-language Support",
+      "Advanced IDE Setup",
+      "Debugging Arsenal"
+    ]
+  },
+  {
+    id: 4,
+    title: "Glory & Rewards",
+    content: "Champions don't just win — they claim legendary rewards. Battle through tiers, earn glory points, and secure your place in the hall of fame.",
+    highlights: [
+      "₹5k Champion Prize",
+      "₹3k Runner Up",
+      "₹1.5k Second Runner Up"
+    ]
+  },
+  {
+    id: 5,
+    title: "Join the Battle",
+    content: "Registration is now open for all aspiring code warriors. Secure your spot in the arena and prepare for the ultimate test of skill and strategy.",
+    highlights: [
+      "Free Registration",
+      "Limited Slots Available",
+      "Instant Confirmation"
+    ]
+  },
+  {
+    id: 6,
+    title: "Event Details",
+    content: "Campus 25, KIIT University • Feb 15, 2026 at 11:00 AM. Check-in opens at 10:00 AM. Bring your laptop, charger, and warrior spirit!",
+    highlights: [
+      "Solo Warriors Welcome",
+      "Any Programming Language",
+      "Strategic Thinking Required"
+    ]
+  }
+];
 
 export default function Details() {
   const container = useRef(null);
 
   useGSAP(() => {
-    // Animate sections on scroll
-    gsap.utils.toArray('.detail-section').forEach((section: any) => {
-      gsap.from(section, {
+    // Page title animation
+    const titleChars = document.querySelectorAll('.page-title-char');
+    gsap.from(titleChars, {
+      opacity: 0,
+      y: 100,
+      rotationX: -90,
+      stagger: 0.05,
+      duration: 1.2,
+      ease: 'power4.out',
+    });
+
+    // Subtitle fade in
+    gsap.from('.page-subtitle', {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      delay: 0.5,
+      ease: 'power3.out',
+    });
+
+    // Animate cards with advanced effects
+    gsap.utils.toArray('.event-card').forEach((card: any, index) => {
+      // Card entrance
+      gsap.from(card, {
         opacity: 0,
-        y: 50,
+        y: 150,
+        rotationX: -15,
+        scale: 0.9,
+        duration: 1.2,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      // Number badge animation
+      gsap.from(card.querySelector('.card-number'), {
+        opacity: 0,
+        scale: 0,
+        rotation: -180,
+        duration: 0.8,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 80%',
+        },
+      });
+
+      // Title reveal
+      gsap.from(card.querySelector('.card-title'), {
+        opacity: 0,
+        x: -50,
         duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 75%',
+        },
+      });
+
+      // Content fade
+      gsap.from(card.querySelector('.card-content'), {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        delay: 0.2,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: section,
-          start: 'top 80%',
+          trigger: card,
+          start: 'top 75%',
+        },
+      });
+
+      // Stagger highlights
+      gsap.from(card.querySelectorAll('.highlight-item'), {
+        opacity: 0,
+        x: -30,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 70%',
+        },
+      });
+
+      // Parallax effect on scroll
+      gsap.to(card, {
+        y: -30,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
         },
       });
     });
 
-    // Draw timeline line
-    gsap.from('.timeline-line', {
-      height: 0,
-      duration: 2,
-      ease: 'none',
+    // CTA section animation
+    gsap.from('.cta-section', {
+      opacity: 0,
+      scale: 0.95,
+      duration: 1.2,
+      ease: 'power3.out',
       scrollTrigger: {
-        trigger: '.timeline-container',
-        start: 'top center',
-        end: 'bottom center',
-        scrub: true,
+        trigger: '.cta-section',
+        start: 'top 85%',
       },
+    });
+
+    // Floating animation for decorative elements
+    gsap.to('.floating-element', {
+      y: -20,
+      duration: 2,
+      ease: 'power1.inOut',
+      repeat: -1,
+      yoyo: true,
     });
   }, { scope: container });
 
   return (
-    <main ref={container} className="min-h-screen pt-32 pb-20 px-6 sm:px-20 max-w-7xl mx-auto text-gray-300 font-sans">
-      <h1 className="text-4xl sm:text-6xl font-heading font-bold uppercase tracking-tighter mb-16 text-white detail-section">
-        The Manifesto
-      </h1>
+    <main ref={container} className="relative min-h-screen pt-32 pb-20 px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto overflow-hidden">
+      {/* Background gradient effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-[120px] floating-element" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 rounded-full blur-[120px] floating-element" style={{ animationDelay: '1s' }} />
+      </div>
 
-      <section className="detail-section mb-24 grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-           <h2 className="text-xl font-heading uppercase tracking-widest text-red-500 mb-4">01. About</h2>
-           <p className="text-lg leading-relaxed text-white/80">
-             CodeCombat is not just a hackathon. It is a battleground for the sharpest minds in engineering. 
-             Organized by IEEE CTSoc, this event challenges participants to solve complex algorithmic problems 
-             and build robust systems under extreme time pressure.
-           </p>
+      {/* Page Title */}
+      <div className="relative mb-20 text-center">
+        <h1 className="text-6xl sm:text-8xl lg:text-9xl font-heading font-bold uppercase tracking-tighter mb-6">
+          {['E', 'V', 'E', 'N', 'T', ' ', 'D', 'E', 'T', 'A', 'I', 'L', 'S'].map((char, i) => (
+            <span
+              key={i}
+              className="page-title-char inline-block bg-gradient-to-b from-white via-white to-red-500 bg-clip-text text-transparent"
+              style={{
+                textShadow: '0 0 80px rgba(255,46,46,0.5)',
+              }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
+        </h1>
+        <p className="page-subtitle text-white/50 text-lg sm:text-xl max-w-3xl mx-auto font-light tracking-wide">
+          Everything you need to know about the ultimate coding battleground
+        </p>
+
+        {/* Decorative line */}
+        <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="h-[1px] w-20 bg-gradient-to-r from-transparent to-red-500" />
+          <div className="w-2 h-2 bg-red-500 rotate-45" />
+          <div className="h-[1px] w-20 bg-gradient-to-l from-transparent to-red-500" />
         </div>
-        <div className="border-l border-white/10 pl-8">
-            <h2 className="text-xl font-heading uppercase tracking-widest text-red-500 mb-4">02. The Vibe</h2>
-            <p className="text-lg leading-relaxed text-white/80">
-                Pure code. No fluff. Elite competition. 
-                We strip away the noise and focus on what matters: Logic, Efficiency, and Innovation.
+      </div>
+
+      {/* Event Sections Grid */}
+      <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {eventSections.map((section, index) => (
+          <div
+            key={section.id}
+            className="event-card group relative"
+          >
+            {/* Card container with border effect */}
+            <div className="relative h-full border border-white/10 bg-black/40 backdrop-blur-sm p-6 sm:p-8 
+                          hover:border-red-500/50 transition-all duration-700
+                          before:absolute before:inset-0 before:bg-gradient-to-br before:from-red-500/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-700 hover:before:opacity-100">
+
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-transparent" />
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
+              </div>
+
+              {/* Card Number Badge */}
+              <div className="card-number absolute top-4 right-4 w-12 h-12 flex items-center justify-center 
+                            border border-white/20 bg-black/60 backdrop-blur-sm
+                            group-hover:border-red-500/50 group-hover:bg-red-500/10 transition-all duration-500 z-10">
+                <span className="text-white/40 font-mono text-base font-bold group-hover:text-red-500 transition-colors duration-500">
+                  0{section.id}
+                </span>
+              </div>
+
+              {/* Section Title */}
+              <h2 className="card-title text-2xl sm:text-3xl lg:text-4xl font-heading font-bold uppercase tracking-tight mb-4 pr-14
+                           bg-gradient-to-r from-white to-red-500 bg-clip-text text-transparent
+                           group-hover:from-red-500 group-hover:to-white transition-all duration-700">
+                {section.title}
+              </h2>
+
+              {/* Content */}
+              <p className="card-content text-white/60 leading-relaxed mb-6 text-sm sm:text-base font-light">
+                {section.content}
+              </p>
+
+              {/* Highlights - Point wise list */}
+              <div className="space-y-2.5">
+                <div className="text-xs uppercase tracking-wider text-red-500/70 font-semibold mb-3">Key Features:</div>
+                {section.highlights.map((highlight, idx) => (
+                  <div
+                    key={idx}
+                    className="highlight-item group/item flex items-start gap-3 py-2"
+                  >
+                    <div className="relative flex-shrink-0 mt-1.5">
+                      <div className="w-1.5 h-1.5 bg-red-500 rotate-45 
+                                    group-hover/item:scale-150 group-hover/item:rotate-180 transition-all duration-500" />
+                      <div className="absolute inset-0 w-1.5 h-1.5 bg-red-500 blur-sm opacity-0 
+                                    group-hover/item:opacity-100 transition-opacity duration-500" />
+                    </div>
+                    <span className="text-sm sm:text-base font-medium text-white/70 leading-relaxed
+                                   group-hover/item:text-white transition-colors duration-500">
+                      {highlight}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-red-500/20 opacity-0 
+                            group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-red-500/20 opacity-0 
+                            group-hover:opacity-100 transition-opacity duration-700" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA Section */}
+      <div className="cta-section relative mt-24 text-center">
+        <div className="relative inline-block">
+          {/* Glow background */}
+          <div className="absolute inset-0 bg-red-500/10 blur-3xl" />
+
+          <div className="relative border border-red-500/30 bg-black/60 backdrop-blur-sm p-12 sm:p-16">
+            {/* Top decorative line */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+              <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-red-500" />
+              <div className="w-2 h-2 bg-red-500 rotate-45" />
+              <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-red-500" />
+            </div>
+
+            <h3 className="text-3xl sm:text-4xl font-heading font-bold uppercase tracking-tight mb-4
+                         bg-gradient-to-r from-white to-red-500 bg-clip-text text-transparent">
+              Ready to Enter the Arena?
+            </h3>
+            <p className="text-white/50 mb-8 max-w-md mx-auto text-base sm:text-lg font-light">
+              Registration closes soon. Secure your spot and prepare for battle.
             </p>
-        </div>
-      </section>
 
-      <section className="detail-section mb-24">
-        <h2 className="text-xl font-heading uppercase tracking-widest text-red-500 mb-12">03. Timeline & Format</h2>
-        
-        <div className="timeline-container relative pl-8 border-l border-white/10">
-          {/* Animated red line overlay */}
-          <div className="timeline-line absolute top-0 left-[-1px] w-[1px] bg-red-500" />
-          
-          <div className="space-y-16">
-            {[
-                { time: 'Round 1', title: 'The Qualifier', desc: 'Online algorithmic contest. Top 50 teams advance.' },
-                { time: 'Round 2', title: 'The Sprint', desc: '24-hour rapid prototyping. Build a working MVP.' },
-                { time: 'Round 3', title: 'The Showdown', desc: 'Final pitch and technical defense before strict judges.' }
-            ].map((item, i) => (
-                <div key={i} className="relative">
-                    <span className="absolute -left-[37px] top-1 w-3 h-3 bg-black border border-red-500 rounded-full" />
-                    <h3 className="text-2xl font-bold text-white mb-2">{item.time} // {item.title}</h3>
-                    <p className="text-white/60">{item.desc}</p>
-                </div>
-            ))}
+            <Link
+              href="/register"
+              className="group/btn relative inline-block px-10 py-4 border border-red-500 bg-red-500/10 
+                       overflow-hidden transition-all duration-500 hover:border-white hover:shadow-[0_0_30px_rgba(255,46,46,0.5)]"
+            >
+              {/* Button background animation */}
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 
+                            translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
+
+              <span className="relative text-red-500 font-bold uppercase tracking-wider text-sm sm:text-base
+                             group-hover/btn:text-black transition-colors duration-500">
+                Register Now
+              </span>
+            </Link>
+
+            {/* Bottom decorative line */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 flex items-center gap-2">
+              <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-red-500" />
+              <div className="w-2 h-2 bg-red-500 rotate-45" />
+              <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-red-500" />
+            </div>
           </div>
         </div>
-      </section>
-
-      <section className="detail-section grid grid-cols-1 sm:grid-cols-3 gap-8">
-         <StatBox number="₹50k" label="Prize Pool" />
-         <StatBox number="24h" label="Non-stop Coding" />
-         <StatBox number="100+" label="Elite Developers" />
-      </section>
-
+      </div>
     </main>
   );
-}
-
-function StatBox({ number, label }: { number: string, label: string }) {
-    return (
-        <div className="border border-white/10 p-8 hover:border-red-500/50 transition-colors duration-500 group">
-            <div className="text-5xl font-heading font-bold text-white mb-2 group-hover:text-red-500 transition-colors">{number}</div>
-            <div className="text-sm uppercase tracking-widest text-white/50">{label}</div>
-        </div>
-    )
 }

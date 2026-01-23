@@ -42,21 +42,6 @@ export default function Footer() {
                             <li>Alex Mercer // Coordinator</li>
                             <li>+91 98765 43210</li>
                         </ul>
-
-                        {/* Social Links */}
-                        <div className="flex gap-4 mt-6">
-                            {['Twitter', 'Discord', 'GitHub'].map((social) => (
-                                <a
-                                    key={social}
-                                    href="#"
-                                    className="w-10 h-10 border border-white/10 flex items-center justify-center hover:border-red-500 hover:bg-red-500/10 transition-all duration-300 group"
-                                >
-                                    <span className="text-xs text-white/60 group-hover:text-red-500 transition-colors">
-                                        {social[0]}
-                                    </span>
-                                </a>
-                            ))}
-                        </div>
                     </div>
                 </div>
 

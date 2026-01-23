@@ -9,7 +9,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MarblingHover from './components/MarblingHover';
 import Footer from './components/Footer';
 import RegistrationModal from './components/RegistrationModal';
-import Marquee from './components/Marquee';
+import InfiniteMarquee from './components/InfiniteMarquee';
+import OurInitiatives from './components/OurInitiatives';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -239,8 +240,11 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* --- MARQUEE SECTION --- */}
-            <Marquee />
+            {/* --- OUR INITIATIVES SLIDER --- */}
+            <OurInitiatives />
+
+            {/* --- INFINITE MARQUEE --- */}
+            <InfiniteMarquee />
 
             {/* --- FOOTER SECTION --- */}
             <footer className="relative py-20 px-6 border-t border-white/10 bg-black overflow-hidden">
@@ -283,35 +287,14 @@ export default function Home() {
                                 <li>Alex Mercer || Coordinator</li>
                                 <li>+91 98765 43210</li>
                             </ul>
-
-                            {/* Social Links */}
-                            <div className="flex gap-4 mt-6">
-                                {['Twitter', 'Discord', 'GitHub'].map((social) => (
-                                    <a
-                                        key={social}
-                                        href="#"
-                                        className="w-10 h-10 border border-white/10 flex items-center justify-center hover:border-red-500 hover:bg-red-500/10 transition-all duration-300 group"
-                                    >
-                                        <span className="text-xs text-white/60 group-hover:text-red-500 transition-colors">
-                                            {social[0]}
-                                        </span>
-                                    </a>
-                                ))}
-                            </div>
                         </div>
                     </div>
 
                     {/* Bottom Section */}
-                    <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-center items-center gap-4">
                         <p className="text-white/40 text-xs">
                             © 2026 IEEE CTSoc. All rights reserved.
                         </p>
-                        <nav className="flex gap-8">
-                            <a href="#about" className="hover:text-red-500 transition-colors">About</a>
-                            <a href="#features" className="hover:text-red-500 transition-colors">Features</a>
-                            <Link href="/register" className="hover:text-red-500 transition-colors">Register</Link>
-                            <Link href="/support" className="hover:text-red-500 transition-colors">Support</Link>
-                        </nav>
                     </div>
                 </div>
             </footer>

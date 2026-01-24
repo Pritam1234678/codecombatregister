@@ -27,8 +27,22 @@ const supportValidation = [
     .isLength({ min: 3, max: 5000 }).withMessage('Message must be between 3 and 5000 characters')
 ];
 
+const rateLimit = require('express-rate-limit');
+
+// Rate limiter: 3 requests per 15 minutes
+const supportLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 3,
+  message: {
+    success: false,
+    message: 'Too many requests from this IP, please try again after 15 minutes.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // POST /api/support/contact
-router.post('/contact', supportValidation, async (req, res) => {
+router.post('/contact', supportLimiter, supportValidation, async (req, res) => {
   try {
     // Check validation errors
     const errors = validationResult(req);

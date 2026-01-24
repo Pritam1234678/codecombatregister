@@ -30,7 +30,6 @@ const registrationValidation = [
   body('branch')
     .trim()
     .notEmpty().withMessage('Branch is required')
-    .isIn(['CSE', 'IT', 'ECE', 'EEE', 'MECH', 'CIVIL', 'OTHER']).withMessage('Invalid branch selected')
 ];
 
 // POST /api/registration/register

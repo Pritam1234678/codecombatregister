@@ -148,7 +148,9 @@ export default function RegisterPage() {
                 <div className="fixed inset-0 z-[300] bg-gradient-to-br from-black via-[#1A0005] to-black flex items-center justify-center">
                     <div className="text-center">
                         <div className="w-20 h-20 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                        <p className="text-white/60 font-heading uppercase tracking-widest text-sm">Loading...</p>
+                        <p className="text-white/40 text-xl font-light tracking-tight max-w-2xl leading-relaxed">
+                            Complete your briefing details to secure your spot in the 2026 CodeCombat arena.
+                        </p>
                     </div>
                 </div>
             )}
@@ -172,10 +174,11 @@ export default function RegisterPage() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <h2 className="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tighter text-white mb-4">
-                                    Welcome to the Arena!
-                                </h2>
-                                <p className="text-white/60 text-lg mb-2">Registration successful, warrior.</p>
+                                <h1 className="text-7xl md:text-[9rem] font-light tracking-tighter leading-[0.8] mb-8">
+                                    Register
+                                    <br />
+                                    <span className="opacity-20">& Join the Mission</span>
+                                </h1>            <p className="text-white/60 text-lg mb-2">Registration successful, warrior.</p>
                                 <p className="text-white/40 text-sm">Redirecting you back...</p>
                             </div>
                         ) : (
@@ -183,7 +186,12 @@ export default function RegisterPage() {
                             <div className="animate-slide-up">
                                 {/* Header */}
                                 <div className="text-center mb-12">
-                                    <h1 className="text-5xl md:text-7xl font-heading font-bold uppercase tracking-tighter text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-red-100 to-white">
+                                    <h3 className="text-lg font-light text-white flex items-center gap-3">
+                                        <span className="w-8 h-px bg-red-500" />
+                                        Secure Your Spot
+                                        <span className="w-8 h-px bg-red-500" />
+                                    </h3>
+                                    <h1 className="text-5xl md:text-7xl font-sans font-bold uppercase tracking-tighter text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-red-100 to-white">
                                         Join the Battle
                                     </h1>
                                     <p className="text-white/60 text-lg">

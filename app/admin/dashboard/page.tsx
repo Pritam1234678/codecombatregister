@@ -23,6 +23,7 @@ export default function AdminDashboard() {
     const [searchTerm, setSearchTerm] = useState('');
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [deletingUserId, setDeletingUserId] = useState<number | null>(null);
+    const { showToast } = useToast();
 
     // Fetch Users
     const fetchUsers = async () => {
@@ -91,11 +92,13 @@ export default function AdminDashboard() {
             if (res.ok) {
                 setUsers(users.filter(u => u.id !== deletingUserId));
                 setDeletingUserId(null);
+                showToast('User deleted successfully', 'success');
             } else {
-                alert('Failed to delete user');
+                showToast('Failed to delete user', 'error');
             }
         } catch (error) {
             console.error(error);
+            showToast('An error occurred', 'error');
         }
     };
 

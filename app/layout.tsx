@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     title: 'CODECOMBAT | IEEE CTSoc',
     description: 'The ultimate competitive coding battle is here.',
   },
+  verification: {
+    google: 'qWUZodIz5HV4UkF1-orT1E1cLvRTPo8xaFRNQES655k',
+  },
 };
 
 

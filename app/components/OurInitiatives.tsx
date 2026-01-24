@@ -134,7 +134,7 @@ export default function OurInitiatives() {
     };
 
     return (
-        <section className="relative py-12 md:py-32 px-4 bg-black overflow-hidden">
+        <section className="relative py-12 md:py-16 px-4 bg-black overflow-hidden">
             {/* Background Grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
 
@@ -143,7 +143,7 @@ export default function OurInitiatives() {
 
             {/* Header */}
             <div className="relative z-10 text-center mb-10 md:mb-20">
-                <h2 className="text-5xl md:text-4xl lg:text-7xl font-heading font-black tracking-tighter mb-4">
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-black tracking-tighter mb-4">
                     <span className="text-white">Our </span>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-500 to-red-500">
                         Initiatives

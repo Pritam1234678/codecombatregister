@@ -205,14 +205,15 @@ export default function Home() {
                     </Link>
                 </div>
 
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-                    <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-red-500 to-transparent" />
+                <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce z-20 pointer-events-none">
+                    <span className="text-[10px] md:text-xs font-mono text-white/50 uppercase tracking-[0.3em]">Scroll</span>
+                    <div className="w-[1px] h-12 md:h-16 bg-gradient-to-b from-white/20 via-red-500 to-transparent" />
                 </div>
             </section>
 
             {/* --- PRIZE SECTION --- */}
             {/* --- PRIZE SECTION --- */}
-            <section className="prize-section relative py-4 md:py-20 px-4 md:px-6 flex flex-col items-center z-10 bg-black overflow-hidden">
+            <section className="prize-section relative py-4 md:py-12 px-4 md:px-6 flex flex-col items-center z-10 bg-black overflow-hidden">
                 {/* Cinematic Background Glows */}
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                     <div className="absolute top-[20%] left-[20%] w-[600px] h-[600px] bg-red-900/10 blur-[120px] rounded-full mix-blend-screen" />
@@ -235,7 +236,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl items-end px-4 relative z-10 mb-16">
+                <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl items-end px-4 relative z-10 mb-8">
 
                     {/* 2nd Place - Smooth Spring Entry */}
                     <div className="prize-card-left order-2 md:order-1 relative group md:mb-12">

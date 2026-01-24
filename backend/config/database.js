@@ -12,7 +12,10 @@ const pool = mysql.createPool({
   connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT) || 100, // Support 100 concurrent connections
   queueLimit: parseInt(process.env.DB_QUEUE_LIMIT) || 0, // Unlimited queue
   enableKeepAlive: true,
-  keepAliveInitialDelay: 0
+  keepAliveInitialDelay: 0,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 // Test database connection

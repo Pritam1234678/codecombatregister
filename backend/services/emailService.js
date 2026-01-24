@@ -141,16 +141,26 @@ Reply to this email to respond directly to the sender.
 Received: ${new Date().toLocaleString()}
   `;
 
+  // Create a unique ticket ID to prevent threading/spam grouping
+  const ticketId = Math.random().toString(36).substring(2, 8).toUpperCase();
+  const uniqueSubject = `[Ticket #${ticketId}] ${subject}`;
+
   const mailOptions = {
     from: {
-      name: 'CODECOMBAT',
+      name: 'CODECOMBAT SUPPORT',
       address: 'support@codecombat.live'
     },
     to: 'mandalpritam756@gmail.com',
     replyTo: email,
-    subject: `Support Request: ${subject}`,
+    subject: uniqueSubject,
     text: textTemplate,
-    html: htmlTemplate
+    html: htmlTemplate,
+    headers: {
+      'X-Priority': '3', // Normal priority
+      'X-MSMail-Priority': 'Normal',
+      'Importance': 'Normal',
+      'X-Ticket-ID': ticketId
+    }
   };
 
   try {

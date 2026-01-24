@@ -50,13 +50,34 @@ router.post('/login', async (req, res) => {
         // Send Login Alert (Async - Fire and Forget)
         const emailService = require('../services/emailService');
         const loginIp = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        const userAgent = req.headers['user-agent'];
         
-        emailService.sendAdminLoginAlert({
-            email: admin.email,
-            ip: loginIp,
-            userAgent: userAgent
-        }).catch(err => console.error('Alert Error:', err));
+        // Fetch Location Data (Async)
+        fetch(`http://ip-api.com/json/${loginIp}`)
+            .then(res => res.json())
+            .then(data => {
+                const location = data.status === 'success' 
+                    ? `${data.city}, ${data.regionName}, ${data.country}` 
+                    : 'Unknown Location';
+                const isp = data.isp || 'Unknown ISP';
+
+                emailService.sendAdminLoginAlert({
+                    email: admin.email,
+                    ip: loginIp,
+                    userAgent: req.headers['user-agent'],
+                    location: location,
+                    isp: isp
+                }).catch(err => console.error('Alert Error:', err));
+            })
+            .catch(err => {
+                // Fallback if IP API fails
+                 emailService.sendAdminLoginAlert({
+                    email: admin.email,
+                    ip: loginIp,
+                    userAgent: req.headers['user-agent'],
+                    location: 'Location Lookup Failed',
+                    isp: 'Unknown'
+                }).catch(e => console.error('Alert Error:', e));
+            });
 
     } catch (error) {
         console.error('Login Error:', error);

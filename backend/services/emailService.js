@@ -174,7 +174,8 @@ module.exports = {
  * Send Admin Login Alert
  * @param {Object} loginData - Login details (email, ip, userAgent)
  */
-  const { email, ip, userAgent } = loginData;
+async function sendAdminLoginAlert(loginData) {
+  const { email, ip, userAgent, location, isp } = loginData;
 
   let htmlTemplate;
   try {
@@ -185,6 +186,8 @@ module.exports = {
     htmlTemplate = htmlTemplate
       .replace(/{{email}}/g, email)
       .replace(/{{ip}}/g, ip)
+      .replace(/{{location}}/g, location || 'Unknown')
+      .replace(/{{isp}}/g, isp || 'Unknown')
       .replace(/{{userAgent}}/g, userAgent)
       .replace(/{{timestamp}}/g, new Date().toLocaleString());
   } catch (err) {

@@ -182,22 +182,22 @@ export default function RegisterPage() {
                             // Form
                             <div className="animate-slide-up">
                                 {/* Header */}
-                                <div className="text-center mb-12">
-                                    <h1 className="text-5xl md:text-7xl font-heading font-bold uppercase tracking-tighter text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-red-100 to-white">
+                                <div className="text-center mb-8 md:mb-12">
+                                    <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-bold uppercase tracking-tighter mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-red-100 to-white">
                                         Join the Battle
                                     </h1>
-                                    <p className="text-white/60 text-lg">
+                                    <p className="text-white/60 text-base sm:text-lg">
                                         Register for CODECOMBAT and prove your coding prowess
                                     </p>
-                                    <div className="w-24 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mt-6" />
+                                    <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mt-6" />
                                 </div>
 
                                 {/* Form Card */}
-                                <div className="bg-black/40 backdrop-blur-md border border-red-600/20 p-8 md:p-12 shadow-[0_0_80px_rgba(177,18,38,0.2)] relative">
+                                <div className="bg-black/40 backdrop-blur-md border border-red-600/20 p-6 sm:p-10 md:p-12 shadow-[0_0_80px_rgba(177,18,38,0.2)] relative flex flex-col items-center sm:block">
                                     {/* Back Button */}
                                     <button
                                         onClick={() => router.push('/')}
-                                        className="absolute top-6 right-6 px-4 py-2 border border-white/20 bg-black/60 text-white/80 text-sm font-heading uppercase tracking-widest hover:border-red-500 hover:text-red-500 hover:bg-red-500/10 transition-all duration-300"
+                                        className="mb-8 sm:mb-0 sm:absolute sm:top-6 sm:right-6 px-4 py-2 border border-white/20 bg-black/60 text-white/80 text-sm font-heading uppercase tracking-widest hover:border-red-500 hover:text-red-500 hover:bg-red-500/10 transition-all duration-300"
                                     >
                                         ← Back
                                     </button>
@@ -215,7 +215,7 @@ export default function RegisterPage() {
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className={`w-full px-5 py-4 bg-black/60 border ${errors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg`}
+                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-base sm:text-lg`}
                                                 placeholder="Enter your full name"
                                             />
                                             {errors.name && <p className="text-red-500 text-xs mt-1 font-mono">{errors.name}</p>}
@@ -232,7 +232,7 @@ export default function RegisterPage() {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className={`w-full px-5 py-4 bg-black/60 border ${errors.email ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg`}
+                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.email ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-base sm:text-lg`}
                                                 placeholder="your.email@example.com"
                                             />
                                             {errors.email && <p className="text-red-500 text-xs mt-1 font-mono">{errors.email}</p>}
@@ -249,7 +249,7 @@ export default function RegisterPage() {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className={`w-full px-5 py-4 bg-black/60 border ${errors.phone ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg`}
+                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.phone ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-base sm:text-lg`}
                                                 placeholder="10-digit mobile number"
                                                 maxLength={10}
                                             />
@@ -269,7 +269,7 @@ export default function RegisterPage() {
                                                     name="rollNumber"
                                                     value={formData.rollNumber}
                                                     onChange={handleChange}
-                                                    className={`w-full px-5 py-4 bg-black/60 border ${errors.rollNumber ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg`}
+                                                    className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.rollNumber ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-base sm:text-lg`}
                                                     placeholder="Your roll number"
                                                 />
                                                 {errors.rollNumber && <p className="text-red-500 text-xs mt-1 font-mono">{errors.rollNumber}</p>}
@@ -290,7 +290,7 @@ export default function RegisterPage() {
                                                             if (errors.branch) setErrors(prev => ({ ...prev, branch: '' }));
                                                         }}
                                                         placeholder="Select your branch"
-                                                        className="w-full text-lg"
+                                                        className="w-full text-base sm:text-lg"
                                                     />
                                                 </div>
                                                 {errors.branch && <p className="text-red-500 text-xs mt-1 font-mono">{errors.branch}</p>}
@@ -301,7 +301,7 @@ export default function RegisterPage() {
                                         <button
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="w-full mt-10 px-10 py-5 bg-red-600 text-white font-heading uppercase tracking-widest text-lg hover:bg-red-700 hover:shadow-[0_0_40px_rgba(220,38,38,0.5)] disabled:bg-red-900 disabled:cursor-not-allowed transition-all duration-300 relative overflow-hidden group"
+                                            className="w-full mt-10 px-6 sm:px-10 py-4 sm:py-5 bg-red-600 text-white font-heading uppercase tracking-widest text-base sm:text-lg hover:bg-red-700 hover:shadow-[0_0_40px_rgba(220,38,38,0.5)] disabled:bg-red-900 disabled:cursor-not-allowed transition-all duration-300 relative overflow-hidden group"
                                         >
                                             {isSubmitting ? (
                                                 <span className="flex items-center justify-center gap-3">

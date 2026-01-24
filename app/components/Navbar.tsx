@@ -78,7 +78,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav ref={container} className="fixed top-0 left-0 w-full px-6 md:px-8 py-6 flex justify-between items-center z-50 text-white">
+    <nav ref={container} className="fixed top-0 left-0 w-full px-6 md:px-8 py-4 flex justify-between items-center z-50 text-white bg-black/190 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none">
       {/* Left Branding */}
       <div className="nav-item z-50 mix-blend-difference">
         <Link href="/" className="text-sm font-light tracking-[0.2em] uppercase opacity-80 font-sans">

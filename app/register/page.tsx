@@ -161,7 +161,7 @@ export default function RegisterPage() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-800/5 blur-[200px] rounded-full pointer-events-none" />
 
                 {/* Content Container */}
-                <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
+                <div className="relative z-10 min-h-screen flex flex-col items-center pt-32 px-6 pb-20">
                     <div className="w-full max-w-3xl">
 
                         {submitted ? (

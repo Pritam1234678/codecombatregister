@@ -183,22 +183,22 @@ export default function Home() {
                 </div>
 
                 <div className="relative z-10 flex flex-col items-center gap-6 px-4">
-                    <p className="hero-meta font-heading text-sm sm:text-base tracking-[0.3em] uppercase text-gray-400 font-light">
+                    <p className="hero-meta font-heading text-base sm:text-lg tracking-[0.3em] uppercase text-gray-400 font-light">
                         IEEE CTSoc presents
                     </p>
 
-                    <h1 ref={titleRef} className="text-4xl sm:text-6xl md:text-8xl lg:text-[9rem] font-sans font-bold tracking-tighter text-white leading-none uppercase mix-blend-screen">
-                        CODE COMBAT
+                    <h1 ref={titleRef} className="text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-sans font-bold tracking-tighter text-white leading-none uppercase mix-blend-screen">
+                        CODE <br className="md:hidden" /> COMBAT
                     </h1>
 
-                    <p className="hero-subtitle text-base sm:text-lg md:text-2xl font-heading font-light tracking-wide text-red-500 mt-4 px-4">
+                    <p className="hero-subtitle text-xl sm:text-2xl md:text-3xl font-heading font-light tracking-wide text-red-500 mt-4 px-4">
                         Where logic meets battle.
                     </p>
 
 
                     <Link
                         href="/register"
-                        className="hero-cta mt-8 px-8 py-3 border border-white/30 bg-red-600/20 backdrop-blur-sm text-white font-heading tracking-widest uppercase hover:bg-red-600 hover:border-red-600 hover:scale-105 transition-all duration-300 group relative overflow-hidden z-20 opacity-100 visible inline-block"
+                        className="hero-cta mt-8 px-8 py-3 border border-white/30 bg-red-600/20 backdrop-blur-sm text-white text-lg font-heading tracking-widest uppercase hover:bg-red-600 hover:border-red-600 hover:scale-105 transition-all duration-300 group relative overflow-hidden z-20 opacity-100 visible inline-block"
                     >
                         <span className="relative z-10">Register Now</span>
                         <div className="absolute inset-0 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 z-0" />

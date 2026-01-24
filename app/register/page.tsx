@@ -31,6 +31,34 @@ export default function RegisterPage() {
         return () => clearTimeout(timer);
     }, []);
 
+    const ALLOWED_BRANCHES = [
+        "Civil Engineering",
+        "Construction Technology",
+        "Mechanical Engineering",
+        "Mechanical Engineering(Automobile)",
+        "Aerospace Engineering",
+        "Mechatronics Engineering",
+        "Electrical Engineering",
+        "Electrical and Computer Engineering",
+        "Electronics & Tele-Communication Engineering",
+        "Electronics & Electrical Engineering",
+        "Electronics and Computer Science Engineering",
+        "Electronics Engineering VLSI Design and Technology",
+        "Electronics and Instrumentation",
+        "Computer Science & Engineering",
+        "Computer Science & Communication Engineering",
+        "Computer Science and Engineering with specialization Artificial Intelligence",
+        "Computer Science and Engineering with specialization Cyber Security",
+        "Computer Science and Engineering with specialization Data Science",
+        "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+        "Computer Science and Engineering with specialization Internet of Things",
+        "Computer Science & Systems Engineering",
+        "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+        "Information Technology",
+        "Chemical Engineering",
+        "Other"
+    ];
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({
             ...formData,
@@ -252,42 +280,52 @@ export default function RegisterPage() {
                                                 <label htmlFor="branch" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-3 group-focus-within:text-red-400 transition-colors">
                                                     Branch
                                                 </label>
-                                                <SearchableSelect
-                                                    options={[
-                                                        "Civil Engineering",
-                                                        "Construction Technology",
-                                                        "Mechanical Engineering",
-                                                        "Mechanical Engineering(Automobile)",
-                                                        "Aerospace Engineering",
-                                                        "Mechatronics Engineering",
-                                                        "Electrical Engineering",
-                                                        "Electrical and Computer Engineering",
-                                                        "Electronics & Tele-Communication Engineering",
-                                                        "Electronics & Electrical Engineering",
-                                                        "Electronics and Computer Science Engineering",
-                                                        "Electronics Engineering VLSI Design and Technology",
-                                                        "Electronics and Instrumentation",
-                                                        "Computer Science & Engineering",
-                                                        "Computer Science & Communication Engineering",
-                                                        "Computer Science and Engineering with specialization Artificial Intelligence",
-                                                        "Computer Science and Engineering with specialization Cyber Security",
-                                                        "Computer Science and Engineering with specialization Data Science",
-                                                        "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
-                                                        "Computer Science and Engineering with specialization Internet of Things",
-                                                        "Computer Science & Systems Engineering",
-                                                        "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
-                                                        "Information Technology",
-                                                        "Chemical Engineering",
-                                                        "Other"
-                                                    ]}
-                                                    value={formData.branch}
-                                                    onChange={(value) => {
-                                                        setFormData({ ...formData, branch: value });
-                                                        if (errors.branch) setErrors({ ...errors, branch: '' });
-                                                    }}
-                                                    placeholder="Select your branch"
-                                                    className="text-lg"
-                                                />
+
+                                                <div className="relative">
+                                                    <select
+                                                        id="branch"
+                                                        name="branch"
+                                                        value={formData.branch}
+                                                        onChange={handleChange}
+                                                        className={`w-full px-5 py-4 bg-black/60 border ${errors.branch ? 'border-red-500' : 'border-white/10'} text-white focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-lg appearance-none`}
+                                                    >
+                                                        <option value="" className="text-black">Select your branch</option>
+                                                        {[
+                                                            "Civil Engineering",
+                                                            "Construction Technology",
+                                                            "Mechanical Engineering",
+                                                            "Mechanical Engineering(Automobile)",
+                                                            "Aerospace Engineering",
+                                                            "Mechatronics Engineering",
+                                                            "Electrical Engineering",
+                                                            "Electrical and Computer Engineering",
+                                                            "Electronics & Tele-Communication Engineering",
+                                                            "Electronics & Electrical Engineering",
+                                                            "Electronics and Computer Science Engineering",
+                                                            "Electronics Engineering VLSI Design and Technology",
+                                                            "Electronics and Instrumentation",
+                                                            "Computer Science & Engineering",
+                                                            "Computer Science & Communication Engineering",
+                                                            "Computer Science and Engineering with specialization Artificial Intelligence",
+                                                            "Computer Science and Engineering with specialization Cyber Security",
+                                                            "Computer Science and Engineering with specialization Data Science",
+                                                            "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+                                                            "Computer Science and Engineering with specialization Internet of Things",
+                                                            "Computer Science & Systems Engineering",
+                                                            "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+                                                            "Information Technology",
+                                                            "Chemical Engineering",
+                                                            "Other"
+                                                        ].map(branch => (
+                                                            <option key={branch} value={branch} className="text-black">
+                                                                {branch}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                                                        <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-red-500"></div>
+                                                    </div>
+                                                </div>
                                                 {errors.branch && <p className="text-red-500 text-xs mt-1 font-mono">{errors.branch}</p>}
                                             </div>
                                         </div>

@@ -15,6 +15,34 @@ interface User {
     created_at: string;
 }
 
+const ALLOWED_BRANCHES = [
+    "Civil Engineering",
+    "Construction Technology",
+    "Mechanical Engineering",
+    "Mechanical Engineering(Automobile)",
+    "Aerospace Engineering",
+    "Mechatronics Engineering",
+    "Electrical Engineering",
+    "Electrical and Computer Engineering",
+    "Electronics & Tele-Communication Engineering",
+    "Electronics & Electrical Engineering",
+    "Electronics and Computer Science Engineering",
+    "Electronics Engineering VLSI Design and Technology",
+    "Electronics and Instrumentation",
+    "Computer Science & Engineering",
+    "Computer Science & Communication Engineering",
+    "Computer Science and Engineering with specialization Artificial Intelligence",
+    "Computer Science and Engineering with specialization Cyber Security",
+    "Computer Science and Engineering with specialization Data Science",
+    "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+    "Computer Science and Engineering with specialization Internet of Things",
+    "Computer Science & Systems Engineering",
+    "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+    "Information Technology",
+    "Chemical Engineering",
+    "Other"
+];
+
 export default function AdminDashboard() {
     const router = useRouter();
     const [users, setUsers] = useState<User[]>([]);
@@ -118,25 +146,33 @@ export default function AdminDashboard() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(editingUser.email)) {
             alert('Please enter a valid email address');
+            showToast('Please enter a valid email address', 'error');
             return;
         }
 
         // Phone: exactly 10 digits
         const phoneRegex = /^[0-9]{10}$/;
         if (!phoneRegex.test(editingUser.phone)) {
-            alert('Phone number must be exactly 10 digits');
+            showToast('Phone number must be exactly 10 digits', 'error');
             return;
         }
 
         // Roll Number: non-empty
         if (!editingUser.roll_number.trim()) {
-            alert('Roll Number is required');
+            showToast('Roll Number is required', 'error');
+            return;
+        }
+
+        // Roll Number: numeric only
+        const rollRegex = /^[0-9]+$/;
+        if (!rollRegex.test(editingUser.roll_number)) {
+            showToast('Roll Number must contain only numbers', 'error');
             return;
         }
 
         // Branch: non-empty
         if (!editingUser.branch.trim()) {
-            alert('Branch is required');
+            showToast('Branch is required', 'error');
             return;
         }
 
@@ -347,14 +383,20 @@ export default function AdminDashboard() {
                                         className="w-full bg-black border border-white/10 px-4 py-2 text-white focus:border-white/30 focus:outline-none transition-colors text-sm rounded"
                                     />
                                 </div>
-                                <div className="space-y-2">
+                                <div>
                                     <label className="block text-xs uppercase text-white/40 tracking-wider">Branch</label>
-                                    <input
-                                        type="text"
+                                    <select
                                         value={editingUser.branch}
                                         onChange={(e) => setEditingUser({ ...editingUser, branch: e.target.value })}
-                                        className="w-full bg-black border border-white/10 px-4 py-2 text-white focus:border-white/30 focus:outline-none transition-colors text-sm rounded"
-                                    />
+                                        className="w-full bg-black border border-white/10 px-4 py-2 text-white focus:border-white/30 focus:outline-none transition-colors text-sm rounded appearance-none"
+                                    >
+                                        <option value="">Select Branch</option>
+                                        {ALLOWED_BRANCHES.map(branch => (
+                                            <option key={branch} value={branch} className="text-black">
+                                                {branch}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
 

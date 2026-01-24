@@ -208,18 +208,29 @@ export default function Details() {
 
       {/* Page Title */}
       <div className="relative mb-20 text-center">
-        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold uppercase tracking-tighter mb-6">
-          {['E', 'V', 'E', 'N', 'T', ' ', 'D', 'E', 'T', 'A', 'I', 'L', 'S'].map((char, i) => (
-            <span
-              key={i}
-              className="page-title-char inline-block bg-gradient-to-b from-white via-white to-red-500 bg-clip-text text-transparent"
-              style={{
-                textShadow: '0 0 80px rgba(255,46,46,0.5)',
-              }}
-            >
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
+        <h1 className="text-4xl sm:text-7xl lg:text-8xl font-heading font-bold uppercase tracking-tighter mb-6 flex flex-wrap justify-center gap-x-4 sm:gap-x-8">
+          <span className="whitespace-nowrap">
+            {['E', 'V', 'E', 'N', 'T'].map((char, i) => (
+              <span
+                key={i}
+                className="page-title-char inline-block bg-gradient-to-b from-white via-white to-red-500 bg-clip-text text-transparent"
+                style={{ textShadow: '0 0 80px rgba(255,46,46,0.5)' }}
+              >
+                {char}
+              </span>
+            ))}
+          </span>
+          <span className="whitespace-nowrap">
+            {['D', 'E', 'T', 'A', 'I', 'L', 'S'].map((char, i) => (
+              <span
+                key={i}
+                className="page-title-char inline-block bg-gradient-to-b from-white via-white to-red-500 bg-clip-text text-transparent"
+                style={{ textShadow: '0 0 80px rgba(255,46,46,0.5)' }}
+              >
+                {char}
+              </span>
+            ))}
+          </span>
         </h1>
         <p className="page-subtitle text-white/50 text-lg sm:text-xl max-w-3xl mx-auto font-light tracking-wide">
           Everything you need to know about the ultimate coding battleground

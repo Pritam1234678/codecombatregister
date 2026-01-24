@@ -23,119 +23,141 @@ export default function Home() {
     const [showDroplets, setShowDroplets] = useState(false);
 
     useGSAP(() => {
-        const tl = gsap.timeline();
+        const mm = gsap.matchMedia();
 
-        // --- HERO ANIMATIONS ---
-        // Split text animation for CODECOMBAT
-        const chars = titleRef.current?.innerText.split('') || [];
-        if (titleRef.current) {
-            titleRef.current.innerHTML = '';
-            chars.forEach((char) => {
-                const span = document.createElement('span');
-                span.innerText = char;
-                span.className = 'inline-block opacity-0 transform translate-y-10 cursor-pointer';
+        mm.add("(min-width: 768px)", () => {
+            const tl = gsap.timeline();
 
-                // Hover Glow Effect
-                span.addEventListener('mouseenter', () => {
-                    gsap.to(span, {
-                        textShadow: "0 0 20px #FF2E2E, 0 0 40px #FF2E2E",
-                        color: "#FFFFFF",
-                        scale: 1.1,
-                        duration: 0.1,
-                        ease: "power1.out"
+            // --- HERO ANIMATIONS ---
+            // Split text animation for CODECOMBAT
+            const chars = titleRef.current?.innerText.split('') || [];
+            if (titleRef.current) {
+                titleRef.current.innerHTML = '';
+                chars.forEach((char) => {
+                    const span = document.createElement('span');
+                    span.innerText = char;
+                    span.className = 'inline-block opacity-0 transform translate-y-10 cursor-pointer';
+
+                    // Hover Glow Effect
+                    span.addEventListener('mouseenter', () => {
+                        gsap.to(span, {
+                            textShadow: "0 0 20px #FF2E2E, 0 0 40px #FF2E2E",
+                            color: "#FFFFFF",
+                            scale: 1.1,
+                            duration: 0.1,
+                            ease: "power1.out"
+                        });
                     });
-                });
 
-                span.addEventListener('mouseleave', () => {
-                    gsap.to(span, {
-                        textShadow: "none",
-                        color: "#FFFFFF",
-                        scale: 1,
-                        duration: 0.3,
-                        ease: "power1.out"
+                    span.addEventListener('mouseleave', () => {
+                        gsap.to(span, {
+                            textShadow: "none",
+                            color: "#FFFFFF",
+                            scale: 1,
+                            duration: 0.3,
+                            ease: "power1.out"
+                        });
                     });
+
+                    titleRef.current?.appendChild(span);
                 });
+            }
 
-                titleRef.current?.appendChild(span);
-            });
-        }
-
-        tl.to(titleRef.current?.children || [], {
-            y: 0,
-            opacity: 1,
-            stagger: 0.08,
-            duration: 1,
-            ease: 'power4.out',
-            onComplete: () => setShowDroplets(true)
-        })
-            .from('.hero-subtitle', {
-                opacity: 0,
-                y: 20,
-                duration: 1,
-                ease: 'power3.out',
-            }, '-=0.5')
-            .from('.hero-meta', {
-                opacity: 0,
-                duration: 1.5,
-                ease: 'power2.inOut',
-            }, '-=1')
-            .fromTo('.hero-cta', {
-                opacity: 0,
-                y: 20,
-            }, {
-                opacity: 1,
+            tl.to(titleRef.current?.children || [], {
                 y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-            }, '-=0.5');
-
-        gsap.to('.samurai-img', {
-            yPercent: 10,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.hero-section',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true,
-            }
-        });
-
-        // --- PRIZE SECTION ANIMATIONS ---
-
-        // --- PRIZE SECTION ANIMATIONS ---
-        const prizeTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.prize-section',
-                start: 'top 60%',
-            }
-        });
-
-        prizeTl
-            .from('.prize-heading', {
-                y: 50,
-                opacity: 0,
+                opacity: 1,
+                stagger: 0.08,
                 duration: 1,
-                ease: 'power3.out'
+                ease: 'power4.out',
+                onComplete: () => setShowDroplets(true)
             })
-            .from('.prize-card-left', {
-                y: 100,
-                opacity: 0,
-                duration: 1.2,
-                ease: 'elastic.out(1, 0.75)'
-            }, '-=0.5')
-            .from('.prize-card-center', {
-                y: 100,
-                opacity: 0,
-                scale: 0.9,
-                duration: 1.2,
-                ease: 'elastic.out(1, 0.75)'
-            }, '-=1')
-            .from('.prize-card-right', {
-                y: 100,
-                opacity: 0,
-                duration: 1.2,
-                ease: 'elastic.out(1, 0.75)'
-            }, '-=1');
+                .from('.hero-subtitle', {
+                    opacity: 0,
+                    y: 20,
+                    duration: 1,
+                    ease: 'power3.out',
+                }, '-=0.5')
+                .from('.hero-meta', {
+                    opacity: 0,
+                    duration: 1.5,
+                    ease: 'power2.inOut',
+                }, '-=1')
+                .fromTo('.hero-cta', {
+                    opacity: 0,
+                    y: 20,
+                }, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                }, '-=0.5');
+
+            gsap.to('.samurai-img', {
+                yPercent: 10,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero-section',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                }
+            });
+
+            // --- PRIZE SECTION ANIMATIONS ---
+            const prizeTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.prize-section',
+                    start: 'top 60%',
+                }
+            });
+
+            prizeTl
+                .from('.prize-heading', {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out'
+                })
+                .from('.prize-card-left', {
+                    y: 100,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: 'elastic.out(1, 0.75)'
+                }, '-=0.5')
+                .from('.prize-card-center', {
+                    y: 100,
+                    opacity: 0,
+                    scale: 0.9,
+                    duration: 1.2,
+                    ease: 'elastic.out(1, 0.75)'
+                }, '-=1')
+                .from('.prize-card-right', {
+                    y: 100,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: 'elastic.out(1, 0.75)'
+                }, '-=1');
+        });
+
+        // Force show content on mobile if matchMedia doesn't run
+        mm.add("(max-width: 767px)", () => {
+            setShowDroplets(false); // Disable heavy droplets on mobile
+            if (titleRef.current) {
+                titleRef.current.style.opacity = '1';
+                // Ensure children are visible if they exist
+                Array.from(titleRef.current.children).forEach((child: any) => {
+                    child.style.opacity = '1';
+                    child.style.transform = 'none';
+                })
+            }
+            gsap.set('.hero-subtitle', { opacity: 1, y: 0 });
+            gsap.set('.hero-meta', { opacity: 1 });
+            gsap.set('.hero-cta', { opacity: 1, y: 0 });
+            gsap.set('.prize-heading', { opacity: 1, y: 0 });
+            gsap.set('.prize-card-left', { opacity: 1, y: 0 });
+            gsap.set('.prize-card-center', { opacity: 1, y: 0, scale: 1 });
+            gsap.set('.prize-card-right', { opacity: 1, y: 0 });
+        });
 
     }, { scope: container });
 
@@ -213,7 +235,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl items-end px-4 relative z-10 mb-16">
+                <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl items-end px-4 relative z-10 mb-16">
 
                     {/* 2nd Place - Smooth Spring Entry */}
                     <div className="prize-card-left order-2 md:order-1 relative group md:mb-12">
@@ -245,7 +267,7 @@ export default function Home() {
                                         <span className="text-xs font-mono uppercase tracking-widest text-white/40">Silver Tier</span>
                                     </div>
                                     <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">Runner Up</h3>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -288,7 +310,7 @@ export default function Home() {
                                         <span className="text-xs font-mono uppercase tracking-[0.2em] text-yellow-500 font-bold">Gold Tier</span>
                                     </div>
                                     <h3 className="text-white font-heading font-black uppercase tracking-[0.2em] text-2xl mb-2 group-hover:text-yellow-500 transition-colors duration-300">Champion</h3>
-     
+
                                 </div>
                             </div>
                         </div>
@@ -323,12 +345,54 @@ export default function Home() {
                                         <span className="text-xs font-mono uppercase tracking-widest text-white/40">Bronze Tier</span>
                                     </div>
                                     <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">2nd Runner Up</h3>
- 
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                </div>
+
+                {/* --- COMPACT MOBILE PRIZE SECTION --- */}
+                <div className="flex md:hidden flex-col gap-4 w-full px-2 relative z-10 mb-12">
+                    <div className="relative bg-gradient-to-b from-yellow-500/10 to-transparent border border-yellow-500/20 p-6 rounded-xl overflow-hidden">
+                        <div className="absolute right-0 top-0 text-7xl font-heading font-black text-yellow-500/10 leading-none">1</div>
+                        <div className="relative z-10 flex justify-between items-end">
+                            <div>
+                                <h3 className="text-xl font-heading font-bold text-yellow-500 uppercase tracking-wider mb-1">Champion</h3>
+                                <p className="text-sm font-mono text-yellow-500/60 uppercase tracking-widest">Gold Tier</p>
+                            </div>
+                            <div className="text-2xl font-heading font-bold text-white text-right">
+                                ₹5,000
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="relative bg-white/5 border border-white/10 p-6 rounded-xl overflow-hidden">
+                        <div className="absolute right-0 top-0 text-7xl font-heading font-black text-white/5 leading-none">2</div>
+                        <div className="relative z-10 flex justify-between items-end">
+                            <div>
+                                <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wider mb-1">Runner Up</h3>
+                                <p className="text-sm font-mono text-white/40 uppercase tracking-widest">Silver Tier</p>
+                            </div>
+                            <div className="text-xl font-heading font-bold text-white/90 text-right">
+                                ₹3,000
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="relative bg-white/5 border border-white/10 p-6 rounded-xl overflow-hidden">
+                        <div className="absolute right-0 top-0 text-7xl font-heading font-black text-white/5 leading-none">3</div>
+                        <div className="relative z-10 flex justify-between items-end">
+                            <div>
+                                <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wider mb-1">2nd Runner Up</h3>
+                                <p className="text-sm font-mono text-white/40 uppercase tracking-widest">Bronze Tier</p>
+                            </div>
+                            <div className="text-xl font-heading font-bold text-white/80 text-right">
+                                ₹1,500
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 

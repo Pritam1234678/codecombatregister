@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import Image from 'next/image';
 
@@ -12,6 +12,7 @@ interface MarblingHoverProps {
 }
 
 export default function MarblingHover({ frontImage, backImage, alt, className = '' }: MarblingHoverProps) {
+    const [isDesktop, setIsDesktop] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const sceneRef = useRef<{
@@ -26,6 +27,16 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
     }>({});
 
     useEffect(() => {
+        const checkDevice = () => {
+            setIsDesktop(window.innerWidth >= 768);
+        };
+        checkDevice();
+        window.addEventListener('resize', checkDevice);
+        return () => window.removeEventListener('resize', checkDevice);
+    }, []);
+
+    useEffect(() => {
+        if (!isDesktop) return; // Skip Three.js on mobile
         if (!containerRef.current || !canvasRef.current) return;
 
         const container = containerRef.current;
@@ -294,7 +305,15 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
                 sceneRef.current.renderer.dispose();
             }
         };
-    }, [frontImage, backImage]);
+    }, [frontImage, backImage, isDesktop]);
+
+    if (!isDesktop) {
+        return (
+            <div className={`relative w-full ${className} flex items-center justify-center bg-white/5 border border-white/10`}>
+                <span className="text-white/20 font-heading font-black uppercase tracking-[0.2em] text-xl transform -rotate-90">{alt}</span>
+            </div>
+        );
+    }
 
     return (
         <div ref={containerRef} className={`relative w-full ${className}`}>

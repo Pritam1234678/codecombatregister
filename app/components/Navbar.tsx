@@ -11,14 +11,23 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useGSAP(() => {
-    // Initial fade in for desktop elements
-    gsap.from('.nav-item', {
-      y: -20,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.5,
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      // Initial fade in for desktop elements
+      gsap.from('.nav-item', {
+        y: -20,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 0.5,
+      });
+    });
+
+    // Ensure visibility on mobile immediately
+    mm.add("(max-width: 767px)", () => {
+      gsap.set('.nav-item', { opacity: 1, y: 0 });
     });
   }, { scope: container });
 
@@ -64,7 +73,7 @@ export default function Navbar() {
     open: (i: number) => ({
       y: 0,
       opacity: 1,
-      transition: { delay: 0.1 * i + 0.3, duration: 0.5, ease: "easeOut" }
+      transition: { delay: 0.1 * i + 0.3, duration: 0.5, ease: "easeOut" as const }
     })
   };
 
@@ -98,7 +107,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Hamburger Button */}
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="md:hidden z-50 relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 group mix-blend-difference"
         aria-label="Toggle Menu"
@@ -118,10 +127,10 @@ export default function Navbar() {
             exit="closed"
             className="fixed inset-0 bg-black z-40 flex flex-col justify-center items-center h-screen w-screen"
           >
-             {/* Background Noise for Texture */}
-             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
-            
-             <div className="flex flex-col items-center gap-8">
+            {/* Background Noise for Texture */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+
+            <div className="flex flex-col items-center gap-8">
               {[
                 { name: 'Home', href: '/' },
                 { name: 'Details', href: '/details' },
@@ -141,7 +150,7 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
               ))}
-             </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

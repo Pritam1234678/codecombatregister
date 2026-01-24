@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Shield, Users, Search, LogOut, Trash2, Edit2, X, Check, Save } from 'lucide-react';
+import Link from 'next/link';
+import { Shield, Users, Search, LogOut, Trash2, Edit2, X, Check, Save, Menu, Home, ClipboardList, Info } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
 import SearchableSelect from '../../components/SearchableSelect';
 
@@ -52,6 +53,7 @@ export default function AdminDashboard() {
     const [searchTerm, setSearchTerm] = useState('');
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [deletingUserId, setDeletingUserId] = useState<number | null>(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { showToast } = useToast();
 
     // Fetch Users
@@ -214,29 +216,103 @@ export default function AdminDashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-[#020202] text-white font-sans selection:bg-white selection:text-black">
+        <div className="min-h-screen bg-[#020202] text-white font-sans selection:bg-white selection:text-black uppercase">
 
             {/* Navbar */}
-            <nav className="fixed top-0 w-full z-50 bg-[#020202]/80 backdrop-blur-xl border-b border-white/[0.08]">
-                <div className="max-w-[1920px] mx-auto px-8 md:px-16 h-20 flex items-center justify-between">
+            <nav className="fixed top-0 w-full z-[100] bg-[#020202]/80 backdrop-blur-xl border-b border-white/[0.08]">
+                <div className="max-w-[1920px] mx-auto px-6 md:px-16 h-20 flex items-center justify-between">
                     <span className="text-xl tracking-tight font-medium">
                         CodeCombat<span className="opacity-40 ml-2 font-normal">Registry</span>
                     </span>
 
-                    <div className="flex items-center gap-8">
-                        <div className="flex items-center gap-3">
-                            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                            <span className="text-sm text-white/40 font-mono uppercase tracking-wider">System Active</span>
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center gap-12">
+                        <div className="flex items-center gap-8 text-sm font-medium">
+                            <Link href="/" className="text-white/40 hover:text-white transition-colors">Home</Link>
+                            <Link href="/register" className="text-white/40 hover:text-white transition-colors">Register</Link>
+                            <Link href="/details" className="text-white/40 hover:text-white transition-colors">Details</Link>
                         </div>
-                        <button
-                            onClick={handleLogout}
-                            className="text-sm font-medium hover:text-white/60 transition-colors"
-                        >
-                            Logout
-                        </button>
+                        <div className="h-4 w-px bg-white/10"></div>
+                        <div className="flex items-center gap-8">
+                            <div className="flex items-center gap-3">
+                                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                <span className="text-[10px] text-white/40 font-mono uppercase tracking-widest">System Protocol Active</span>
+                            </div>
+                            <button
+                                onClick={handleLogout}
+                                className="text-sm font-medium text-white/60 hover:text-white transition-colors"
+                            >
+                                Logout
+                            </button>
+                        </div>
                     </div>
+
+                    {/* Mobile Hamburger Button */}
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden p-2 text-white/60 hover:text-white transition-colors z-[10001] relative"
+                    >
+                        {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </button>
                 </div>
             </nav>
+
+            {/* Mobile Menu Overlay */}
+            <div className={`fixed inset-0 bg-[#000000] z-[9999] transition-transform duration-500 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className="absolute inset-0 bg-black/98 backdrop-blur-3xl -z-10"></div>
+
+                {/* Mobile Menu Header Spacer */}
+                <div className="h-20 border-b border-white/[0.08] flex items-center justify-end px-6 md:px-16">
+                    <button
+                        onClick={() => setIsMenuOpen(false)}
+                        className="p-2 text-white/60 hover:text-white transition-colors"
+                    >
+                        <X className="w-6 h-6" />
+                    </button>
+                </div>
+
+                <div className="flex flex-col p-8 gap-0 h-[calc(100%-80px)] overflow-y-auto relative z-10">
+                    <Link
+                        href="/"
+                        className="flex items-center gap-4 py-8 text-3xl font-light border-b border-white/[0.04] active:bg-white/5"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        <Home className="w-8 h-8 text-white/40" />
+                        Home
+                    </Link>
+                    <Link
+                        href="/register"
+                        className="flex items-center gap-4 py-8 text-3xl font-light border-b border-white/[0.04] active:bg-white/5"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        <ClipboardList className="w-8 h-8 text-white/40" />
+                        Register
+                    </Link>
+                    <Link
+                        href="/details"
+                        className="flex items-center gap-4 py-8 text-3xl font-light border-b border-white/[0.04] active:bg-white/5"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        <Info className="w-8 h-8 text-white/40" />
+                        Details
+                    </Link>
+                    <button
+                        onClick={() => {
+                            handleLogout();
+                            setIsMenuOpen(false);
+                        }}
+                        className="flex items-center gap-4 py-8 text-3xl font-light text-red-500 active:bg-red-500/5 transition-colors border-b border-white/[0.04]"
+                    >
+                        <LogOut className="w-8 h-8" />
+                        Logout
+                    </button>
+
+                    <div className="mt-auto pb-10 flex items-center gap-3 pt-12">
+                        <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                        <span className="text-xs text-white/30 font-mono uppercase tracking-[0.2em]">System Protocol Active</span>
+                    </div>
+                </div>
+            </div>
 
             <main className="pt-32 pb-20 px-8 md:px-16 max-w-[1920px] mx-auto">
                 <div className="grid grid-cols-12 gap-6 mb-24">
@@ -249,7 +325,7 @@ export default function AdminDashboard() {
                         </h1>
                     </div>
 
-                    {/* Stats Box - The "Bento" Block */}
+                    {/* Stats Box */}
                     <div className="col-span-12 lg:col-span-4 flex flex-col justify-end">
                         <div className="bg-white/[0.03] border border-white/[0.08] p-8 hover:bg-white/[0.05] transition-all duration-500 group">
                             <p className="text-white/40 text-sm font-mono uppercase tracking-widest mb-4">Total Registrations</p>
@@ -347,20 +423,20 @@ export default function AdminDashboard() {
 
             {/* Premium Edit Modal */}
             {editingUser && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
-                    <div className="w-full max-w-xl bg-[#090909] border border-white/[0.08] p-10 shadow-2xl">
-                        <div className="flex justify-between items-start mb-12">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+                    <div className="w-full max-w-xl bg-[#090909] border border-white/[0.08] p-6 md:p-10 shadow-2xl max-h-[90vh] overflow-y-auto">
+                        <div className="flex justify-between items-start mb-8 md:mb-12">
                             <div>
-                                <h3 className="text-3xl font-light tracking-tight text-white mb-2">Edit Details</h3>
-                                <p className="text-white/40 text-sm font-mono">ID: {editingUser.id}</p>
+                                <h3 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-2">Edit Details</h3>
+                                <p className="text-white/40 text-xs md:text-sm font-mono">ID: {editingUser.id}</p>
                             </div>
-                            <button onClick={() => setEditingUser(null)} className="text-white/40 hover:text-white transition-colors text-2xl leading-none">
+                            <button onClick={() => setEditingUser(null)} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
                                 &times;
                             </button>
                         </div>
 
-                        <form onSubmit={handleUpdate} className="space-y-8">
-                            <div className="grid grid-cols-2 gap-8">
+                        <form onSubmit={handleUpdate} className="space-y-6 md:space-y-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                 <div className="space-y-3">
                                     <label className="block text-xs font-mono uppercase tracking-widest text-white/40">Name</label>
                                     <input
@@ -391,7 +467,7 @@ export default function AdminDashboard() {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                 <div className="space-y-3">
                                     <label className="block text-xs font-mono uppercase tracking-widest text-white/40">Phone</label>
                                     <input
@@ -435,8 +511,8 @@ export default function AdminDashboard() {
 
             {/* Minimalist Delete Modal */}
             {deletingUserId && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm animate-fade-in">
-                    <div className="w-full max-w-sm bg-[#090909] border border-white/[0.1] p-10 text-center">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-sm animate-fade-in">
+                    <div className="w-full max-w-sm bg-[#090909] border border-white/[0.1] p-8 md:p-10 text-center">
                         <div className="w-2 h-2 bg-red-500 mx-auto mb-6 rounded-full"></div>
                         <h3 className="text-xl font-light text-white mb-2">Delete Record?</h3>
                         <p className="text-white/40 text-sm mb-8">This action cannot be undone.</p>
@@ -444,13 +520,13 @@ export default function AdminDashboard() {
                         <div className="flex justify-center gap-4">
                             <button
                                 onClick={() => setDeletingUserId(null)}
-                                className="px-6 py-2 border border-white/10 text-sm hover:bg-white/5 transition-colors"
+                                className="flex-1 md:flex-none px-6 py-2 border border-white/10 text-sm hover:bg-white/5 transition-colors"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleDelete}
-                                className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white text-sm transition-colors"
+                                className="flex-1 md:flex-none px-6 py-2 bg-red-600 hover:bg-red-700 text-white text-sm transition-colors"
                             >
                                 Confirm
                             </button>
@@ -458,6 +534,6 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             )}
-        </div>
+        </div >
     );
 }

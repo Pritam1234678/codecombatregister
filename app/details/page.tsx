@@ -11,42 +11,62 @@ gsap.registerPlugin(ScrollTrigger);
 const eventSections = [
   {
     id: 1,
-    title: "About the Competition",
-    content: "CodeCombat is a high-stakes competitive programming arena designed to push the boundaries of logical reasoning and algorithmic efficiency.",
+    title: "About Code Combat",
+    content: "Welcome to Code Combat, a thrilling competitive programming hackathon designed to test your logic, speed, and problem-solving skills.",
     highlights: [
-      "Two hours of intense problem solving",
-      "Six to eight architected challenges",
-      "Tiered difficulty progression"
+      "2 Hours of Intense Battle",
+      "6–8 Epic Coding Quests",
+      "Multiple Samurai Difficulty Tiers"
     ]
   },
   {
     id: 2,
-    title: "The Battleground",
-    content: "Our arena is engineered for focus. A high-performance environment where participants face real-time challenges with live feedback.",
+    title: "Battle Arena Setup",
+    content: "Step into our battle-ready atmosphere with dark aesthetics, where warriors face algorithmic challenges in an epic Samurai-inspired environment.",
     highlights: [
-      "Optimized coding stations",
-      "Real-time global leaderboard",
-      "High-bandwidth environment"
+      "Premium Coding Stations",
+      "Real-time Leaderboard",
+      "Samurai Battle Zones"
     ]
   },
   {
     id: 3,
-    title: "Technical Stack",
-    content: "Bring your preferred stack. Our submission engine supports all major programming languages with official compilers and runtime environments.",
+    title: "Warrior's Toolkit",
+    content: "Equip yourself with the right weapons. Any modern programming language is your sword, logic is your shield, and speed is your ultimate advantage.",
     highlights: [
-      "Universal language support",
-      "Premium IDE environments",
-      "Integrated debugging tools"
+      "Multi-language Support",
+      "Advanced IDE Setup",
+      "Debugging Arsenal"
     ]
   },
   {
     id: 4,
-    title: "Prize Pool",
-    content: "Excellence is rewarded. Compete for substantial rewards and recognition within the engineering community.",
+    title: "Glory & Rewards",
+    content: "Champions don't just win — they claim legendary rewards. Battle through tiers, earn glory points, and secure your place in the hall of fame.",
     highlights: [
-      "₹5,000 Champion Prize",
-      "₹3,000 Runner Up",
-      "₹1,500 Second Runner Up"
+      "₹5k Champion Prize",
+      "₹3k Runner Up",
+      "₹1.5k Second Runner Up"
+    ]
+  },
+  {
+    id: 5,
+    title: "Join the Battle",
+    content: "Registration is now open for all aspiring code warriors. Secure your spot in the arena and prepare for the ultimate test of skill and strategy.",
+    highlights: [
+      "Free Registration",
+      "Limited Slots Available",
+      "Instant Confirmation"
+    ]
+  },
+  {
+    id: 6,
+    title: "Event Details",
+    content: "Campus 25, KIIT University • Feb 15, 2026 at 11:00 AM. Check-in opens at 10:00 AM. Bring your laptop, charger, and warrior spirit!",
+    highlights: [
+      "Solo Warriors Welcome",
+      "Any Programming Language",
+      "Strategic Thinking Required"
     ]
   }
 ];
@@ -55,134 +75,282 @@ export default function Details() {
   const container = useRef(null);
 
   useGSAP(() => {
-    // Title animation
-    gsap.from('.page-title', {
+    // Page title animation
+    const titleChars = document.querySelectorAll('.page-title-char');
+    gsap.from(titleChars, {
       opacity: 0,
-      y: 60,
-      duration: 1.5,
+      y: 100,
+      rotationX: -90,
+      stagger: 0.05,
+      duration: 1.2,
       ease: 'power4.out',
     });
 
-    // Content animation
-    gsap.utils.toArray('.event-card').forEach((card: any) => {
+    // Subtitle fade in
+    gsap.from('.page-subtitle', {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      delay: 0.5,
+      ease: 'power3.out',
+    });
+
+    // Animate cards with advanced effects
+    gsap.utils.toArray('.event-card').forEach((card: any, index) => {
+      // Card entrance
       gsap.from(card, {
         opacity: 0,
-        y: 80,
+        y: 150,
+        rotationX: -15,
+        scale: 0.9,
+        duration: 1.2,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      // Number badge animation
+      gsap.from(card.querySelector('.card-number'), {
+        opacity: 0,
+        scale: 0,
+        rotation: -180,
+        duration: 0.8,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 80%',
+        },
+      });
+
+      // Title reveal
+      gsap.from(card.querySelector('.card-title'), {
+        opacity: 0,
+        x: -50,
         duration: 1,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: card,
-          start: 'top 85%',
+          start: 'top 75%',
+        },
+      });
+
+      // Content fade
+      gsap.from(card.querySelector('.card-content'), {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        delay: 0.2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 75%',
+        },
+      });
+
+      // Stagger highlights
+      gsap.from(card.querySelectorAll('.highlight-item'), {
+        opacity: 0,
+        x: -30,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 70%',
+        },
+      });
+
+      // Parallax effect on scroll
+      gsap.to(card, {
+        y: -30,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
         },
       });
     });
 
+    // CTA section animation
     gsap.from('.cta-section', {
       opacity: 0,
-      scale: 0.98,
-      duration: 1.5,
+      scale: 0.95,
+      duration: 1.2,
+      ease: 'power3.out',
       scrollTrigger: {
         trigger: '.cta-section',
-        start: 'top 90%',
+        start: 'top 85%',
       },
+    });
+
+    // Floating animation for decorative elements
+    gsap.to('.floating-element', {
+      y: -20,
+      duration: 2,
+      ease: 'power1.inOut',
+      repeat: -1,
+      yoyo: true,
     });
   }, { scope: container });
 
   return (
-    <main ref={container} className="relative min-h-screen pt-40 pb-32 px-8 md:px-16 max-w-[1920px] mx-auto font-sans selection:bg-white selection:text-black">
-
-      {/* Background elements */}
+    <main ref={container} className="relative min-h-screen pt-32 pb-20 px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto overflow-hidden">
+      {/* Background gradient effects */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/[0.02] blur-[150px] rounded-full" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-[120px] floating-element" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 rounded-full blur-[120px] floating-element" style={{ animationDelay: '1s' }} />
       </div>
 
-      {/* Header */}
-      <header className="mb-32">
-        <div className="flex items-center gap-4 mb-12">
-          <div className="h-[1px] w-12 bg-white/20"></div>
-          <span className="text-xs font-mono uppercase tracking-[0.4em] text-white/40">Technical Briefing</span>
-        </div>
-
-        <h1 className="page-title text-7xl md:text-9xl font-light tracking-tighter leading-[0.8] mb-12">
-          Event
-          <br />
-          <span className="opacity-20">Specifications</span>
+      {/* Page Title */}
+      <div className="relative mb-20 text-center">
+        <h1 className="text-6xl sm:text-8xl lg:text-9xl font-heading font-bold uppercase tracking-tighter mb-6">
+          {['E', 'V', 'E', 'N', 'T', ' ', 'D', 'E', 'T', 'A', 'I', 'L', 'S'].map((char, i) => (
+            <span
+              key={i}
+              className="page-title-char inline-block bg-gradient-to-b from-white via-white to-red-500 bg-clip-text text-transparent"
+              style={{
+                textShadow: '0 0 80px rgba(255,46,46,0.5)',
+              }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
         </h1>
-
-        <p className="page-subtitle text-white/40 text-xl md:text-2xl font-light max-w-2xl leading-relaxed">
-          The structural parameters and mission-critical information for CodeCombat 2026.
+        <p className="page-subtitle text-white/50 text-lg sm:text-xl max-w-3xl mx-auto font-light tracking-wide">
+          Everything you need to know about the ultimate coding battleground
         </p>
-      </header>
 
-      {/* Section Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 px-1 border-t border-white/[0.08] bg-white/[0.08]">
-        {eventSections.map((section) => (
-          <div key={section.id} className="event-card group bg-[#020202] p-12 md:p-16 hover:bg-white/[0.01] transition-colors duration-500">
-            <div className="flex justify-between items-start mb-12">
-              <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">SEC_{section.id.toString().padStart(2, '0')}</span>
-              <div className="w-2 h-2 rounded-full border border-white/20 group-hover:bg-white group-hover:border-white transition-all duration-500"></div>
-            </div>
+        {/* Decorative line */}
+        <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="h-[1px] w-20 bg-gradient-to-r from-transparent to-red-500" />
+          <div className="w-2 h-2 bg-red-500 rotate-45" />
+          <div className="h-[1px] w-20 bg-gradient-to-l from-transparent to-red-500" />
+        </div>
+      </div>
 
-            <h2 className="text-4xl font-light tracking-tight mb-6 transition-transform duration-500 group-hover:translate-x-2">
-              {section.title}
-            </h2>
+      {/* Event Sections Grid */}
+      <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {eventSections.map((section, index) => (
+          <div
+            key={section.id}
+            className="event-card group relative"
+          >
+            {/* Card container with border effect */}
+            <div className="relative h-full border border-white/10 bg-black/40 backdrop-blur-sm p-6 sm:p-8 
+                          hover:border-red-500/50 transition-all duration-700
+                          before:absolute before:inset-0 before:bg-gradient-to-br before:from-red-500/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-700 hover:before:opacity-100">
 
-            <p className="text-white/40 text-lg font-light mb-12 leading-relaxed h-24">
-              {section.content}
-            </p>
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-transparent" />
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
+              </div>
 
-            <div className="space-y-4">
-              {section.highlights.map((item, i) => (
-                <div key={i} className="flex items-center gap-4 text-sm font-medium text-white/60 group-hover:text-white transition-colors duration-300">
-                  <div className="w-1 h-1 bg-white/20 rounded-full group-hover:bg-white transition-colors"></div>
-                  {item}
-                </div>
-              ))}
+              {/* Card Number Badge */}
+              <div className="card-number absolute top-4 right-4 w-12 h-12 flex items-center justify-center 
+                            border border-white/20 bg-black/60 backdrop-blur-sm
+                            group-hover:border-red-500/50 group-hover:bg-red-500/10 transition-all duration-500 z-10">
+                <span className="text-white/40 font-mono text-base font-bold group-hover:text-red-500 transition-colors duration-500">
+                  0{section.id}
+                </span>
+              </div>
+
+              {/* Section Title */}
+              <h2 className="card-title text-2xl sm:text-3xl lg:text-4xl font-heading font-bold uppercase tracking-tight mb-4 pr-14
+                           bg-gradient-to-r from-white to-red-500 bg-clip-text text-transparent
+                           group-hover:from-red-500 group-hover:to-white transition-all duration-700">
+                {section.title}
+              </h2>
+
+              {/* Content */}
+              <p className="card-content text-white/60 leading-relaxed mb-6 text-sm sm:text-base font-light">
+                {section.content}
+              </p>
+
+              {/* Highlights - Point wise list */}
+              <div className="space-y-2.5">
+                <div className="text-xs uppercase tracking-wider text-red-500/70 font-semibold mb-3">Key Features:</div>
+                {section.highlights.map((highlight, idx) => (
+                  <div
+                    key={idx}
+                    className="highlight-item group/item flex items-start gap-3 py-2"
+                  >
+                    <div className="relative flex-shrink-0 mt-1.5">
+                      <div className="w-1.5 h-1.5 bg-red-500 rotate-45 
+                                    group-hover/item:scale-150 group-hover/item:rotate-180 transition-all duration-500" />
+                      <div className="absolute inset-0 w-1.5 h-1.5 bg-red-500 blur-sm opacity-0 
+                                    group-hover/item:opacity-100 transition-opacity duration-500" />
+                    </div>
+                    <span className="text-sm sm:text-base font-medium text-white/70 leading-relaxed
+                                   group-hover/item:text-white transition-colors duration-500">
+                      {highlight}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-red-500/20 opacity-0 
+                            group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-red-500/20 opacity-0 
+                            group-hover:opacity-100 transition-opacity duration-700" />
             </div>
           </div>
         ))}
       </div>
 
-      {/* Campus Details Section */}
-      <div className="mt-40 border-t border-white/[0.08] pt-24 grid grid-cols-1 lg:grid-cols-12 gap-16">
-        <div className="lg:col-span-8">
-          <h3 className="text-5xl font-light tracking-tight mb-8">Deployment Details</h3>
-          <p className="text-white/40 text-2xl font-light leading-relaxed">
-            Campus 25, KIIT University.
-            <br />
-            February 15, 2026.
-            <br />
-            Check-in initiates at <span className="text-white">10:00 AM IST</span>.
-          </p>
-        </div>
-        <div className="lg:col-span-4 flex flex-col justify-end items-start lg:items-end">
-          <div className="space-y-2 text-right">
-            <p className="text-xs font-mono uppercase tracking-widest text-white/20">Operational Status</p>
-            <div className="flex items-center gap-3 justify-end">
-              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-              <span className="text-lg font-light">Mission Ready</span>
+      {/* CTA Section */}
+      <div className="cta-section relative mt-24 text-center">
+        <div className="relative inline-block">
+          {/* Glow background */}
+          <div className="absolute inset-0 bg-red-500/10 blur-3xl" />
+
+          <div className="relative border border-red-500/30 bg-black/60 backdrop-blur-sm p-12 sm:p-16">
+            {/* Top decorative line */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+              <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-red-500" />
+              <div className="w-2 h-2 bg-red-500 rotate-45" />
+              <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-red-500" />
+            </div>
+
+            <h3 className="text-3xl sm:text-4xl font-heading font-bold uppercase tracking-tight mb-4
+                         bg-gradient-to-r from-white to-red-500 bg-clip-text text-transparent">
+              Ready to Enter the Arena?
+            </h3>
+            <p className="text-white/50 mb-8 max-w-md mx-auto text-base sm:text-lg font-light">
+              Registration closes soon. Secure your spot and prepare for battle.
+            </p>
+
+            <Link
+              href="/register"
+              className="group/btn relative inline-block px-10 py-4 border border-red-500 bg-red-500/10 
+                       overflow-hidden transition-all duration-500 hover:border-white hover:shadow-[0_0_30px_rgba(255,46,46,0.5)]"
+            >
+              {/* Button background animation */}
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 
+                            translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
+
+              <span className="relative text-red-500 font-bold uppercase tracking-wider text-sm sm:text-base
+                             group-hover/btn:text-black transition-colors duration-500">
+                Register Now
+              </span>
+            </Link>
+
+            {/* Bottom decorative line */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 flex items-center gap-2">
+              <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-red-500" />
+              <div className="w-2 h-2 bg-red-500 rotate-45" />
+              <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-red-500" />
             </div>
           </div>
         </div>
       </div>
-
-      {/* CTA section */}
-      <section className="cta-section mt-40">
-        <div className="bg-white/[0.03] border border-white/[0.08] p-16 md:p-32 text-center group">
-          <h2 className="text-5xl md:text-7xl font-light tracking-tighter mb-8 group-hover:scale-[1.02] transition-transform duration-700">
-            Ready to initiate?
-          </h2>
-          <p className="text-white/30 text-xl font-light mb-16 max-w-md mx-auto">
-            Limited slots available for the 2026 operational cycle.
-          </p>
-          <Link
-            href="/register"
-            className="inline-block px-12 py-5 bg-white text-black font-semibold text-sm tracking-[0.2em] uppercase hover:bg-zinc-200 transition-colors"
-          >
-            Register Base
-          </Link>
-        </div>
-      </section>
     </main>
   );
 }

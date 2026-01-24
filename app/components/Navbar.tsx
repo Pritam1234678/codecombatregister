@@ -46,13 +46,13 @@ export default function Navbar() {
     <nav ref={container} className="fixed top-0 left-0 w-full px-8 py-6 flex justify-between items-center z-50 mix-blend-difference text-white">
       {/* Left Branding */}
       <div className="nav-item">
-        <span className="text-xl tracking-tight font-medium hover:opacity-70 transition-opacity">
-          CodeCombat<span className="opacity-40 ml-2 font-normal">Registry</span>
-        </span>
+        <Link href="/" className="text-sm font-light tracking-[0.2em] uppercase opacity-80 font-sans">
+          IEEE CTSoc
+        </Link>
       </div>
 
       {/* Right Links */}
-      <div className="flex gap-12 font-sans text-sm font-medium">
+      <div className="flex gap-12 font-heading text-sm uppercase tracking-widest">
         {[
           { name: 'Home', href: '/' },
           { name: 'Details', href: '/details' },

@@ -104,14 +104,48 @@ router.get('/users', authMiddleware, async (req, res) => {
 // PUT /api/admin/users/:id - Update User
 const { body, validationResult } = require('express-validator');
 
+const ALLOWED_BRANCHES = [
+  "Civil Engineering",
+  "Construction Technology",
+  "Mechanical Engineering",
+  "Mechanical Engineering(Automobile)",
+  "Aerospace Engineering",
+  "Mechatronics Engineering",
+  "Electrical Engineering",
+  "Electrical and Computer Engineering",
+  "Electronics & Tele-Communication Engineering",
+  "Electronics & Electrical Engineering",
+  "Electronics and Computer Science Engineering",
+  "Electronics Engineering VLSI Design and Technology",
+  "Electronics and Instrumentation",
+  "Computer Science & Engineering",
+  "Computer Science & Communication Engineering",
+  "Computer Science and Engineering with specialization Artificial Intelligence",
+  "Computer Science and Engineering with specialization Cyber Security",
+  "Computer Science and Engineering with specialization Data Science",
+  "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+  "Computer Science and Engineering with specialization Internet of Things",
+  "Computer Science & Systems Engineering",
+  "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+  "Information Technology",
+  "Chemical Engineering",
+  "Other"
+];
+
 router.put('/users/:id', [
     authMiddleware,
     // Validation Rules
     body('name').trim().notEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('Invalid email format'),
-    body('phone').matches(/^[0-9]{10}$/).withMessage('Phone must be 10 digits'),
-    body('rollNumber').trim().notEmpty().withMessage('Roll Number is required'),
-    body('branch').trim().notEmpty().withMessage('Branch is required')
+    body('phone').matches(/^[0-9]{10}$/).withMessage('Phone must be exactly 10 digits'),
+    body('rollNumber')
+        .trim()
+        .notEmpty().withMessage('Roll Number is required')
+        .matches(/^[0-9]+$/).withMessage('Roll Number must be numeric'),
+    body('branch')
+        .trim()
+        .notEmpty().withMessage('Branch is required')
+        .isIn(ALLOWED_BRANCHES).withMessage('Invalid Branch selection')
 ], async (req, res) => {
     try {
         const errors = validationResult(req);

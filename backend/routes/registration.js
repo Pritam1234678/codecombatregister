@@ -4,6 +4,35 @@ const { body, validationResult } = require('express-validator');
 const db = require('../config/database');
 const { sendRegistrationEmail } = require('../services/emailService');
 
+// Allowed Branches List
+const ALLOWED_BRANCHES = [
+  "Civil Engineering",
+  "Construction Technology",
+  "Mechanical Engineering",
+  "Mechanical Engineering(Automobile)",
+  "Aerospace Engineering",
+  "Mechatronics Engineering",
+  "Electrical Engineering",
+  "Electrical and Computer Engineering",
+  "Electronics & Tele-Communication Engineering",
+  "Electronics & Electrical Engineering",
+  "Electronics and Computer Science Engineering",
+  "Electronics Engineering VLSI Design and Technology",
+  "Electronics and Instrumentation",
+  "Computer Science & Engineering",
+  "Computer Science & Communication Engineering",
+  "Computer Science and Engineering with specialization Artificial Intelligence",
+  "Computer Science and Engineering with specialization Cyber Security",
+  "Computer Science and Engineering with specialization Data Science",
+  "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+  "Computer Science and Engineering with specialization Internet of Things",
+  "Computer Science & Systems Engineering",
+  "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+  "Information Technology",
+  "Chemical Engineering",
+  "Other"
+];
+
 // Validation rules
 const registrationValidation = [
   body('name')
@@ -25,11 +54,13 @@ const registrationValidation = [
   body('rollNumber')
     .trim()
     .notEmpty().withMessage('Roll number is required')
-    .isLength({ min: 1, max: 50 }).withMessage('Roll number must be between 1 and 50 characters'),
+    .matches(/^[0-9]+$/).withMessage('Roll number must contain only numbers')
+    .isLength({ min: 1, max: 20 }).withMessage('Roll number length is invalid'),
   
   body('branch')
     .trim()
     .notEmpty().withMessage('Branch is required')
+    .isIn(ALLOWED_BRANCHES).withMessage('Invalid branch selected')
 ];
 
 // POST /api/registration/register

@@ -245,7 +245,7 @@ export default function Home() {
                                         <span className="text-xs font-mono uppercase tracking-widest text-white/40">Silver Tier</span>
                                     </div>
                                     <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">Runner Up</h3>
-                                    <div className="text-4xl font-sans font-light text-white tracking-tighter">₹3,000</div>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -288,7 +288,7 @@ export default function Home() {
                                         <span className="text-xs font-mono uppercase tracking-[0.2em] text-yellow-500 font-bold">Gold Tier</span>
                                     </div>
                                     <h3 className="text-white font-heading font-black uppercase tracking-[0.2em] text-2xl mb-2 group-hover:text-yellow-500 transition-colors duration-300">Champion</h3>
-                                    <div className="text-6xl md:text-7xl font-sans font-bold text-white tracking-tighter group-hover:scale-105 transition-transform duration-500 origin-bottom">₹5,000</div>
+     
                                 </div>
                             </div>
                         </div>
@@ -323,7 +323,7 @@ export default function Home() {
                                         <span className="text-xs font-mono uppercase tracking-widest text-white/40">Bronze Tier</span>
                                     </div>
                                     <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">2nd Runner Up</h3>
-                                    <div className="text-4xl font-sans font-light text-white tracking-tighter">₹1,500</div>
+ 
                                 </div>
                             </div>
                         </div>

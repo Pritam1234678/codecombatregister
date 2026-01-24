@@ -146,7 +146,7 @@ export default function Home() {
             {/* --- HERO SECTION --- */}
             <section className="hero-section relative h-screen flex flex-col items-center justify-center overflow-hidden">
                 {showDroplets && <InteractiveDroplets />}
-                <div className="absolute inset-0 bg-gradient-to-br from-black via-black to-[#2A0505] opacity-90 z-0" />
+                <div className="absolute inset-0 bg-gradient-to-br from-black via-[#1e0101] to-[#530303] opacity-90 z-0" />
 
                 <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
                     <Image
@@ -165,11 +165,11 @@ export default function Home() {
                         IEEE CTSoc presents
                     </p>
 
-                    <h1 ref={titleRef} className="text-6xl sm:text-8xl md:text-[9rem] font-sans font-bold tracking-tighter text-white leading-none uppercase mix-blend-screen">
+                    <h1 ref={titleRef} className="text-4xl sm:text-6xl md:text-8xl lg:text-[9rem] font-sans font-bold tracking-tighter text-white leading-none uppercase mix-blend-screen">
                         CODE COMBAT
                     </h1>
 
-                    <p className="hero-subtitle text-lg sm:text-2xl font-heading font-light tracking-wide text-red-500 mt-4">
+                    <p className="hero-subtitle text-base sm:text-lg md:text-2xl font-heading font-light tracking-wide text-red-500 mt-4 px-4">
                         Where logic meets battle.
                     </p>
 
@@ -190,15 +190,15 @@ export default function Home() {
 
             {/* --- PRIZE SECTION --- */}
             {/* --- PRIZE SECTION --- */}
-            <section className="prize-section relative py-20 px-6 flex flex-col items-center z-10 bg-black overflow-hidden">
+            <section className="prize-section relative py-12 md:py-20 px-4 md:px-6 flex flex-col items-center z-10 bg-black overflow-hidden">
                 {/* Cinematic Background Glows */}
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                     <div className="absolute top-[20%] left-[20%] w-[600px] h-[600px] bg-red-900/10 blur-[120px] rounded-full mix-blend-screen" />
                     <div className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-orange-900/5 blur-[100px] rounded-full mix-blend-screen" />
                 </div>
 
-                <div className="prize-heading mb-20 text-center relative z-10 w-full max-w-5xl">
-                    <h2 className="text-6xl md:text-8xl lg:text-[9rem] font-heading uppercase tracking-tighter leading-[0.85] select-none">
+                <div className="prize-heading mb-10 md:mb-20 text-center relative z-10 w-full max-w-5xl">
+                    <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-[9rem] font-heading uppercase tracking-tighter leading-[0.85] select-none">
                         <span className="block text-white/20 font-light" data-text="Rewards">Rewards</span>
                         <span className="block font-black text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-600 to-red-950" data-text="Of War">
                             Of War
@@ -223,7 +223,7 @@ export default function Home() {
                             {/* Inner Container */}
                             <div className="bg-[#050505] rounded-xl p-6 pb-8 relative overflow-hidden">
                                 {/* Rank Number - Massive & Overlapping */}
-                                <div className="absolute -right-4 -top-8 text-[120px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
+                                <div className="absolute -right-2 -top-4 md:-right-4 md:-top-8 text-[80px] md:text-[120px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
                                     2
                                 </div>
 
@@ -263,7 +263,7 @@ export default function Home() {
                             {/* Inner Container */}
                             <div className="bg-[#080808] rounded-xl p-8 pb-12 relative overflow-hidden">
                                 {/* Rank Number */}
-                                <div className="absolute -right-6 -top-10 text-[180px] font-heading font-black text-yellow-500/[0.05] select-none leading-none z-0 group-hover:text-yellow-500/[0.08] transition-colors duration-500">
+                                <div className="absolute -right-4 -top-6 md:-right-6 md:-top-10 text-[100px] md:text-[180px] font-heading font-black text-yellow-500/[0.05] select-none leading-none z-0 group-hover:text-yellow-500/[0.08] transition-colors duration-500">
                                     1
                                 </div>
 
@@ -302,7 +302,7 @@ export default function Home() {
                             {/* Inner Container */}
                             <div className="bg-[#050505] rounded-xl p-6 pb-8 relative overflow-hidden">
                                 {/* Rank Number */}
-                                <div className="absolute -right-4 -top-8 text-[120px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
+                                <div className="absolute -right-2 -top-4 md:-right-4 md:-top-8 text-[80px] md:text-[120px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
                                     3
                                 </div>
 

@@ -30,7 +30,7 @@ export default function InteractiveDroplets() {
     return (
         <div
             ref={containerRef}
-            className="absolute inset-0 pointer-events-none z-[1] mix-blend-screen"
+            className="absolute inset-0 pointer-events-none z-[1] mix-blend-screen hidden md:block"
         />
     );
 }

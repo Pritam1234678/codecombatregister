@@ -109,7 +109,7 @@ export default function OurInitiatives() {
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % cards.length);
         }, 3500);
-        
+
         return () => clearInterval(interval);
     }, []);
 
@@ -125,11 +125,11 @@ export default function OurInitiatives() {
     // Calculate position offset for each card relative to current index
     const getCardOffset = (cardIndex: number) => {
         let diff = cardIndex - currentIndex;
-        
+
         // Handle wrap-around for infinite loop
         if (diff > cards.length / 2) diff -= cards.length;
         if (diff < -cards.length / 2) diff += cards.length;
-        
+
         return diff;
     };
 
@@ -137,26 +137,26 @@ export default function OurInitiatives() {
         <section className="relative py-32 px-4 bg-black overflow-hidden">
             {/* Background Grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
-            
+
             {/* Noise Texture */}
             <div className="absolute inset-0 opacity-[0.015] mix-blend-overlay pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
 
             {/* Header */}
-            <div className="relative z-10 text-center mb-20">
-                <h2 className="text-5xl md:text-7xl font-heading font-black tracking-tighter mb-4">
+            <div className="relative z-10 text-center mb-10 md:mb-20">
+                <h2 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black tracking-tighter mb-4">
                     <span className="text-white">Our </span>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-500 to-red-500">
                         Initiatives
                     </span>
                 </h2>
-                <p className="text-white/40 font-mono text-sm tracking-widest uppercase">
+                <p className="text-white/40 font-mono text-xs md:text-sm tracking-widest uppercase">
                     Pioneering the future through technology and innovation
                 </p>
             </div>
 
             {/* 3D Carousel Container */}
-            <div 
-                className="relative max-w-7xl mx-auto h-[450px] flex items-center justify-center perspective-[2000px]"
+            <div
+                className="relative max-w-7xl mx-auto h-[480px] md:h-[450px] flex items-center justify-center perspective-[2000px]"
             >
                 {/* Cards Stack */}
                 <div className="relative w-full h-full flex items-center justify-center">
@@ -164,7 +164,7 @@ export default function OurInitiatives() {
                         const offset = getCardOffset(index);
                         const isCenter = offset === 0;
                         const isVisible = Math.abs(offset) <= 2; // Show 2 cards on each side
-                        
+
                         if (!isVisible) return null;
 
                         return (
@@ -183,13 +183,12 @@ export default function OurInitiatives() {
                                     ease: [0.25, 0.46, 0.45, 0.94]
                                 }}
                             >
-                                <motion.div 
-                                    className={`w-[420px] h-[350px] bg-gradient-to-br from-zinc-950 to-black border rounded-2xl overflow-hidden transition-all duration-500 group ${
-                                        isCenter 
-                                            ? 'border-white/20' 
+                                <motion.div
+                                    className={`w-[85vw] md:w-[420px] h-[400px] md:h-[350px] bg-gradient-to-br from-zinc-950 to-black border rounded-2xl overflow-hidden transition-all duration-500 group ${isCenter
+                                            ? 'border-white/20'
                                             : 'border-white/20'
-                                    }`}
-                                    whileHover={isCenter ? { 
+                                        }`}
+                                    whileHover={isCenter ? {
                                         scale: 1.05,
                                         boxShadow: card.glowColor.replace('shadow-', '')
                                     } : {}}
@@ -205,7 +204,7 @@ export default function OurInitiatives() {
                                     {/* Card Content */}
                                     <div className="relative h-full p-6 flex flex-col justify-center">
                                         {/* Title */}
-                                        <h3 className={`text-2xl font-heading font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r ${card.headingColor}`}>
+                                        <h3 className={`text-xl md:text-2xl font-heading font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r ${card.headingColor}`}>
                                             {card.title}
                                         </h3>
 
@@ -218,8 +217,8 @@ export default function OurInitiatives() {
                                         {card.highlights && (
                                             <div className="flex flex-wrap gap-2">
                                                 {card.highlights.map((highlight, idx) => (
-                                                    <div key={idx} className={`border px-3 py-1.5 rounded-full ${card.highlightColor}`}>
-                                                        <span className="font-mono text-xs">{highlight}</span>
+                                                    <div key={idx} className={`border px-2 md:px-3 py-1 md:py-1.5 rounded-full ${card.highlightColor}`}>
+                                                        <span className="font-mono text-[10px] md:text-xs">{highlight}</span>
                                                     </div>
                                                 ))}
                                             </div>
@@ -234,31 +233,30 @@ export default function OurInitiatives() {
                 {/* Navigation Arrows */}
                 <button
                     onClick={() => paginate(-1)}
-                    className="absolute left-4 md:left-8 z-40 w-14 h-14 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:border-red-500 hover:bg-red-500/10 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all duration-300 group"
+                    className="absolute left-2 md:left-8 z-40 w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:border-red-500 hover:bg-red-500/10 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all duration-300 group"
                     aria-label="Previous card"
                 >
-                    <ChevronLeft className="w-6 h-6 text-white/60 group-hover:text-red-500 transition-colors" />
+                    <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white/60 group-hover:text-red-500 transition-colors" />
                 </button>
 
                 <button
                     onClick={() => paginate(1)}
-                    className="absolute right-4 md:right-8 z-40 w-14 h-14 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:border-red-500 hover:bg-red-500/10 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all duration-300 group"
+                    className="absolute right-2 md:right-8 z-40 w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:border-red-500 hover:bg-red-500/10 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] transition-all duration-300 group"
                     aria-label="Next card"
                 >
-                    <ChevronRight className="w-6 h-6 text-white/60 group-hover:text-red-500 transition-colors" />
+                    <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white/60 group-hover:text-red-500 transition-colors" />
                 </button>
 
                 {/* Slide Indicators */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-40">
+                <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-40">
                     {cards.map((_, index) => (
                         <button
                             key={index}
                             onClick={() => setCurrentIndex(index)}
-                            className={`h-1 rounded-full transition-all duration-300 ${
-                                index === currentIndex 
-                                    ? 'w-8 bg-red-500' 
+                            className={`h-1 rounded-full transition-all duration-300 ${index === currentIndex
+                                    ? 'w-6 md:w-8 bg-red-500'
                                     : 'w-1 bg-white/20 hover:bg-white/40'
-                            }`}
+                                }`}
                             aria-label={`Go to slide ${index + 1}`}
                         />
                     ))}

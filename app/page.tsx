@@ -220,7 +220,7 @@ export default function Home() {
                 </div>
 
                 <div className="prize-heading mb-10 md:mb-20 text-center relative z-10 w-full max-w-5xl">
-                    <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-[9rem] font-heading uppercase tracking-tighter leading-[0.85] select-none">
+                    <h2 className="text-5xl sm:text-6xl md:text-8xl lg:text-[9rem] font-heading uppercase tracking-tighter leading-[0.85] select-none">
                         <span className="block text-white/20 font-light" data-text="Rewards">Rewards</span>
                         <span className="block font-black text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-600 to-red-950" data-text="Of War">
                             Of War

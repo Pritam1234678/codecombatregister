@@ -143,14 +143,14 @@ export default function OurInitiatives() {
 
             {/* Header */}
             <div className="relative z-10 text-center mb-10 md:mb-20">
-                <h2 className="text-3xl md:text-5xl lg:text-7xl font-heading font-black tracking-tighter mb-4">
+                <h2 className="text-5xl md:text-4xl lg:text-7xl font-heading font-black tracking-tighter mb-4">
                     <span className="text-white">Our </span>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-500 to-red-500">
                         Initiatives
                     </span>
                 </h2>
                 <p className="text-white/40 font-mono text-xs md:text-sm tracking-widest uppercase">
-                    Pioneering the future through technology and innovation
+                    Be a good coder
                 </p>
             </div>
 

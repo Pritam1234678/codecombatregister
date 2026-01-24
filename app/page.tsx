@@ -212,7 +212,7 @@ export default function Home() {
 
             {/* --- PRIZE SECTION --- */}
             {/* --- PRIZE SECTION --- */}
-            <section className="prize-section relative py-8 md:py-20 px-4 md:px-6 flex flex-col items-center z-10 bg-black overflow-hidden">
+            <section className="prize-section relative py-4 md:py-20 px-4 md:px-6 flex flex-col items-center z-10 bg-black overflow-hidden">
                 {/* Cinematic Background Glows */}
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                     <div className="absolute top-[20%] left-[20%] w-[600px] h-[600px] bg-red-900/10 blur-[120px] rounded-full mix-blend-screen" />
@@ -354,7 +354,7 @@ export default function Home() {
                 </div>
 
                 {/* --- COMPACT MOBILE PRIZE SECTION --- */}
-                <div className="flex md:hidden flex-col gap-4 w-full px-2 relative z-10 mb-4">
+                <div className="flex md:hidden flex-col gap-4 w-full px-2 relative z-10 mb-0">
                     <div className="relative bg-gradient-to-b from-yellow-500/10 to-transparent border border-yellow-500/20 p-6 rounded-xl overflow-hidden">
                         <div className="absolute right-0 top-0 text-7xl font-heading font-black text-yellow-500/10 leading-none">1</div>
                         <div className="relative z-10 flex justify-between items-end">

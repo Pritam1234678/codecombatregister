@@ -134,7 +134,7 @@ export default function OurInitiatives() {
     };
 
     return (
-        <section className="relative py-32 px-4 bg-black overflow-hidden">
+        <section className="relative py-12 md:py-32 px-4 bg-black overflow-hidden">
             {/* Background Grid */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
 
@@ -185,8 +185,8 @@ export default function OurInitiatives() {
                             >
                                 <motion.div
                                     className={`w-[85vw] md:w-[420px] h-[400px] md:h-[350px] bg-gradient-to-br from-zinc-950 to-black border rounded-2xl overflow-hidden transition-all duration-500 group ${isCenter
-                                            ? 'border-white/20'
-                                            : 'border-white/20'
+                                        ? 'border-white/20'
+                                        : 'border-white/20'
                                         }`}
                                     whileHover={isCenter ? {
                                         scale: 1.05,
@@ -254,8 +254,8 @@ export default function OurInitiatives() {
                             key={index}
                             onClick={() => setCurrentIndex(index)}
                             className={`h-1 rounded-full transition-all duration-300 ${index === currentIndex
-                                    ? 'w-6 md:w-8 bg-red-500'
-                                    : 'w-1 bg-white/20 hover:bg-white/40'
+                                ? 'w-6 md:w-8 bg-red-500'
+                                : 'w-1 bg-white/20 hover:bg-white/40'
                                 }`}
                             aria-label={`Go to slide ${index + 1}`}
                         />

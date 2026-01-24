@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { X } from 'lucide-react';
 import SearchableSelect from '../components/SearchableSelect';
+import { useToast } from '../context/ToastContext';
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -19,6 +20,8 @@ export default function RegisterPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+    const { showToast } = useToast();
 
     // Page loading animation
     useEffect(() => {
@@ -60,6 +63,11 @@ export default function RegisterPage() {
         if (!formData.branch) newErrors.branch = "Please select a branch";
 
         setErrors(newErrors);
+
+        if (Object.keys(newErrors).length > 0) {
+            showToast('Please fix the errors in the form', 'error');
+        }
+
         return Object.keys(newErrors).length === 0;
     };
 
@@ -84,13 +92,14 @@ export default function RegisterPage() {
             if (!res.ok) {
                 // Handle error response
                 setIsSubmitting(false);
-                alert(data.message || 'Registration failed. Please try again.');
+                showToast(data.message || 'Registration failed. Please try again.', 'error');
                 return;
             }
 
             // Success
             setIsSubmitting(false);
             setSubmitted(true);
+            showToast('Registration successful! Redirecting...', 'success');
 
             // Redirect to home after 3 seconds
             setTimeout(() => {
@@ -100,7 +109,7 @@ export default function RegisterPage() {
         } catch (error) {
             console.error('Registration error:', error);
             setIsSubmitting(false);
-            alert('Network error. Please check if the backend server is running.');
+            showToast('Network error. Please check if the backend server is running.', 'error');
         }
     };
 

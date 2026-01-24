@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Shield, Users, Search, LogOut, Trash2, Edit2, X, Check, Save } from 'lucide-react';
+import { useToast } from '../../context/ToastContext';
 
 interface User {
     id: number;

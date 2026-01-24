@@ -43,6 +43,8 @@ export const metadata: Metadata = {
 
 
 
+import { ToastProvider } from './context/ToastContext';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -51,9 +53,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${interTight.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <body className="antialiased selection:bg-red-900 selection:text-white" suppressHydrationWarning>
-        <Navbar />
-        {children}
-        <Footer />
+        <ToastProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </ToastProvider>
       </body>
     </html>
   );

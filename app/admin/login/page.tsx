@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
 
     return (
         <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] pointer-events-none opacity-20"></div>
+            {/* Background Grid Removed */}
 
             <div className="w-full max-w-md bg-[#0A0A0A] border border-white/10 p-8 rounded-lg shadow-2xl relative z-10">
                 <h1 className="text-3xl font-heading font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60">

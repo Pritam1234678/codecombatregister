@@ -172,7 +172,7 @@ export default function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-[#050505] text-white font-sans">
-            <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] pointer-events-none opacity-20"></div>
+            {/* Background Grid Removed */}
 
             {/* Navbar */}
             <nav className="border-b border-white/10 bg-black/50 backdrop-blur-md sticky top-0 z-50">

@@ -113,7 +113,7 @@ export default function SupportPage() {
 
     return (
         <div className="min-h-screen bg-[#050505] text-white selection:bg-red-500/30 selection:text-red-500 font-sans">
-            <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] pointer-events-none opacity-20"></div>
+            {/* Background Grid Removed */}
 
             <main className="relative pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 {/* Header Section */}
@@ -335,7 +335,7 @@ export default function SupportPage() {
                     </div>
                 </div>
             </main>
-            
+
         </div>
     );
 }

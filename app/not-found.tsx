@@ -20,7 +20,7 @@ export default function NotFound() {
                 <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-red-600/5 blur-[150px] rounded-full" />
 
                 {/* Grid overlay */}
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
+                {/* Background Grid Removed */}
             </div>
 
             <div className="relative z-10 flex flex-col items-center text-center">

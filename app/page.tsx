@@ -19,6 +19,7 @@ export default function Home() {
     const container = useRef(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showDroplets, setShowDroplets] = useState(false);
 
     useGSAP(() => {
         const tl = gsap.timeline();
@@ -31,7 +32,7 @@ export default function Home() {
             chars.forEach((char) => {
                 const span = document.createElement('span');
                 span.innerText = char;
-                span.className = 'inline-block opacity-0 blur-sm transform translate-y-10 cursor-pointer';
+                span.className = 'inline-block opacity-0 transform translate-y-10 cursor-pointer';
 
                 // Hover Glow Effect
                 span.addEventListener('mouseenter', () => {
@@ -61,10 +62,10 @@ export default function Home() {
         tl.to(titleRef.current?.children || [], {
             y: 0,
             opacity: 1,
-            filter: 'blur(0px)',
-            stagger: 0.1,
-            duration: 1.2,
+            stagger: 0.08,
+            duration: 1,
             ease: 'power4.out',
+            onComplete: () => setShowDroplets(true)
         })
             .from('.hero-subtitle', {
                 opacity: 0,
@@ -154,7 +155,7 @@ export default function Home() {
 
     return (
         <main ref={container} className="relative w-full overflow-hidden bg-black text-center">
-            <InteractiveDroplets />
+            {showDroplets && <InteractiveDroplets />}
 
             {/* --- HERO SECTION --- */}
             <section className="hero-section relative h-screen flex flex-col items-center justify-center overflow-hidden">

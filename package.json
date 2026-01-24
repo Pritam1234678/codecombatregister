@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "cd backend && node server.js",
+    "start:frontend": "next start",
     "lint": "eslint"
   },
   "dependencies": {

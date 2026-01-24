@@ -79,9 +79,9 @@ export default function RegisterPage() {
                 body: JSON.stringify(formData)
             });
 
-            const data = await response.json();
+            const data = await res.json();
 
-            if (!response.ok) {
+            if (!res.ok) {
                 // Handle error response
                 setIsSubmitting(false);
                 alert(data.message || 'Registration failed. Please try again.');

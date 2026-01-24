@@ -27,42 +27,60 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Custom IP extraction to handle Azure's IP:Port format
+const getClientIp = (req) => {
+  let ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  // If IP is IPv4 mapped (::ffff:1.2.3.4), strip prefix
+  if (ip && ip.toString().startsWith('::ffff:')) {
+    ip = ip.toString().replace('::ffff:', '');
+  }
+  // If IP has port (1.2.3.4:12345), remove port
+  if (ip && ip.toString().includes(':') && ip.toString().indexOf('.') !== -1) {
+    ip = ip.toString().split(':')[0];
+  }
+  return ip || '127.0.0.1';
+};
+
 // Global Rate Limiting - 100 requests per 15 minutes per IP
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: 100,
   message: {
     success: false,
     message: 'Too many requests from this IP, please try again later.'
   },
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: getClientIp,
+  validate: { trustProxy: false }
 });
 
 // Strict Registration Rate Limiting - 5 requests per hour per IP
 const registrationLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 50, // Limit each IP to 5 registration attempts per hour
+  max: 50,
   message: {
     success: false,
     message: 'Too many registration attempts from this IP, please try again after an hour.'
   },
   standardHeaders: true,
   legacyHeaders: false,
-  standardHeaders: true,
-  legacyHeaders: false,
+  keyGenerator: getClientIp,
+  validate: { trustProxy: false }
 });
 
 // Strict Admin Login Rate Limiting - 5 requests per 15 minutes per IP
 const adminLoginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Limit each IP to 5 login attempts per windowMs
+  max: 5,
   message: {
     success: false,
     message: 'Too many login attempts, please try again after 15 minutes.'
   },
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: getClientIp,
+  validate: { trustProxy: false }
 });
 
 // Apply global limiter to all API routes

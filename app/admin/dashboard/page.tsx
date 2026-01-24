@@ -218,7 +218,7 @@ export default function AdminDashboard() {
 
             {/* Navbar */}
             <nav className="fixed top-0 w-full z-50 bg-[#020202]/80 backdrop-blur-xl border-b border-white/[0.08]">
-                <div className="max-w-[1920px] mx-auto px-6 h-20 flex items-center justify-between">
+                <div className="max-w-[1920px] mx-auto px-8 md:px-16 h-20 flex items-center justify-between">
                     <span className="text-xl tracking-tight font-medium">
                         CodeCombat<span className="opacity-40 ml-2 font-normal">Registry</span>
                     </span>
@@ -238,7 +238,7 @@ export default function AdminDashboard() {
                 </div>
             </nav>
 
-            <main className="pt-32 pb-20 px-6 max-w-[1920px] mx-auto">
+            <main className="pt-32 pb-20 px-8 md:px-16 max-w-[1920px] mx-auto">
                 <div className="grid grid-cols-12 gap-6 mb-24">
                     {/* Header Text */}
                     <div className="col-span-12 lg:col-span-8">

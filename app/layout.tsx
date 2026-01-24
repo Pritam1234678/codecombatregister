@@ -20,7 +20,22 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: 'CODECOMBAT | IEEE CTSoc',
-  description: 'A premium competitive coding event by IEEE CTSoc.',
+  description: 'Join the ultimate competitive coding battle organized by IEEE CTSoc. Register now to showcase your skills and win exciting prizes.',
+  keywords: ['competitive coding', 'hackathon', 'IEEE', 'CTSoc', 'programming contest', 'codecombat'],
+  authors: [{ name: 'IEEE CTSoc' }],
+  metadataBase: new URL('https://register.codecombat.live'),
+  openGraph: {
+    title: 'CODECOMBAT | IEEE CTSoc',
+    description: 'Join the ultimate competitive coding battle. Register now!',
+    url: 'https://register.codecombat.live',
+    siteName: 'CODECOMBAT',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CODECOMBAT | IEEE CTSoc',
+    description: 'The ultimate competitive coding battle is here.',
+  },
 };
 
 

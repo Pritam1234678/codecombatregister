@@ -1,0 +1,43 @@
+config:
+  target: "https://codecombat-api-pritam-efhph3etfue9h4dx.koreacentral-01.azurewebsites.net/api"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up (5 users/sec)"
+    - duration: 120
+      arrivalRate: 20
+      rampTo: 50
+      name: "Ramp up load (20 to 50 users/sec)"
+    - duration: 60
+      arrivalRate: 50
+      name: "Sustained load (50 users/sec)"
+  processor: "./stress-test-processor.js"
+
+scenarios:
+  - name: "Health Check (Low Impact)"
+    weight: 7
+    flow:
+      - get:
+          url: "/health"
+          expect:
+            - statusCode: 200
+
+  - name: "Registration Attack (High Impact)"
+    weight: 3
+    flow:
+      - post:
+          url: "/registration/register"
+          beforeRequest: "generateRandomUser"
+          json:
+            name: "{{ name }}"
+            email: "{{ email }}"
+            phone: "{{ phone }}"
+            rollNumber: "{{ rollNumber }}"
+            branch: "CSE"
+          capture:
+            - json: "$.success"
+              as: "success"
+            - json: "$.message"
+              as: "message"
+          expect:
+            - statusCode: [201, 409, 429] 

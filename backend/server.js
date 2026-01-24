@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const compression = require('compression');
+const morgan = require('morgan');
 require('dotenv').config();
 
 const registrationRoutes = require('./routes/registration');
@@ -16,6 +18,17 @@ app.set('trust proxy', 1);
 
 // Security middleware
 app.use(helmet());
+
+// Performance middleware (Gzip compression)
+app.use(compression());
+
+// Logging middleware
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+} else {
+  // Use 'combined' format for production (Standard Apache log format)
+  app.use(morgan('combined'));
+}
 
 // CORS configuration
 app.use(cors({

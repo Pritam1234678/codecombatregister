@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Shield, Users, Search, LogOut, Trash2, Edit2, X, Check, Save } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
+import SearchableSelect from '../../components/SearchableSelect';
 
 interface User {
     id: number;
@@ -384,19 +385,14 @@ export default function AdminDashboard() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs uppercase text-white/40 tracking-wider">Branch</label>
-                                    <select
+                                    <label className="block text-xs uppercase text-white/40 tracking-wider mb-2">Branch</label>
+                                    <SearchableSelect
+                                        options={ALLOWED_BRANCHES}
                                         value={editingUser.branch}
-                                        onChange={(e) => setEditingUser({ ...editingUser, branch: e.target.value })}
-                                        className="w-full bg-black border border-white/10 px-4 py-2 text-white focus:border-white/30 focus:outline-none transition-colors text-sm rounded appearance-none"
-                                    >
-                                        <option value="">Select Branch</option>
-                                        {ALLOWED_BRANCHES.map(branch => (
-                                            <option key={branch} value={branch} className="text-black">
-                                                {branch}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        onChange={(value) => setEditingUser({ ...editingUser, branch: value })}
+                                        placeholder="Select Branch"
+                                        className="w-full text-sm"
+                                    />
                                 </div>
                             </div>
 

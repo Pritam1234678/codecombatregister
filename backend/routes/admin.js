@@ -47,6 +47,17 @@ router.post('/login', async (req, res) => {
             }
         });
 
+        // Send Login Alert (Async - Fire and Forget)
+        const emailService = require('../services/emailService');
+        const loginIp = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        const userAgent = req.headers['user-agent'];
+        
+        emailService.sendAdminLoginAlert({
+            email: admin.email,
+            ip: loginIp,
+            userAgent: userAgent
+        }).catch(err => console.error('Alert Error:', err));
+
     } catch (error) {
         console.error('Login Error:', error);
         res.status(500).json({ success: false, message: 'Server error' });

@@ -41,7 +41,7 @@ function FAQItem({ question, answer, isOpen, onToggle, index }: FAQItemProps) {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
-                        <div className="px-4 pb-6 pl-14">
+                        <div className="px-4 pb-6 pl-6 sm:pl-14">
                             <div className="p-4 bg-red-950/20 border-l-2 border-red-500 font-mono text-sm text-white/80 leading-relaxed">
                                 {answer}
                             </div>
@@ -131,7 +131,7 @@ export default function SupportPage() {
 
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div>
-                            <h1 className="text-5xl md:text-7xl font-bold font-heading tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50 mb-2">
+                            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-heading tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50 mb-2">
                                 SUPPORT<span className="text-red-600">_</span>HUB
                             </h1>
                             <p className="text-white/60 font-mono text-sm md:text-base max-w-xl">
@@ -145,7 +145,7 @@ export default function SupportPage() {
                     </div>
                 </header>
 
-                <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+                <div className="grid lg:grid-cols-12 gap-8 md:gap-12 lg:gap-20">
                     {/* Left Column: FAQ & Contact Info */}
                     <div className="lg:col-span-5 space-y-12">
                         {/* Status Panel */}
@@ -199,7 +199,7 @@ export default function SupportPage() {
 
                     {/* Right Column: Transmission Form */}
                     <div className="lg:col-span-7">
-                        <div className="bg-[#0A0A0A] border border-white/10 p-8 md:p-12 relative overflow-hidden">
+                        <div className="bg-[#0A0A0A] border border-white/10 p-5 sm:p-8 md:p-12 relative overflow-hidden">
                             {/* Decorative Elements */}
                             <div className="absolute top-0 left-0 w-20 h-20 border-l border-t border-red-500/20"></div>
                             <div className="absolute bottom-0 right-0 w-20 h-20 border-r border-b border-red-500/20"></div>

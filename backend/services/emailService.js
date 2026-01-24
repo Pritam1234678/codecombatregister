@@ -174,36 +174,24 @@ module.exports = {
  * Send Admin Login Alert
  * @param {Object} loginData - Login details (email, ip, userAgent)
  */
-async function sendAdminLoginAlert(loginData) {
   const { email, ip, userAgent } = loginData;
 
-  const htmlTemplate = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #333; background: #000; color: #fff;">
-      <h1 style="color: #ff0000; text-align: center;">⚠️ ADMIN LOGIN DETECTED</h1>
-      <div style="padding: 20px; background: #111; border-radius: 5px;">
-        <p style="font-size: 16px;">New successful login to Admin Dashboard.</p>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 15px; color: #ccc;">
-          <tr>
-            <td style="padding: 8px; border-bottom: 1px solid #333;"><strong>Email:</strong></td>
-            <td style="padding: 8px; border-bottom: 1px solid #333;">${email}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px; border-bottom: 1px solid #333;"><strong>IP Address:</strong></td>
-            <td style="padding: 8px; border-bottom: 1px solid #333;">${ip}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px; border-bottom: 1px solid #333;"><strong>Device/Agent:</strong></td>
-            <td style="padding: 8px; border-bottom: 1px solid #333;">${userAgent}</td>
-          </tr>
-           <tr>
-            <td style="padding: 8px; border-bottom: 1px solid #333;"><strong>Time:</strong></td>
-            <td style="padding: 8px; border-bottom: 1px solid #333;">${new Date().toLocaleString()}</td>
-          </tr>
-        </table>
-        <p style="margin-top: 20px; font-size: 14px; color: #888;">If this wasn't you, please change your password immediately.</p>
-      </div>
-    </div>
-  `;
+  let htmlTemplate;
+  try {
+    const templatePath = path.join(__dirname, '../templates/adminLoginAlert.html');
+    htmlTemplate = fs.readFileSync(templatePath, 'utf8');
+    
+    // Replace placeholders
+    htmlTemplate = htmlTemplate
+      .replace(/{{email}}/g, email)
+      .replace(/{{ip}}/g, ip)
+      .replace(/{{userAgent}}/g, userAgent)
+      .replace(/{{timestamp}}/g, new Date().toLocaleString());
+  } catch (err) {
+    console.error('❌ Error reading admin alert template:', err);
+    // Fallback
+    htmlTemplate = `<h1>⚠️ Admin Login Alert</h1><p>User: ${email}</p><p>IP: ${ip}</p>`;
+  }
 
   const mailOptions = {
     from: {
@@ -211,7 +199,7 @@ async function sendAdminLoginAlert(loginData) {
       address: 'security@codecombat.live'
     },
     to: 'mandalpritam756@gmail.com',
-    subject: `⚠️ Admin Login Alert - ${new Date().toLocaleTimeString()}`,
+    subject: `⚠️ Admin Access Detected - ${new Date().toLocaleTimeString()}`,
     html: htmlTemplate
   };
 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access Detected</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #000000; font-family: 'Courier New', Courier, monospace; color: #e0e0e0;">
+    
+    <!-- Main Container -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #000000;">
+        <tr>
+            <td align="center" style="padding: 40px 10px;">
+                
+                <!-- Card -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: #0f0f0f; border: 1px solid #333333; border-radius: 4px; overflow: hidden;">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="padding: 30px; background-color: #1a0000; border-bottom: 2px solid #ff0000;">
+                            <h1 style="margin: 0; color: #ff0000; font-size: 24px; text-transform: uppercase; letter-spacing: 2px;">
+                                ⚠️ Security Alert
+                            </h1>
+                            <p style="margin: 10px 0 0 0; color: #ff6666; font-size: 14px;">
+                                ADMIN_ACCESS_DETECTED
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <p style="margin-top: 0; font-size: 16px; line-height: 1.5;">
+                                A new sign-in to the <strong>CODECOMBAT Admin Dashboard</strong> was detected.
+                            </p>
+
+                            <!-- Details Table -->
+                            <table width="100%" cellpadding="10" cellspacing="0" border="0" style="margin: 20px 0; background-color: #111111; border: 1px solid #333333;">
+                                <tr>
+                                    <td style="border-bottom: 1px solid #222222; color: #888888; width: 120px;">User</td>
+                                    <td style="border-bottom: 1px solid #222222; color: #ffffff;">{{email}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #222222; color: #888888;">IP Address</td>
+                                    <td style="border-bottom: 1px solid #222222; color: #00ffff; font-family: monospace;">{{ip}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #222222; color: #888888;">Time</td>
+                                    <td style="border-bottom: 1px solid #222222; color: #ffffff;">{{timestamp}}</td>
+                                </tr>
+                                <tr>
+                                    <td style=" color: #888888;">Device</td>
+                                    <td style="color: #ffffff; font-size: 12px;">{{userAgent}}</td>
+                                </tr>
+                            </table>
+
+                            <p style="font-size: 14px; color: #aaaaaa; margin-top: 30px;">
+                                If this was you, you can ignore this message.
+                            </p>
+                            
+                            <!-- Warning Box -->
+                            <table width="100%" cellpadding="15" cellspacing="0" border="0" style="margin-top: 10px; background-color: #2a0000; border-left: 4px solid #ff0000;">
+                                <tr>
+                                    <td>
+                                        <strong style="color: #ff3333; display: block; margin-bottom: 5px;">Wasn't you?</strong>
+                                        <span style="font-size: 13px; color: #ffcccc;">
+                                            Your account may be compromised. Change your password immediately.
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="padding: 20px; background-color: #050505; border-top: 1px solid #222222; font-size: 12px; color: #444444;">
+                            SECURE TRANSMISSION // SYSTEM GENERATED<br>
+                            CODECOMBAT SECURITY DIVISION
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

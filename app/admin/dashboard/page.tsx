@@ -21,6 +21,7 @@ export default function AdminDashboard() {
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [editingUser, setEditingUser] = useState<User | null>(null);
+    const [deletingUserId, setDeletingUserId] = useState<number | null>(null);
 
     // Fetch Users
     const fetchUsers = async () => {
@@ -70,19 +71,25 @@ export default function AdminDashboard() {
         router.push('/admin/login');
     };
 
-    // Delete User
-    const handleDelete = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
+    // Confirm Delete
+    const confirmDelete = (id: number) => {
+        setDeletingUserId(id);
+    };
+
+    // Execute Delete
+    const handleDelete = async () => {
+        if (!deletingUserId) return;
 
         const token = localStorage.getItem('adminToken');
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/admin/users/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/admin/users/${deletingUserId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
             if (res.ok) {
-                setUsers(users.filter(u => u.id !== id));
+                setUsers(users.filter(u => u.id !== deletingUserId));
+                setDeletingUserId(null);
             } else {
                 alert('Failed to delete user');
             }
@@ -122,7 +129,7 @@ export default function AdminDashboard() {
             alert('Roll Number is required');
             return;
         }
-        
+
         // Branch: non-empty
         if (!editingUser.branch.trim()) {
             alert('Branch is required');
@@ -131,7 +138,7 @@ export default function AdminDashboard() {
 
         const token = localStorage.getItem('adminToken');
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/users/${editingUser.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/admin/users/${editingUser.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -236,7 +243,7 @@ export default function AdminDashboard() {
                                                     <Edit2 className="w-4 h-4" />
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDelete(user.id)}
+                                                    onClick={() => confirmDelete(user.id)}
                                                     className="p-2 text-white/60 hover:text-red-500 hover:bg-red-500/10 rounded transition-colors"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
@@ -332,6 +339,37 @@ export default function AdminDashboard() {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Modal */}
+            {deletingUserId && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="w-full max-w-sm bg-[#0A0A0A] border border-red-500/30 p-6 rounded-lg shadow-2xl">
+                        <div className="text-center">
+                            <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Trash2 className="w-6 h-6 text-red-500" />
+                            </div>
+                            <h3 className="text-lg font-heading font-bold text-white mb-2">Confirm Deletion</h3>
+                            <p className="text-sm text-white/60 mb-6">
+                                Are you sure you want to delete this user? This action cannot be undone.
+                            </p>
+                            <div className="flex justify-center gap-3">
+                                <button
+                                    onClick={() => setDeletingUserId(null)}
+                                    className="px-4 py-2 text-sm text-white/60 hover:text-white border border-white/10 hover:border-white/30 rounded"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleDelete}
+                                    className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold uppercase tracking-wide rounded"
+                                >
+                                    Delete User
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

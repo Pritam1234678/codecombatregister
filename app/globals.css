@@ -56,3 +56,22 @@ body::before {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
   color: transparent;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--red-blood), #000000);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--red-accent), var(--red-blood));
+}

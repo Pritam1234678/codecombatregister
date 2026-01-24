@@ -1,171 +1,334 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import MarblingHover from './components/MarblingHover';
+
+
 import RegistrationModal from './components/RegistrationModal';
 import InfiniteMarquee from './components/InfiniteMarquee';
 import OurInitiatives from './components/OurInitiatives';
-import { useState } from 'react';
+import InteractiveDroplets from './components/interactive-droplets/InteractiveDroplets';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
     const container = useRef(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showDroplets, setShowDroplets] = useState(false);
 
-    const { scrollYProgress } = useScroll({
-        target: container,
-        offset: ['start start', 'end end']
-    });
+    useGSAP(() => {
+        const tl = gsap.timeline();
 
-    const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+        // --- HERO ANIMATIONS ---
+        // Split text animation for CODECOMBAT
+        const chars = titleRef.current?.innerText.split('') || [];
+        if (titleRef.current) {
+            titleRef.current.innerHTML = '';
+            chars.forEach((char) => {
+                const span = document.createElement('span');
+                span.innerText = char;
+                span.className = 'inline-block opacity-0 transform translate-y-10 cursor-pointer';
+
+                // Hover Glow Effect
+                span.addEventListener('mouseenter', () => {
+                    gsap.to(span, {
+                        textShadow: "0 0 20px #FF2E2E, 0 0 40px #FF2E2E",
+                        color: "#FFFFFF",
+                        scale: 1.1,
+                        duration: 0.1,
+                        ease: "power1.out"
+                    });
+                });
+
+                span.addEventListener('mouseleave', () => {
+                    gsap.to(span, {
+                        textShadow: "none",
+                        color: "#FFFFFF",
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "power1.out"
+                    });
+                });
+
+                titleRef.current?.appendChild(span);
+            });
+        }
+
+        tl.to(titleRef.current?.children || [], {
+            y: 0,
+            opacity: 1,
+            stagger: 0.08,
+            duration: 1,
+            ease: 'power4.out',
+            onComplete: () => setShowDroplets(true)
+        })
+            .from('.hero-subtitle', {
+                opacity: 0,
+                y: 20,
+                duration: 1,
+                ease: 'power3.out',
+            }, '-=0.5')
+            .from('.hero-meta', {
+                opacity: 0,
+                duration: 1.5,
+                ease: 'power2.inOut',
+            }, '-=1')
+            .fromTo('.hero-cta', {
+                opacity: 0,
+                y: 20,
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+            }, '-=0.5');
+
+        gsap.to('.samurai-img', {
+            yPercent: 10,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.hero-section',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,
+            }
+        });
+
+        // --- PRIZE SECTION ANIMATIONS ---
+
+        // --- PRIZE SECTION ANIMATIONS ---
+        const prizeTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.prize-section',
+                start: 'top 60%',
+            }
+        });
+
+        prizeTl
+            .from('.prize-heading', {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            })
+            .from('.prize-card-left', {
+                y: 100,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'elastic.out(1, 0.75)'
+            }, '-=0.5')
+            .from('.prize-card-center', {
+                y: 100,
+                opacity: 0,
+                scale: 0.9,
+                duration: 1.2,
+                ease: 'elastic.out(1, 0.75)'
+            }, '-=1')
+            .from('.prize-card-right', {
+                y: 100,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'elastic.out(1, 0.75)'
+            }, '-=1');
+
+    }, { scope: container });
 
     return (
-        <main ref={container} className="relative w-full overflow-hidden bg-[#050505] text-center selection:bg-white selection:text-black">
+        <main ref={container} className="relative w-full overflow-hidden bg-black text-center">
+
 
             {/* --- HERO SECTION --- */}
-            <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6">
+            <section className="hero-section relative h-screen flex flex-col items-center justify-center overflow-hidden">
+                {showDroplets && <InteractiveDroplets />}
+                <div className="absolute inset-0 bg-gradient-to-br from-black via-black to-[#2A0505] opacity-90 z-0" />
 
-                {/* Minimalist Grid Background */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
-
-                <div className="relative z-10 flex flex-col items-center gap-8 max-w-[1200px]">
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="font-mono text-sm tracking-[0.5em] uppercase text-white/40"
-                    >
-                        IEEE CTSoc Presents
-                    </motion.p>
-
-                    <div className="flex flex-col items-center">
-                        <div className="overflow-hidden">
-                            <motion.h1
-                                initial={{ y: "100%" }}
-                                animate={{ y: 0 }}
-                                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-                                className="text-[12vw] leading-[0.8] font-medium tracking-tight text-white mix-blend-difference"
-                            >
-                                CODE
-                            </motion.h1>
-                        </div>
-                        <div className="overflow-hidden">
-                            <motion.h1
-                                initial={{ y: "100%" }}
-                                animate={{ y: 0 }}
-                                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-                                className="text-[12vw] leading-[0.8] font-medium tracking-tight text-white/40 mix-blend-difference"
-                            >
-                                COMBAT
-                            </motion.h1>
-                        </div>
-                    </div>
-
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.8 }}
-                        className="flex flex-col items-center gap-8 mt-12"
-                    >
-                        <p className="text-xl md:text-2xl font-light text-white/60 max-w-2xl">
-                            The ultimate competitive coding arena.
-                            <br />
-                            <span className="text-white">Prove your logic. Claim the throne.</span>
-                        </p>
-
-                        <Link
-                            href="/register"
-                            className="group relative px-8 py-4 bg-white text-black font-medium tracking-widest uppercase text-sm overflow-hidden"
-                        >
-                            <span className="relative z-10 group-hover:text-white transition-colors duration-300">
-                                Register Now
-                            </span>
-                            <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out" />
-                        </Link>
-                    </motion.div>
+                <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
+                    <Image
+                        src="/hero.png"
+                        alt="Code Combat Samurai"
+                        fill
+                        className="object-cover samurai-img"
+                        priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
+                    <div className="absolute inset-0 bg-black/40" />
                 </div>
 
-                {/* Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5, duration: 1 }}
-                    className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
-                >
-                    <div className="w-[1px] h-24 bg-gradient-to-b from-white/0 via-white/20 to-white/0" />
-                </motion.div>
+                <div className="relative z-10 flex flex-col items-center gap-6 px-4">
+                    <p className="hero-meta font-heading text-sm sm:text-base tracking-[0.3em] uppercase text-gray-400 font-light">
+                        IEEE CTSoc presents
+                    </p>
+
+                    <h1 ref={titleRef} className="text-6xl sm:text-8xl md:text-[9rem] font-sans font-bold tracking-tighter text-white leading-none uppercase mix-blend-screen">
+                        CODE COMBAT
+                    </h1>
+
+                    <p className="hero-subtitle text-lg sm:text-2xl font-heading font-light tracking-wide text-red-500 mt-4">
+                        Where logic meets battle.
+                    </p>
+
+
+                    <Link
+                        href="/register"
+                        className="hero-cta mt-8 px-8 py-3 border border-white/30 bg-red-600/20 backdrop-blur-sm text-white font-heading tracking-widest uppercase hover:bg-red-600 hover:border-red-600 hover:scale-105 transition-all duration-300 group relative overflow-hidden z-20 opacity-100 visible inline-block"
+                    >
+                        <span className="relative z-10">Register Now</span>
+                        <div className="absolute inset-0 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 z-0" />
+                    </Link>
+                </div>
+
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+                    <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-red-500 to-transparent" />
+                </div>
             </section>
 
             {/* --- PRIZE SECTION --- */}
-            <section className="relative py-40 px-6 bg-[#050505]">
-                <div className="max-w-[1400px] mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="mb-32 text-left"
-                    >
-                        <h2 className="text-6xl md:text-9xl font-medium tracking-tighter text-white opacity-10">
-                            REWARDS
-                        </h2>
-                        <h2 className="text-6xl md:text-9xl font-medium tracking-tighter text-white -mt-4 md:-mt-12 ml-4 md:ml-24">
-                            OF WAR
-                        </h2>
-                    </motion.div>
+            {/* --- PRIZE SECTION --- */}
+            <section className="prize-section relative py-20 px-6 flex flex-col items-center z-10 bg-black overflow-hidden">
+                {/* Cinematic Background Glows */}
+                <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                    <div className="absolute top-[20%] left-[20%] w-[600px] h-[600px] bg-red-900/10 blur-[120px] rounded-full mix-blend-screen" />
+                    <div className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-orange-900/5 blur-[100px] rounded-full mix-blend-screen" />
+                </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 items-end">
-
-                        {/* Silver */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 100 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className="order-2 md:order-1 p-8 border-t border-white/10 text-left hover:bg-white/[0.02] transition-colors duration-500 group"
-                        >
-                            <div className="mb-8 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/40 font-mono text-sm group-hover:border-white/60 group-hover:text-white transition-colors">
-                                02
-                            </div>
-                            <h3 className="text-3xl font-medium text-white mb-2">Runner Up</h3>
-                            <p className="text-white/40 font-mono text-sm mb-8">SILVER TIER</p>
-                            <div className="text-5xl font-light text-white">₹3,000</div>
-                        </motion.div>
-
-                        {/* Gold */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 100 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            className="order-1 md:order-2 p-8 md:p-12 border-t md:border-t-0 md:border-x border-white/10 text-left bg-white/[0.02] relative"
-                        >
-                            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-yellow-500/50 to-transparent" />
-                            <div className="mb-12 w-16 h-16 rounded-full border border-yellow-500/30 flex items-center justify-center text-yellow-500 font-mono text-lg">
-                                01
-                            </div>
-                            <h3 className="text-4xl md:text-5xl font-medium text-white mb-2">Champion</h3>
-                            <p className="text-yellow-500/60 font-mono text-sm mb-12">GOLD TIER</p>
-                            <div className="text-7xl font-light text-white">₹5,000</div>
-                        </motion.div>
-
-                        {/* Bronze */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 100 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.4 }}
-                            className="order-3 p-8 border-t border-white/10 text-left hover:bg-white/[0.02] transition-colors duration-500 group"
-                        >
-                            <div className="mb-8 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/40 font-mono text-sm group-hover:border-white/60 group-hover:text-white transition-colors">
-                                03
-                            </div>
-                            <h3 className="text-3xl font-medium text-white mb-2">2nd Runner Up</h3>
-                            <p className="text-white/40 font-mono text-sm mb-8">BRONZE TIER</p>
-                            <div className="text-5xl font-light text-white">₹1,500</div>
-                        </motion.div>
-
+                <div className="prize-heading mb-20 text-center relative z-10 w-full max-w-5xl">
+                    <h2 className="text-6xl md:text-8xl lg:text-[9rem] font-heading uppercase tracking-tighter leading-[0.85] select-none">
+                        <span className="block text-white/20 font-light" data-text="Rewards">Rewards</span>
+                        <span className="block font-black text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-600 to-red-950" data-text="Of War">
+                            Of War
+                        </span>
+                    </h2>
+                    <div className="mt-12 flex items-center justify-center gap-6">
+                        <div className="h-[1px] w-12 md:w-24 bg-gradient-to-r from-transparent to-red-500/50" />
+                        <p className="text-white/60 text-base md:text-lg font-sans tracking-[0.2em] uppercase">
+                            Total Prizepool <span className="text-white font-medium ml-2">₹21,500</span>
+                        </p>
+                        <div className="h-[1px] w-12 md:w-24 bg-gradient-to-l from-transparent to-red-500/50" />
                     </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl items-end px-4 relative z-10 mb-16">
+
+                    {/* 2nd Place - Smooth Spring Entry */}
+                    <div className="prize-card-left order-2 md:order-1 relative group md:mb-12">
+                        {/* Premium Glass Card */}
+                        <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-2 text-center rounded-2xl overflow-hidden hover:bg-white/[0.05] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)] group-hover:-translate-y-2">
+
+                            {/* Inner Container */}
+                            <div className="bg-[#050505] rounded-xl p-6 pb-8 relative overflow-hidden">
+                                {/* Rank Number - Massive & Overlapping */}
+                                <div className="absolute -right-4 -top-8 text-[120px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
+                                    2
+                                </div>
+
+                                {/* Image Area - Clean Gallery Look */}
+                                <div className="relative w-full aspect-[4/5] mb-6 rounded-lg overflow-hidden border border-white/10 shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                    <MarblingHover
+                                        frontImage="/runner.png"
+                                        backImage="/2nd.png"
+                                        alt="Runner Up"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    {/* Shine Effect */}
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                                </div>
+
+                                {/* Details */}
+                                <div className="relative z-10 flex flex-col items-center">
+                                    <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-md mb-4">
+                                        <span className="text-xs font-mono uppercase tracking-widest text-white/40">Silver Tier</span>
+                                    </div>
+                                    <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">Runner Up</h3>
+                                    <div className="text-4xl font-sans font-light text-white tracking-tighter">₹3,000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 1st Place - The Champion's Pedestal */}
+                    <div className="prize-card-center order-1 md:order-2 relative group z-20">
+                        {/* Golden Glow */}
+                        <div className="absolute -inset-4 bg-gradient-to-b from-yellow-600/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl" />
+
+                        <div className="relative bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-2xl border border-yellow-500/20 p-2 text-center rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-all duration-700 hover:shadow-[0_0_80px_-20px_rgba(234,179,8,0.3)] hover:border-yellow-500/40">
+
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent opacity-50" />
+
+                            {/* Inner Container */}
+                            <div className="bg-[#080808] rounded-xl p-8 pb-12 relative overflow-hidden">
+                                {/* Rank Number */}
+                                <div className="absolute -right-6 -top-10 text-[180px] font-heading font-black text-yellow-500/[0.05] select-none leading-none z-0 group-hover:text-yellow-500/[0.08] transition-colors duration-500">
+                                    1
+                                </div>
+
+                                {/* Crown Icon (Minimal CSS) */}
+                                <div className="absolute top-6 left-6 text-yellow-500 opacity-80">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11h-14zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"></path></svg>
+                                </div>
+
+                                {/* Image Area - Heroic Scale */}
+                                <div className="relative w-full aspect-[4/5] mb-8 rounded-lg overflow-hidden border border-yellow-500/20 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] z-10 group-hover:scale-[1.03] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                    <MarblingHover
+                                        frontImage="/champion.png"
+                                        backImage="/1st.png"
+                                        alt="Champion"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+
+                                {/* Details */}
+                                <div className="relative z-10 flex flex-col items-center">
+                                    <div className="px-4 py-1.5 bg-yellow-500/10 rounded-full border border-yellow-500/20 backdrop-blur-md mb-5">
+                                        <span className="text-xs font-mono uppercase tracking-[0.2em] text-yellow-500 font-bold">Gold Tier</span>
+                                    </div>
+                                    <h3 className="text-white font-heading font-black uppercase tracking-[0.2em] text-2xl mb-2 group-hover:text-yellow-500 transition-colors duration-300">Champion</h3>
+                                    <div className="text-6xl md:text-7xl font-sans font-bold text-white tracking-tighter group-hover:scale-105 transition-transform duration-500 origin-bottom">₹5,000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 3rd Place - Smooth Spring Entry */}
+                    <div className="prize-card-right order-3 relative group md:mb-12">
+                        {/* Premium Glass Card */}
+                        <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-2 text-center rounded-2xl overflow-hidden hover:bg-white/[0.05] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)] group-hover:-translate-y-2">
+
+                            {/* Inner Container */}
+                            <div className="bg-[#050505] rounded-xl p-6 pb-8 relative overflow-hidden">
+                                {/* Rank Number */}
+                                <div className="absolute -right-4 -top-8 text-[120px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
+                                    3
+                                </div>
+
+                                {/* Image Area */}
+                                <div className="relative w-full aspect-[4/5] mb-6 rounded-lg overflow-hidden border border-white/10 shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                    <MarblingHover
+                                        frontImage="/bronze.png"
+                                        backImage="/3rd.png"
+                                        alt="2nd Runner Up"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                                </div>
+
+                                {/* Details */}
+                                <div className="relative z-10 flex flex-col items-center">
+                                    <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-md mb-4">
+                                        <span className="text-xs font-mono uppercase tracking-widest text-white/40">Bronze Tier</span>
+                                    </div>
+                                    <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">2nd Runner Up</h3>
+                                    <div className="text-4xl font-sans font-light text-white tracking-tighter">₹1,500</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -174,6 +337,8 @@ export default function Home() {
 
             {/* --- INFINITE MARQUEE --- */}
             <InfiniteMarquee />
+
+
 
             <RegistrationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 

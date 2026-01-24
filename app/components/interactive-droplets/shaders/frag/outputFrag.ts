@@ -65,7 +65,7 @@ float sdSphere(vec3 p, float s)
 }
 
 float map(vec3 p) {
-    float baseRadius = 4e-3;
+    float baseRadius = 1.5e-3;
     float radius = baseRadius * float(TRAIL_LENGTH);
     float k = 7.;
     float d = 1e5;
@@ -82,7 +82,7 @@ float map(vec3 p) {
         d = smoothMin(d, sphere, k);
     }
 
-    float sphere = sdSphere(translate(p, vec3(1.0, -0.25, 0.0)), 0.25);
+    float sphere = sdSphere(translate(p, vec3(1.0, -0.25, 0.0)), 0.35);
     d = smoothMin(d, sphere, k);
 
     return d;
@@ -102,10 +102,10 @@ vec3 dropletColor(vec3 normal, vec3 rayDir) {
     float noisePosTime = noise3D(reflectDir * 2.0 + uTime);
     float noiseNegTime = noise3D(reflectDir * 2.0 - uTime);
 
-    vec3 _color0 = vec3(0.1765, 0.1255, 0.2275) * noisePosTime;
-    vec3 _color1 = vec3(0.4118, 0.4118, 0.4157) * noiseNegTime;
+    vec3 _color0 = vec3(0.6, 0.0, 0.0) * noisePosTime; // Deep Blood Red
+    vec3 _color1 = vec3(0.0, 0.0, 0.0) * noiseNegTime; // Pure Black
 
-    float intensity = 2.3;
+    float intensity = 2.5;
     vec3 color = (_color0 + _color1) * intensity;
 
     return color;
@@ -135,7 +135,7 @@ void main() {
         // color = normal; // for debug
     }
 
-    vec3 finalColor = pow(color, vec3(7.0));
+    vec3 finalColor = pow(color, vec3(5.0));
 
     gl_FragColor = vec4(finalColor, 1.0);
 }`;

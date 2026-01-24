@@ -146,7 +146,7 @@ export default function OurInitiatives() {
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-black tracking-tighter mb-4">
                     <span className="text-white">Our </span>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-pink-500 to-red-500">
-                        Initiatives
+                        Initiaives
                     </span>
                 </h2>
                 <p className="text-white/40 font-mono text-xs md:text-sm tracking-widest uppercase">

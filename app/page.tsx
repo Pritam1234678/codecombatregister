@@ -236,36 +236,36 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl items-end px-4 relative z-10 mb-8">
+                <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl items-end px-4 relative z-10 mb-8">
 
                     {/* 2nd Place - Smooth Spring Entry */}
                     <div className="prize-card-left order-2 md:order-1 relative group md:mb-12">
-                        {/* Premium Glass Card */}
-                        <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-2 text-center rounded-2xl overflow-hidden hover:bg-white/[0.05] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)] group-hover:-translate-y-2">
+                        {/* Premium Glass Card - NO PADDING */}
+                        <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-0 text-center rounded-2xl overflow-hidden hover:bg-white/[0.05] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)] group-hover:-translate-y-2">
 
-                            {/* Inner Container */}
-                            <div className="bg-[#050505] rounded-xl p-6 pb-8 relative overflow-hidden">
-                                {/* Rank Number - Massive & Overlapping */}
-                                <div className="absolute -right-2 -top-4 md:-right-4 md:-top-8 text-[80px] md:text-[120px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
+                            {/* Inner Container - NO PADDING */}
+                            <div className="bg-[#050505] rounded-xl p-0 relative overflow-hidden">
+                                {/* Rank Number - Adjusted Position */}
+                                <div className="absolute -right-2 -top-2 text-[80px] md:text-[100px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
                                     2
                                 </div>
 
-                                {/* Image Area - Clean Gallery Look */}
-                                <div className="relative w-full aspect-[4/5] mb-6 rounded-lg overflow-hidden border border-white/10 shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                {/* Image Area - EDGE TO EDGE & CONTAIN */}
+                                <div className="relative w-full aspect-[3/4] mb-0 border-b border-white/10 shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                     <MarblingHover
                                         frontImage="/runner.png"
                                         backImage="/2nd.png"
                                         alt="Runner Up"
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                     />
                                     {/* Shine Effect */}
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                                 </div>
 
-                                {/* Details */}
-                                <div className="relative z-10 flex flex-col items-center">
-                                    <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-md mb-4">
-                                        <span className="text-xs font-mono uppercase tracking-widest text-white/40">Silver Tier</span>
+                                {/* Details - Padded Separate Container */}
+                                <div className="relative z-10 flex flex-col items-center p-4">
+                                    <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-md mb-2">
+                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-white/40">Silver Tier</span>
                                     </div>
                                     <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">Runner Up</h3>
 
@@ -279,38 +279,38 @@ export default function Home() {
                         {/* Golden Glow */}
                         <div className="absolute -inset-4 bg-gradient-to-b from-yellow-600/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl" />
 
-                        <div className="relative bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-2xl border border-yellow-500/20 p-2 text-center rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-all duration-700 hover:shadow-[0_0_80px_-20px_rgba(234,179,8,0.3)] hover:border-yellow-500/40">
+                        <div className="relative bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-2xl border border-yellow-500/20 p-0 text-center rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-all duration-700 hover:shadow-[0_0_80px_-20px_rgba(234,179,8,0.3)] hover:border-yellow-500/40">
 
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent opacity-50" />
 
                             {/* Inner Container */}
-                            <div className="bg-[#080808] rounded-xl p-8 pb-12 relative overflow-hidden">
+                            <div className="bg-[#080808] rounded-xl p-0 relative overflow-hidden">
                                 {/* Rank Number */}
-                                <div className="absolute -right-4 -top-6 md:-right-6 md:-top-10 text-[100px] md:text-[180px] font-heading font-black text-yellow-500/[0.05] select-none leading-none z-0 group-hover:text-yellow-500/[0.08] transition-colors duration-500">
+                                <div className="absolute -right-4 -top-4 text-[100px] md:text-[140px] font-heading font-black text-yellow-500/[0.05] select-none leading-none z-0 group-hover:text-yellow-500/[0.08] transition-colors duration-500">
                                     1
                                 </div>
 
                                 {/* Crown Icon (Minimal CSS) */}
-                                <div className="absolute top-6 left-6 text-yellow-500 opacity-80">
+                                <div className="absolute top-4 left-4 text-yellow-500 opacity-80 scale-75 z-20">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11h-14zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"></path></svg>
                                 </div>
 
                                 {/* Image Area - Heroic Scale */}
-                                <div className="relative w-full aspect-[4/5] mb-8 rounded-lg overflow-hidden border border-yellow-500/20 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] z-10 group-hover:scale-[1.03] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                <div className="relative w-full aspect-[3/4] mb-0 border-b border-yellow-500/20 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] z-10 group-hover:scale-[1.03] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                     <MarblingHover
                                         frontImage="/champion.png"
                                         backImage="/1st.png"
                                         alt="Champion"
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                     />
                                 </div>
 
                                 {/* Details */}
-                                <div className="relative z-10 flex flex-col items-center">
-                                    <div className="px-4 py-1.5 bg-yellow-500/10 rounded-full border border-yellow-500/20 backdrop-blur-md mb-5">
-                                        <span className="text-xs font-mono uppercase tracking-[0.2em] text-yellow-500 font-bold">Gold Tier</span>
+                                <div className="relative z-10 flex flex-col items-center p-5">
+                                    <div className="px-4 py-1.5 bg-yellow-500/10 rounded-full border border-yellow-500/20 backdrop-blur-md mb-3">
+                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-yellow-500 font-bold">Gold Tier</span>
                                     </div>
-                                    <h3 className="text-white font-heading font-black uppercase tracking-[0.2em] text-2xl mb-2 group-hover:text-yellow-500 transition-colors duration-300">Champion</h3>
+                                    <h3 className="text-white font-heading font-black uppercase tracking-[0.2em] text-xl md:text-2xl mb-1 group-hover:text-yellow-500 transition-colors duration-300">Champion</h3>
 
                                 </div>
                             </div>
@@ -320,30 +320,30 @@ export default function Home() {
                     {/* 3rd Place - Smooth Spring Entry */}
                     <div className="prize-card-right order-3 relative group md:mb-12">
                         {/* Premium Glass Card */}
-                        <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-2 text-center rounded-2xl overflow-hidden hover:bg-white/[0.05] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)] group-hover:-translate-y-2">
+                        <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-0 text-center rounded-2xl overflow-hidden hover:bg-white/[0.05] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)] group-hover:-translate-y-2">
 
                             {/* Inner Container */}
-                            <div className="bg-[#050505] rounded-xl p-6 pb-8 relative overflow-hidden">
+                            <div className="bg-[#050505] rounded-xl p-0 relative overflow-hidden">
                                 {/* Rank Number */}
-                                <div className="absolute -right-2 -top-4 md:-right-4 md:-top-8 text-[80px] md:text-[120px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
+                                <div className="absolute -right-2 -top-2 text-[80px] md:text-[100px] font-heading font-black text-white/[0.03] select-none leading-none z-0 group-hover:text-white/[0.06] transition-colors duration-500">
                                     3
                                 </div>
 
                                 {/* Image Area */}
-                                <div className="relative w-full aspect-[4/5] mb-6 rounded-lg overflow-hidden border border-white/10 shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                <div className="relative w-full aspect-[3/4] mb-0 border-b border-white/10 shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                     <MarblingHover
                                         frontImage="/bronze.png"
                                         backImage="/3rd.png"
                                         alt="2nd Runner Up"
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                                 </div>
 
                                 {/* Details */}
-                                <div className="relative z-10 flex flex-col items-center">
-                                    <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-md mb-4">
-                                        <span className="text-xs font-mono uppercase tracking-widest text-white/40">Bronze Tier</span>
+                                <div className="relative z-10 flex flex-col items-center p-4">
+                                    <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-md mb-2">
+                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-white/40">Bronze Tier</span>
                                     </div>
                                     <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">2nd Runner Up</h3>
 

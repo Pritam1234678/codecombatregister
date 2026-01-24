@@ -208,7 +208,7 @@ export default function Details() {
 
       {/* Page Title */}
       <div className="relative mb-20 text-center">
-        <h1 className="text-6xl sm:text-8xl lg:text-9xl font-heading font-bold uppercase tracking-tighter mb-6">
+        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold uppercase tracking-tighter mb-6">
           {['E', 'V', 'E', 'N', 'T', ' ', 'D', 'E', 'T', 'A', 'I', 'L', 'S'].map((char, i) => (
             <span
               key={i}

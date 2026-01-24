@@ -309,8 +309,15 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
 
     if (!isDesktop) {
         return (
-            <div className={`relative w-full ${className} flex items-center justify-center bg-white/5 border border-white/10`}>
-                <span className="text-white/20 font-heading font-black uppercase tracking-[0.2em] text-xl transform -rotate-90">{alt}</span>
+            <div className={`relative w-full ${className}`}>
+                <Image
+                    src={frontImage}
+                    alt={alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    priority
+                />
             </div>
         );
     }

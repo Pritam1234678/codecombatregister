@@ -151,7 +151,7 @@ export default function SupportPage() {
                         {/* Status Panel */}
                         <div className="bg-[#0A0A0A] border border-white/10 p-6 relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-40 transition-opacity">
-                                <Terminal className="w-24 h-24 rotate-12" />
+                               
                             </div>
                             <h3 className="text-xl font-heading font-bold mb-6 flex items-center gap-2">
                                 <Shield className="w-5 h-5 text-red-500" />

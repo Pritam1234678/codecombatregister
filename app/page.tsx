@@ -73,41 +73,82 @@ export default function Home() {
                         IEEE CTSoc presents
                     </motion.p>
 
-                    <h1 ref={titleRef} className="text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-sans font-bold tracking-tight text-white leading-none uppercase flex items-center justify-center min-h-[1.2em] relative z-30">
-                        {text.split("").map((char, i) => (
-                            <motion.span
-                                key={i}
-                                className="inline-block cursor-default"
-                                initial={{ 
-                                    opacity: 0, 
-                                    y: 20,
-                                    scale: 1,
-                                    filter: "drop-shadow(0 0 0px rgba(0,0,0,0))"
-                                }}
-                                animate={{ 
-                                    opacity: i < visibleLetters ? 1 : 0,
-                                    y: i < visibleLetters ? 0 : 20,
-                                    scale: 1,
-                                    filter: "drop-shadow(0 0 0px rgba(0,0,0,0))"
-                                }}
-                                whileHover={{
-                                    scale: 1.1,
-                                    y: -4,
-                                    filter: "drop-shadow(0 0 8px rgba(239,68,68,0.9)) drop-shadow(0 0 16px rgba(220,38,38,0.7))",
-                                    transition: {
-                                        type: "spring",
-                                        stiffness: 400,
-                                        damping: 17,
-                                    }
-                                }}
-                                transition={{
-                                    duration: 0.5,
-                                    ease: [0.25, 0.1, 0.25, 1],
-                                }}
-                            >
-                                {char === " " ? "\u00A0" : char}
-                            </motion.span>
-                        ))}
+                    <h1 ref={titleRef} className="text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-sans font-bold tracking-tight text-white leading-none uppercase flex flex-col sm:flex-row items-center justify-center min-h-[1.2em] relative z-30">
+                        <span className="flex items-center justify-center">
+                            {"CODE".split("").map((char, i) => (
+                                <motion.span
+                                    key={i}
+                                    className="inline-block cursor-default"
+                                    initial={{ 
+                                        opacity: 0, 
+                                        y: 20,
+                                        scale: 1,
+                                        filter: "drop-shadow(0 0 0px rgba(0,0,0,0))"
+                                    }}
+                                    animate={{ 
+                                        opacity: i < visibleLetters ? 1 : 0,
+                                        y: i < visibleLetters ? 0 : 20,
+                                        scale: 1,
+                                        filter: "drop-shadow(0 0 0px rgba(0,0,0,0))"
+                                    }}
+                                    whileHover={{
+                                        scale: 1.1,
+                                        y: -4,
+                                        filter: "drop-shadow(0 0 8px rgba(239,68,68,0.9)) drop-shadow(0 0 16px rgba(220,38,38,0.7))",
+                                        transition: {
+                                            type: "spring",
+                                            stiffness: 400,
+                                            damping: 17,
+                                        }
+                                    }}
+                                    transition={{
+                                        duration: 0.5,
+                                        ease: [0.25, 0.1, 0.25, 1],
+                                    }}
+                                >
+                                    {char}
+                                </motion.span>
+                            ))}
+                        </span>
+                        <span className="flex items-center justify-center sm:ml-4">
+                            {"COMBAT".split("").map((char, i) => {
+                                const actualIndex = i + 5; // 4 letters in "CODE" + 1 space
+                                return (
+                                    <motion.span
+                                        key={i}
+                                        className="inline-block cursor-default"
+                                        initial={{ 
+                                            opacity: 0, 
+                                            y: 20,
+                                            scale: 1,
+                                            filter: "drop-shadow(0 0 0px rgba(0,0,0,0))"
+                                        }}
+                                        animate={{ 
+                                            opacity: actualIndex < visibleLetters ? 1 : 0,
+                                            y: actualIndex < visibleLetters ? 0 : 20,
+                                            scale: 1,
+                                            filter: "drop-shadow(0 0 0px rgba(0,0,0,0))"
+                                        }}
+                                        whileHover={{
+                                            scale: 1.1,
+                                            y: -4,
+                                            filter: "drop-shadow(0 0 8px rgba(239,68,68,0.9)) drop-shadow(0 0 16px rgba(220,38,38,0.7))",
+                                            transition: {
+                                                type: "spring",
+                                                stiffness: 400,
+                                                damping: 17,
+                                            }
+                                        }}
+                                        transition={{
+                                            duration: 0.5,
+                                            ease: [0.25, 0.1, 0.25, 1],
+                                        }}
+                                    >
+                                        {char}
+                                    </motion.span>
+                                );
+                            })}
+                        </span>
                     </h1>
 
                     <p className="hero-subtitle text-xl sm:text-2xl md:text-3xl font-heading font-light tracking-wide text-red-500 mt-4 px-4">

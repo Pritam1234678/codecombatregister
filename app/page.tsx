@@ -343,7 +343,7 @@ export default function Home() {
                     <div className="relative bg-gradient-to-b from-yellow-500/10 to-transparent border border-yellow-500/20 p-6 rounded-xl overflow-hidden">
                         <div className="absolute right-0 top-0 text-7xl font-heading font-black text-yellow-500/10 leading-none">1</div>
                         <div className="relative z-10 flex justify-between items-end">
-                            <div>
+                            <div className="text-left">
                                 <h3 className="text-xl font-heading font-bold text-yellow-500 uppercase tracking-wider mb-1">Champion</h3>
                                 <p className="text-sm font-mono text-yellow-500/60 uppercase tracking-widest">Gold Tier</p>
                             </div>
@@ -356,7 +356,7 @@ export default function Home() {
                     <div className="relative bg-white/5 border border-white/10 p-6 rounded-xl overflow-hidden">
                         <div className="absolute right-0 top-0 text-7xl font-heading font-black text-white/5 leading-none">2</div>
                         <div className="relative z-10 flex justify-between items-end">
-                            <div>
+                            <div className="text-left">
                                 <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wider mb-1">Runner Up</h3>
                                 <p className="text-sm font-mono text-white/40 uppercase tracking-widest">Silver Tier</p>
                             </div>
@@ -369,7 +369,7 @@ export default function Home() {
                     <div className="relative bg-white/5 border border-white/10 p-6 rounded-xl overflow-hidden">
                         <div className="absolute right-0 top-0 text-7xl font-heading font-black text-white/5 leading-none">3</div>
                         <div className="relative z-10 flex justify-between items-end">
-                            <div>
+                            <div className="text-left">
                                 <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wider mb-1">2nd Runner Up</h3>
                                 <p className="text-sm font-mono text-white/40 uppercase tracking-widest">Bronze Tier</p>
                             </div>

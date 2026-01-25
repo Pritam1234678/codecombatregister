@@ -127,6 +127,10 @@ export default function RegisterPage() {
             // Success
             setIsSubmitting(false);
             setSubmitted(true);
+            
+            // Smooth scroll to top to show success message
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
             showToast('Registration successful! Redirecting...', 'success');
 
             // Redirect to home after 3 seconds
@@ -156,9 +160,9 @@ export default function RegisterPage() {
             {/* Main Page */}
             <div className="min-h-screen bg-gradient-to-br from-black via-[#1A0005] to-black relative overflow-hidden">
                 {/* Background Effects */}
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-900/20 blur-[150px] rounded-full pointer-events-none animate-pulse" />
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-red-600/10 blur-[120px] rounded-full pointer-events-none" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-800/5 blur-[200px] rounded-full pointer-events-none" />
+                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-900/20 blur-[80px] rounded-full pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-red-600/10 blur-[60px] rounded-full pointer-events-none" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-800/5 blur-[100px] rounded-full pointer-events-none" />
 
                 {/* Content Container */}
                 <div className="relative z-10 min-h-screen flex flex-col items-center pt-32 px-6 pb-20">
@@ -166,17 +170,19 @@ export default function RegisterPage() {
 
                         {submitted ? (
                             // Success State
-                            <div className="text-center py-20 animate-fade-in">
-                                <div className="w-24 h-24 mx-auto mb-8 border-4 border-red-500 rounded-full flex items-center justify-center animate-scale-in">
-                                    <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                    </svg>
+                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
+                                <div className="text-center py-20 px-6 animate-scale-in">
+                                    <div className="w-24 h-24 mx-auto mb-8 border-4 border-red-500 rounded-full flex items-center justify-center">
+                                        <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                    <h2 className="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tighter text-white mb-4">
+                                        Welcome to the Arena!
+                                    </h2>
+                                    <p className="text-white/60 text-lg mb-2">Registration successful, warrior.</p>
+                                    <p className="text-white/40 text-sm">Redirecting you back...</p>
                                 </div>
-                                <h2 className="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tighter text-white mb-4">
-                                    Welcome to the Arena!
-                                </h2>
-                                <p className="text-white/60 text-lg mb-2">Registration successful, warrior.</p>
-                                <p className="text-white/40 text-sm">Redirecting you back...</p>
                             </div>
                         ) : (
                             // Form
@@ -193,11 +199,11 @@ export default function RegisterPage() {
                                 </div>
 
                                 {/* Form Card */}
-                                <div className="bg-black/40 backdrop-blur-md border border-red-600/20 p-6 sm:p-10 md:p-12 shadow-[0_0_80px_rgba(177,18,38,0.2)] relative flex flex-col items-center sm:block">
+                                <div className="bg-black/40 backdrop-blur-sm border border-red-600/20 p-6 sm:p-10 md:p-12 shadow-[0_0_80px_rgba(177,18,38,0.2)] relative flex flex-col items-center sm:block will-change-transform">
                                     {/* Back Button */}
                                     <button
                                         onClick={() => router.push('/')}
-                                        className="mb-8 sm:mb-0 sm:absolute sm:top-6 sm:right-6 px-4 py-2 border border-white/20 bg-black/60 text-white/80 text-sm font-heading uppercase tracking-widest hover:border-red-500 hover:text-red-500 hover:bg-red-500/10 transition-all duration-300"
+                                        className="mb-8 sm:mb-0 sm:absolute sm:top-6 sm:right-6 px-4 py-2 border cursor-pointer border-white/20 bg-black/60 text-white/80 text-sm font-heading uppercase tracking-widest hover:border-red-500 hover:text-red-500 hover:bg-red-500/10 transition-all duration-300"
                                     >
                                         ← Back
                                     </button>
@@ -215,7 +221,7 @@ export default function RegisterPage() {
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-base sm:text-lg`}
+                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.name ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
                                                 placeholder="Enter your full name"
                                             />
                                             {errors.name && <p className="text-red-500 text-xs mt-1 font-mono">{errors.name}</p>}
@@ -232,7 +238,7 @@ export default function RegisterPage() {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.email ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-base sm:text-lg`}
+                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.email ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
                                                 placeholder="your.email@example.com"
                                             />
                                             {errors.email && <p className="text-red-500 text-xs mt-1 font-mono">{errors.email}</p>}
@@ -249,7 +255,7 @@ export default function RegisterPage() {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.phone ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-base sm:text-lg`}
+                                                className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.phone ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
                                                 placeholder="10-digit mobile number"
                                                 maxLength={10}
                                             />
@@ -269,7 +275,7 @@ export default function RegisterPage() {
                                                     name="rollNumber"
                                                     value={formData.rollNumber}
                                                     onChange={handleChange}
-                                                    className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.rollNumber ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-all duration-300 text-base sm:text-lg`}
+                                                    className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.rollNumber ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
                                                     placeholder="Your roll number"
                                                 />
                                                 {errors.rollNumber && <p className="text-red-500 text-xs mt-1 font-mono">{errors.rollNumber}</p>}
@@ -313,7 +319,7 @@ export default function RegisterPage() {
                                                 </span>
                                             ) : (
                                                 <>
-                                                    <span className="relative z-10">Register Now</span>
+                                                    <span className="relative z-10 cursor-pointer">Register Now</span>
                                                     <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
                                                 </>
                                             )}

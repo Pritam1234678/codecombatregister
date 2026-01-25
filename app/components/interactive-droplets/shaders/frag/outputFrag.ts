@@ -65,9 +65,9 @@ float sdSphere(vec3 p, float s)
 }
 
 float map(vec3 p) {
-    float baseRadius = 1.5e-3;
+    float baseRadius = 0.5e-3;
     float radius = baseRadius * float(TRAIL_LENGTH);
-    float k = 7.;
+    float k = 10.;
     float d = 1e5;
 
     for (int i = 0; i < TRAIL_LENGTH; i++) {
@@ -82,7 +82,7 @@ float map(vec3 p) {
         d = smoothMin(d, sphere, k);
     }
 
-    float sphere = sdSphere(translate(p, vec3(1.0, -0.25, 0.0)), 0.35);
+    float sphere = sdSphere(translate(p, vec3(1.0, -0.25, 0.0)), 0.2);
     d = smoothMin(d, sphere, k);
 
     return d;

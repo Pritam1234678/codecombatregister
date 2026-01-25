@@ -90,10 +90,10 @@ Organized by IEEE CTSoc
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('✅ Email sent successfully to:', email);
+    console.log(' Email sent successfully to:', email);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('❌ Email sending failed:', error.message);
+    console.error(' Email sending failed:', error.message);
     return { success: false, error: error.message };
   }
 }
@@ -174,12 +174,6 @@ Received: ${new Date().toLocaleString()}
   }
 }
 
-module.exports = {
-  sendRegistrationEmail,
-  sendSupportEmail,
-  sendAdminLoginAlert
-};
-
 /**
  * Send Admin Login Alert
  * @param {Object} loginData - Login details (email, ip, userAgent)
@@ -223,3 +217,9 @@ async function sendAdminLoginAlert(loginData) {
     console.error('❌ Failed to send login alert:', error.message);
   }
 }
+
+module.exports = {
+  sendRegistrationEmail,
+  sendSupportEmail,
+  sendAdminLoginAlert
+};

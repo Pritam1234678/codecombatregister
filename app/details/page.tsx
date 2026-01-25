@@ -75,36 +75,33 @@ export default function Details() {
   const container = useRef(null);
 
   useGSAP(() => {
-    // Page title animation
+    // Page title animation - simplified
     const titleChars = document.querySelectorAll('.page-title-char');
     gsap.from(titleChars, {
       opacity: 0,
-      y: 100,
-      rotationX: -90,
-      stagger: 0.05,
-      duration: 1.2,
-      ease: 'power4.out',
+      y: 30,
+      stagger: 0.03,
+      duration: 0.6,
+      ease: 'power2.out',
     });
 
     // Subtitle fade in
     gsap.from('.page-subtitle', {
       opacity: 0,
-      y: 30,
-      duration: 1,
-      delay: 0.5,
-      ease: 'power3.out',
+      y: 20,
+      duration: 0.6,
+      delay: 0.3,
+      ease: 'power2.out',
     });
 
-    // Animate cards with advanced effects
+    // Animate cards with optimized effects
     gsap.utils.toArray('.event-card').forEach((card: any, index) => {
-      // Card entrance
+      // Card entrance - simplified
       gsap.from(card, {
         opacity: 0,
-        y: 150,
-        rotationX: -15,
-        scale: 0.9,
-        duration: 1.2,
-        ease: 'power4.out',
+        y: 40,
+        duration: 0.8,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: card,
           start: 'top 85%',
@@ -112,37 +109,23 @@ export default function Details() {
         },
       });
 
-      // Number badge animation
+      // Number badge animation - simplified
       gsap.from(card.querySelector('.card-number'), {
         opacity: 0,
         scale: 0,
-        rotation: -180,
-        duration: 0.8,
-        ease: 'back.out(1.7)',
+        duration: 0.5,
+        ease: 'back.out(1.4)',
         scrollTrigger: {
           trigger: card,
           start: 'top 80%',
         },
       });
 
-      // Title reveal
+      // Title reveal - simplified
       gsap.from(card.querySelector('.card-title'), {
         opacity: 0,
-        x: -50,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 75%',
-        },
-      });
-
-      // Content fade
-      gsap.from(card.querySelector('.card-content'), {
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        delay: 0.2,
+        x: -30,
+        duration: 0.6,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: card,
@@ -150,60 +133,51 @@ export default function Details() {
         },
       });
 
-      // Stagger highlights
+      // Content fade - simplified
+      gsap.from(card.querySelector('.card-content'), {
+        opacity: 0,
+        duration: 0.5,
+        delay: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 75%',
+        },
+      });
+
+      // Stagger highlights - simplified
       gsap.from(card.querySelectorAll('.highlight-item'), {
         opacity: 0,
-        x: -30,
-        duration: 0.6,
-        stagger: 0.1,
+        x: -20,
+        duration: 0.4,
+        stagger: 0.08,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: card,
           start: 'top 70%',
         },
       });
-
-      // Parallax effect on scroll
-      gsap.to(card, {
-        y: -30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: card,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      });
     });
 
-    // CTA section animation
+    // CTA section animation - simplified
     gsap.from('.cta-section', {
       opacity: 0,
-      scale: 0.95,
-      duration: 1.2,
-      ease: 'power3.out',
+      y: 30,
+      duration: 0.8,
+      ease: 'power2.out',
       scrollTrigger: {
         trigger: '.cta-section',
         start: 'top 85%',
       },
     });
-
-    // Floating animation for decorative elements
-    gsap.to('.floating-element', {
-      y: -20,
-      duration: 2,
-      ease: 'power1.inOut',
-      repeat: -1,
-      yoyo: true,
-    });
   }, { scope: container });
 
   return (
     <main ref={container} className="relative min-h-screen pt-32 pb-20 px-6 sm:px-12 lg:px-20 max-w-7xl mx-auto overflow-hidden">
-      {/* Background gradient effects */}
+      {/* Background gradient effects - optimized */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-[120px] floating-element" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 rounded-full blur-[120px] floating-element" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-[80px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 rounded-full blur-[80px]" />
       </div>
 
       {/* Page Title */}
@@ -249,15 +223,15 @@ export default function Details() {
         {eventSections.map((section, index) => (
           <div
             key={section.id}
-            className="event-card group relative"
+            className="event-card group relative will-change-transform"
           >
             {/* Card container with border effect */}
             <div className="relative h-full border border-white/10 bg-black/40 backdrop-blur-sm p-6 sm:p-8 
-                          hover:border-red-500/50 transition-all duration-700
-                          before:absolute before:inset-0 before:bg-gradient-to-br before:from-red-500/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-700 hover:before:opacity-100">
+                          hover:border-red-500/50 transition-colors duration-500
+                          before:absolute before:inset-0 before:bg-gradient-to-br before:from-red-500/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-100">
 
               {/* Glow effect on hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                 <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-transparent to-transparent" />
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
                 <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
@@ -308,9 +282,9 @@ export default function Details() {
 
               {/* Corner accents */}
               <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-red-500/20 opacity-0 
-                            group-hover:opacity-100 transition-opacity duration-700" />
+                            group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-red-500/20 opacity-0 
-                            group-hover:opacity-100 transition-opacity duration-700" />
+                            group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           </div>
         ))}

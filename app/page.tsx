@@ -1,173 +1,50 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion';
 import MarblingHover from './components/MarblingHover';
-
-
 import RegistrationModal from './components/RegistrationModal';
 import InfiniteMarquee from './components/InfiniteMarquee';
 import OurInitiatives from './components/OurInitiatives';
 import InteractiveDroplets from './components/interactive-droplets/InteractiveDroplets';
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Home() {
     const container = useRef(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [showDroplets, setShowDroplets] = useState(false);
+    const [visibleLetters, setVisibleLetters] = useState(0);
+    const text = "CODE COMBAT";
 
-    useGSAP(() => {
-        const mm = gsap.matchMedia();
-
-        mm.add("(min-width: 768px)", () => {
-            const tl = gsap.timeline();
-
-            // --- HERO ANIMATIONS ---
-            // Split text animation for CODECOMBAT
-            const chars = titleRef.current?.innerText.split('') || [];
-            if (titleRef.current) {
-                titleRef.current.innerHTML = '';
-                chars.forEach((char) => {
-                    const span = document.createElement('span');
-                    span.innerText = char;
-                    span.className = 'inline-block opacity-0 transform translate-y-10 cursor-pointer';
-
-                    // Hover Glow Effect
-                    span.addEventListener('mouseenter', () => {
-                        gsap.to(span, {
-                            textShadow: "0 0 20px #FF2E2E, 0 0 40px #FF2E2E",
-                            color: "#FFFFFF",
-                            scale: 1.1,
-                            duration: 0.1,
-                            ease: "power1.out"
-                        });
-                    });
-
-                    span.addEventListener('mouseleave', () => {
-                        gsap.to(span, {
-                            textShadow: "none",
-                            color: "#FFFFFF",
-                            scale: 1,
-                            duration: 0.3,
-                            ease: "power1.out"
-                        });
-                    });
-
-                    titleRef.current?.appendChild(span);
-                });
-            }
-
-            tl.to(titleRef.current?.children || [], {
-                y: 0,
-                opacity: 1,
-                stagger: 0.08,
-                duration: 1,
-                ease: 'power4.out',
-                onComplete: () => setShowDroplets(true)
-            })
-                .from('.hero-subtitle', {
-                    opacity: 0,
-                    y: 20,
-                    duration: 1,
-                    ease: 'power3.out',
-                }, '-=0.5')
-                .from('.hero-meta', {
-                    opacity: 0,
-                    duration: 1.5,
-                    ease: 'power2.inOut',
-                }, '-=1')
-                .fromTo('.hero-cta', {
-                    opacity: 0,
-                    y: 20,
-                }, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: 'power3.out',
-                }, '-=0.5');
-
-            gsap.to('.samurai-img', {
-                yPercent: 10,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.hero-section',
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: true,
-                }
-            });
-
-            // --- PRIZE SECTION ANIMATIONS ---
-            const prizeTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '.prize-section',
-                    start: 'top 60%',
-                }
-            });
-
-            prizeTl
-                .from('.prize-heading', {
-                    y: 50,
-                    opacity: 0,
-                    duration: 1,
-                    ease: 'power3.out'
-                })
-                .from('.prize-card-left', {
-                    y: 100,
-                    opacity: 0,
-                    duration: 1.2,
-                    ease: 'elastic.out(1, 0.75)'
-                }, '-=0.5')
-                .from('.prize-card-center', {
-                    y: 100,
-                    opacity: 0,
-                    scale: 0.9,
-                    duration: 1.2,
-                    ease: 'elastic.out(1, 0.75)'
-                }, '-=1')
-                .from('.prize-card-right', {
-                    y: 100,
-                    opacity: 0,
-                    duration: 1.2,
-                    ease: 'elastic.out(1, 0.75)'
-                }, '-=1');
-        });
-
-        // Force show content on mobile if matchMedia doesn't run
-        mm.add("(max-width: 767px)", () => {
-            setShowDroplets(false); // Disable heavy droplets on mobile
-            if (titleRef.current) {
-                titleRef.current.style.opacity = '1';
-                // Ensure children are visible if they exist
-                Array.from(titleRef.current.children).forEach((child: any) => {
-                    child.style.opacity = '1';
-                    child.style.transform = 'none';
-                })
-            }
-            gsap.set('.hero-subtitle', { opacity: 1, y: 0 });
-            gsap.set('.hero-meta', { opacity: 1 });
-            gsap.set('.hero-cta', { opacity: 1, y: 0 });
-            gsap.set('.prize-heading', { opacity: 1, y: 0 });
-            gsap.set('.prize-card-left', { opacity: 1, y: 0 });
-            gsap.set('.prize-card-center', { opacity: 1, y: 0, scale: 1 });
-            gsap.set('.prize-card-right', { opacity: 1, y: 0 });
-        });
-
-    }, { scope: container });
+    useEffect(() => {
+        const typingSpeed = 80; // ms per character (adjustable)
+        if (visibleLetters < text.length) {
+            const timer = setTimeout(() => {
+                setVisibleLetters(prev => prev + 1);
+            }, typingSpeed);
+            return () => clearTimeout(timer);
+        }
+    }, [visibleLetters, text.length]);
 
     return (
         <main ref={container} className="relative w-full overflow-hidden bg-black text-center">
 
+            {/* Preload All Images */}
+            <div className="hidden">
+                <Image src="/hero.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/runner.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/2nd.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/champion.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/1st.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/bronze.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/3rd.png" alt="preload" width={100} height={100} priority quality={100} />
+            </div>
+
 
             {/* --- HERO SECTION --- */}
             <section className="hero-section relative h-screen flex flex-col items-center justify-center overflow-hidden">
-                {showDroplets && <InteractiveDroplets />}
+                <InteractiveDroplets />
                 <div className="absolute inset-0 bg-gradient-to-br from-black via-[#1e0101] to-[#530303] opacity-90 z-0" />
 
                 <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
@@ -177,36 +54,87 @@ export default function Home() {
                         fill
                         className="object-cover samurai-img"
                         priority
+                        quality={100}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
                     <div className="absolute inset-0 bg-black/40" />
                 </div>
 
                 <div className="relative z-10 flex flex-col items-center gap-6 px-4">
-                    <p className="hero-meta font-heading text-base sm:text-lg tracking-[0.3em] uppercase text-gray-400 font-light">
+                    <motion.p 
+                        className="hero-meta font-heading text-base sm:text-lg tracking-[0.3em] uppercase text-gray-400 font-light"
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ 
+                            duration: 1.2, 
+                            ease: [0.25, 0.1, 0.25, 1]
+                        }}
+                    >
                         IEEE CTSoc presents
-                    </p>
+                    </motion.p>
 
-                    <h1 ref={titleRef} className="text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-sans font-bold tracking-tighter text-white leading-none uppercase mix-blend-screen">
-                        CODE <br className="md:hidden" /> COMBAT
+                    <h1 ref={titleRef} className="text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-sans font-bold tracking-tight text-white leading-none uppercase flex items-center justify-center min-h-[1.2em] relative z-30">
+                        {text.split("").map((char, i) => (
+                            <motion.span
+                                key={i}
+                                className="inline-block cursor-default"
+                                initial={{ 
+                                    opacity: 0, 
+                                    y: 20,
+                                    scale: 1,
+                                    filter: "drop-shadow(0 0 0px rgba(0,0,0,0))"
+                                }}
+                                animate={{ 
+                                    opacity: i < visibleLetters ? 1 : 0,
+                                    y: i < visibleLetters ? 0 : 20,
+                                    scale: 1,
+                                    filter: "drop-shadow(0 0 0px rgba(0,0,0,0))"
+                                }}
+                                whileHover={{
+                                    scale: 1.1,
+                                    y: -4,
+                                    filter: "drop-shadow(0 0 8px rgba(239,68,68,0.9)) drop-shadow(0 0 16px rgba(220,38,38,0.7))",
+                                    transition: {
+                                        type: "spring",
+                                        stiffness: 400,
+                                        damping: 17,
+                                    }
+                                }}
+                                transition={{
+                                    duration: 0.5,
+                                    ease: [0.25, 0.1, 0.25, 1],
+                                }}
+                            >
+                                {char === " " ? "\u00A0" : char}
+                            </motion.span>
+                        ))}
                     </h1>
 
                     <p className="hero-subtitle text-xl sm:text-2xl md:text-3xl font-heading font-light tracking-wide text-red-500 mt-4 px-4">
                         Where logic meets battle.
                     </p>
 
-
-                    <Link
-                        href="/register"
-                        className="hero-cta mt-8 px-8 py-3 border border-white/30 bg-red-600/20 backdrop-blur-sm text-white text-lg font-heading tracking-widest uppercase hover:bg-red-600 hover:border-red-600 hover:scale-105 transition-all duration-300 group relative overflow-hidden z-20 opacity-100 visible inline-block"
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ 
+                            duration: 0.8, 
+                            delay: 1.2,
+                            ease: [0.25, 0.1, 0.25, 1]
+                        }}
                     >
-                        <span className="relative z-10">Register Now</span>
-                        <div className="absolute inset-0 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 z-0" />
-                    </Link>
+                        <Link
+                            href="/register"
+                            className="hero-cta mt-8 px-8 py-3 border border-white/30 bg-red-600/20 backdrop-blur-sm text-white text-lg font-heading tracking-widest uppercase hover:bg-red-600 hover:border-red-600 hover:scale-105 transition-all duration-300 group relative overflow-hidden z-20 inline-block"
+                        >
+                            <span className="relative z-10">Register Now</span>
+                            <div className="absolute inset-0 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 z-0" />
+                        </Link>
+                    </motion.div>
                 </div>
 
                 <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce z-20 pointer-events-none">
-                    <span className="text-[10px] md:text-xs font-mono text-white/50 uppercase tracking-[0.3em]">Scroll</span>
+                    
                     <div className="w-[1px] h-12 md:h-16 bg-gradient-to-b from-white/20 via-red-500 to-transparent" />
                 </div>
             </section>
@@ -220,7 +148,16 @@ export default function Home() {
                     <div className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-orange-900/5 blur-[100px] rounded-full mix-blend-screen" />
                 </div>
 
-                <div className="prize-heading mb-10 md:mb-20 text-center relative z-10 w-full max-w-5xl">
+                <motion.div 
+                    className="prize-heading mb-10 md:mb-20 text-center relative z-10 w-full max-w-5xl"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ 
+                        duration: 0.8, 
+                        ease: [0.25, 0.1, 0.25, 1]
+                    }}
+                >
                     <h2 className="text-5xl sm:text-6xl md:text-8xl lg:text-[9rem] font-heading uppercase tracking-tighter leading-[0.85] select-none">
                         <span className="block text-white/20 font-light" data-text="Rewards">Rewards</span>
                         <span className="block font-black text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-600 to-red-950" data-text="Of War">
@@ -234,12 +171,15 @@ export default function Home() {
                         </p>
                         <div className="h-[1px] w-12 md:w-24 bg-gradient-to-l from-transparent to-red-500/50" />
                     </div>
-                </div>
+                </motion.div>
 
                 <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl items-end px-4 relative z-10 mb-8">
 
                     {/* 2nd Place - Smooth Spring Entry */}
-                    <div className="prize-card-left order-2 md:order-1 relative group md:mb-12">
+                    <div className="prize-card-left order-2 md:order-1 relative group md:mb-24">
+                        {/* Silver Glow */}
+                        <div className="absolute -inset-4 bg-gradient-to-b from-gray-400/40 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl" />
+                        
                         {/* Premium Glass Card - NO PADDING */}
                         <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-0 text-center rounded-2xl overflow-hidden hover:bg-white/[0.05] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)] group-hover:-translate-y-2">
 
@@ -275,9 +215,9 @@ export default function Home() {
                     </div>
 
                     {/* 1st Place - The Champion's Pedestal */}
-                    <div className="prize-card-center order-1 md:order-2 relative group z-20">
+                    <div className="prize-card-center order-1 md:order-2 relative group z-20 md:mb-48">
                         {/* Golden Glow */}
-                        <div className="absolute -inset-4 bg-gradient-to-b from-yellow-600/20 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl" />
+                        <div className="absolute -inset-4 bg-gradient-to-b from-yellow-600/40 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl" />
 
                         <div className="relative bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-2xl border border-yellow-500/20 p-0 text-center rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-all duration-700 hover:shadow-[0_0_80px_-20px_rgba(234,179,8,0.3)] hover:border-yellow-500/40">
 
@@ -318,7 +258,10 @@ export default function Home() {
                     </div>
 
                     {/* 3rd Place - Smooth Spring Entry */}
-                    <div className="prize-card-right order-3 relative group md:mb-12">
+                    <div className="prize-card-right order-3 relative group md:mb-24">
+                        {/* Bronze Glow */}
+                        <div className="absolute -inset-4 bg-gradient-to-b from-orange-700/40 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] rounded-3xl" />
+                        
                         {/* Premium Glass Card */}
                         <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 p-0 text-center rounded-2xl overflow-hidden hover:bg-white/[0.05] hover:border-white/20 transition-all duration-700 hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.1)] group-hover:-translate-y-2">
 

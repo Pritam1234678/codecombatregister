@@ -78,16 +78,16 @@ export default function Navbar() {
   };
 
   return (
-    <nav ref={container} className="fixed top-0 left-0 w-full px-6 md:px-8 py-4 flex justify-between items-center z-50 text-white bg-black/190 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none">
+    <nav ref={container} className="fixed top-0 left-0 w-full px-6 md:px-8 py-4 flex justify-between items-center z-50 text-white bg-black/180 backdrop-blur-md">
       {/* Left Branding */}
-      <div className="nav-item z-50 mix-blend-difference">
+      <div className="nav-item z-50">
         <Link href="/" className="text-sm font-light tracking-[0.2em] uppercase opacity-80 font-sans">
           IEEE CTSoc
         </Link>
       </div>
 
       {/* Desktop Links - Hidden on Mobile */}
-      <div className="hidden md:flex gap-12 font-heading text-sm uppercase tracking-widest mix-blend-difference">
+      <div className="hidden md:flex gap-12 font-heading text-sm uppercase tracking-widest">
         {[
           { name: 'Home', href: '/' },
           { name: 'Details', href: '/details' },
@@ -109,7 +109,7 @@ export default function Navbar() {
       {/* Mobile Hamburger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden z-50 relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 group mix-blend-difference"
+        className="md:hidden z-50 relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 group"
         aria-label="Toggle Menu"
       >
         <div className={`w-8 h-[1px] bg-white transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />

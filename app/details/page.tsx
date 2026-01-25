@@ -44,9 +44,9 @@ const eventSections = [
     title: "Glory & Rewards",
     content: "Champions don't just win — they claim legendary rewards. Battle through tiers, earn glory points, and secure your place in the hall of fame.",
     highlights: [
-      "₹5k Champion Prize",
-      "₹3k Runner Up",
-      "₹1.5k Second Runner Up"
+      "₹5k worth Goodies for Champion ",
+      "₹3k worth Goodies for Runner Up",
+      "₹1.5k worth Goodies for Second Runner Up"
     ]
   },
   {

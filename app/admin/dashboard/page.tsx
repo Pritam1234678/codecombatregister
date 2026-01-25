@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, Users, Search, LogOut, Trash2, Edit2, X, Check, Save, Menu, Home, ClipboardList, Info } from 'lucide-react';
+import { Shield, Users, Search, LogOut, Trash2, Edit2, X, Check, Save, Menu, Home, ClipboardList, Info, Download } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
 import SearchableSelect from '../../components/SearchableSelect';
 
@@ -102,6 +102,44 @@ export default function AdminDashboard() {
     const handleLogout = () => {
         localStorage.removeItem('adminToken');
         router.push('/admin/login');
+    };
+
+    // Export to CSV
+    const handleExportCSV = () => {
+        // CSV Headers
+        const headers = ['ID', 'Name', 'Email', 'Phone', 'Roll Number', 'Branch', 'Registered At'];
+        
+        // CSV Rows
+        const rows = filteredUsers.map(user => [
+            user.id,
+            user.name,
+            user.email,
+            user.phone,
+            user.roll_number,
+            user.branch,
+            new Date(user.created_at).toLocaleString()
+        ]);
+
+        // Create CSV content
+        const csvContent = [
+            headers.join(','),
+            ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+        ].join('\n');
+
+        // Create blob and download
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', `codecombat-registrations-${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showToast(`Exported ${filteredUsers.length} registrations to CSV`, 'success');
     };
 
     // Confirm Delete
@@ -343,21 +381,32 @@ export default function AdminDashboard() {
 
                 {/* Toolbar & Search */}
                 <div className="flex flex-col md:flex-row items-end justify-between gap-8 mb-12 border-b border-white/[0.08] pb-12">
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex-1">
                         <h2 className="text-2xl font-light">Database</h2>
                         <p className="text-white/40 text-sm max-w-md">
                             Manage and monitor all participant entries.
                         </p>
                     </div>
 
-                    <div className="w-full md:w-[400px]">
-                        <input
-                            type="text"
-                            placeholder="Search by name, email or ID..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-transparent border-b border-white/20 py-4 text-xl placeholder-white/20 focus:outline-none focus:border-white transition-colors"
-                        />
+                    <div className="flex flex-col md:flex-row items-stretch md:items-end gap-4 w-full md:w-auto">
+                        <button
+                            onClick={handleExportCSV}
+                            className="group relative overflow-hidden bg-white/[0.03] border border-white/[0.08] px-6 py-3 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-3"
+                        >
+                            <Download className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
+                            <span className="text-sm font-medium">Export CSV</span>
+                            <span className="text-xs text-white/40 font-mono">({filteredUsers.length})</span>
+                        </button>
+
+                        <div className="w-full md:w-[400px]">
+                            <input
+                                type="text"
+                                placeholder="Search by name, email or ID..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full bg-transparent border-b border-white/20 py-4 text-xl placeholder-white/20 focus:outline-none focus:border-white transition-colors"
+                            />
+                        </div>
                     </div>
                 </div>
 

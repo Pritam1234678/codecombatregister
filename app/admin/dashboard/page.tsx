@@ -1077,10 +1077,10 @@ export default function AdminDashboard() {
                             <div className="sticky bottom-0 bg-[#090909] border-t border-white/[0.08] p-6 md:p-8">
                                 <div className="flex justify-end">
                                     <button
-                                        onClick={() => { setGenderFilter(null); setGenderFilterSearch(''); }}
+                                        onClick={() => { setGenderFilter(null); setGenderFilterSearch(''); setShowGenderStats(true); }}
                                         className="px-8 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-colors"
                                     >
-                                        Close
+                                        Back
                                     </button>
                                 </div>
                             </div>
@@ -1187,10 +1187,10 @@ export default function AdminDashboard() {
                             <div className="sticky bottom-0 bg-[#090909] border-t border-white/[0.08] p-6 md:p-8">
                                 <div className="flex justify-end">
                                     <button
-                                        onClick={() => { setYearFilter(null); setYearFilterSearch(''); }}
+                                        onClick={() => { setYearFilter(null); setYearFilterSearch(''); setShowYearStats(true); }}
                                         className="px-8 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-colors"
                                     >
-                                        Close
+                                        Back
                                     </button>
                                 </div>
                             </div>

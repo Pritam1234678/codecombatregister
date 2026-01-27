@@ -106,7 +106,7 @@ router.post('/register', registrationValidation, async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       console.log(
-        '❌ Validation Errors:',
+        ' VALIDATION ERRORS KINDLY GO SUPPORT PAGE  :',
         JSON.stringify(errors.array(), null, 2)
       )
       return res.status(400).json({

@@ -13,7 +13,7 @@ export default function Footer() {
                     {/* Brand Column */}
                     <div>
                         <h3 className="text-2xl font-sans font-medium tracking-tight text-white mb-4">
-                            CODECOMBAT
+                            CODE  COMBAT
                         </h3>
                         <p className="text-white/60 text-sm leading-relaxed">
                             Where logic meets battle. Join the ultimate competitive coding arena organized by IEEE CTSoc.
@@ -61,7 +61,7 @@ export default function Footer() {
                                     <svg className="w-4 h-4 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
-                                    mailto:support@codecombat.ieee
+                                    Email: support@codecombat.ieee
                                 </a>
                             </li>
                             <li>

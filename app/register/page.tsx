@@ -145,7 +145,7 @@ export default function RegisterPage() {
             // Redirect to home after 3 seconds
             setTimeout(() => {
                 router.push('/');
-            }, 3000);
+            }, 5000);
 
         } catch (error) {
             console.error('Registration error:', error);

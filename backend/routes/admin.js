@@ -145,7 +145,15 @@ router.put('/users/:id', [
     body('branch')
         .trim()
         .notEmpty().withMessage('Branch is required')
-        .isIn(ALLOWED_BRANCHES).withMessage('Invalid Branch selection')
+        .isIn(ALLOWED_BRANCHES).withMessage('Invalid Branch selection'),
+    body('gender')
+        .trim()
+        .notEmpty().withMessage('Gender is required')
+        .isIn(['Male', 'Female', 'Other']).withMessage('Invalid gender selected'),
+    body('year')
+        .trim()
+        .notEmpty().withMessage('Year is required')
+        .isIn(['1st', '2nd', '3rd', '4th']).withMessage('Invalid year selected')
 ], async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -154,11 +162,11 @@ router.put('/users/:id', [
         }
 
         const { id } = req.params;
-        const { name, email, phone, rollNumber, branch } = req.body;
+        const { name, email, phone, rollNumber, branch, gender, year } = req.body;
 
         const [result] = await db.query(
-            'UPDATE registrations SET name = ?, email = ?, phone = ?, roll_number = ?, branch = ? WHERE id = ?',
-            [name, email, phone, rollNumber, branch, id]
+            'UPDATE registrations SET name = ?, email = ?, phone = ?, roll_number = ?, branch = ?, gender = ?, year = ? WHERE id = ?',
+            [name, email, phone, rollNumber, branch, gender, year, id]
         );
 
         if (result.affectedRows === 0) {

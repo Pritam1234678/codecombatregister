@@ -49,8 +49,16 @@
                         <td style="padding: 8px 0; border-bottom: 1px solid #eeeeee; color: #111111; font-size: 15px; font-weight: 600;">{{rollNumber}}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 8px 0; color: #888888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Branch</td>
-                        <td style="padding: 8px 0; color: #111111; font-size: 15px; font-weight: 600;">{{branch}}</td>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eeeeee; color: #888888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Branch</td>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eeeeee; color: #111111; font-size: 15px; font-weight: 600;">{{branch}}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eeeeee; color: #888888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Gender</td>
+                        <td style="padding: 8px 0; border-bottom: 1px solid #eeeeee; color: #111111; font-size: 15px; font-weight: 600;">{{gender}}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; color: #888888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Year</td>
+                        <td style="padding: 8px 0; color: #111111; font-size: 15px; font-weight: 600;">{{year}}</td>
                       </tr>
                     </table>
                   </td>
@@ -59,6 +67,16 @@
 
               <p style="color: #555555; font-size: 15px; line-height: 1.6;">
                 Get ready to test your skills against the best. Further details regarding the event schedule and rules will be shared shortly.
+              </p>
+              
+              <p style="color: #dc2626; font-size: 16px; line-height: 1.6; font-weight: 700; margin-top: 20px;">
+                See you in the battle arena on 15 February 2026!
+              </p>
+              
+              <hr style="border: none; border-top: 1px solid #eeeeee; margin: 30px 0;" />
+              
+              <p style="color: #999999; font-size: 13px; margin: 0;">
+                <strong>Registered on:</strong> {{registrationDate}}
               </p>
               
             </td>
@@ -70,7 +88,7 @@
               <p style="color: #111111; font-weight: 700; margin: 0 0 10px; font-size: 14px; letter-spacing: 1px;">CODECOMBAT</p>
               <p style="color: #666666; font-size: 12px; margin: 0 0 5px;">Organized by IEEE CTSoc</p>
               <p style="color: #999999; font-size: 12px; margin: 15px 0 0;">
-                &copy; {{year}} IEEE CTSoc. All rights reserved.
+                &copy; {{currentYear}} IEEE CTSoc. All rights reserved.
               </p>
             </td>
           </tr>

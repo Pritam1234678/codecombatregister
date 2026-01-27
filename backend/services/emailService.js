@@ -28,7 +28,7 @@ transporter.verify((error, success) => {
  * @returns {Promise<Object>} Email send result
  */
 async function sendRegistrationEmail(userData) {
-  const { name, email, rollNumber, branch } = userData;
+  const { name, email, rollNumber, branch, gender, year } = userData;
 
   let htmlTemplate;
   try {
@@ -41,7 +41,18 @@ async function sendRegistrationEmail(userData) {
       .replace(/{{email}}/g, email)
       .replace(/{{rollNumber}}/g, rollNumber)
       .replace(/{{branch}}/g, branch)
-      .replace(/{{year}}/g, new Date().getFullYear());
+      .replace(/{{gender}}/g, gender)
+      .replace(/{{year}}/g, year)
+      .replace(/{{registrationDate}}/g, new Date().toLocaleString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      }))
+      .replace(/{{currentYear}}/g, new Date().getFullYear());
   } catch (err) {
     console.error('❌ Error reading email template:', err);
     // Fallback simple HTML if template fails
@@ -60,6 +71,8 @@ Registration Details:
 - Email: ${email}
 - Roll Number: ${rollNumber}
 - Branch: ${branch}
+- Gender: ${gender}
+- Year: ${year}
 
 You are now officially registered for the ultimate competitive coding battle organized by IEEE CTSoc.
 
@@ -118,9 +131,15 @@ async function sendSupportEmail(formData) {
       .replace(/{{subject}}/g, subject)
       .replace(/{{message}}/g, message)
       .replace(/{{timestamp}}/g, new Date().toLocaleString('en-US', { 
-        dateStyle: 'full', 
-        timeStyle: 'short' 
-      }));
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      }))
+      .replace(/{{currentYear}}/g, new Date().getFullYear());
   } catch (err) {
     console.error('❌ Error reading support email template:', err);
     // Fallback simple HTML if template fails
@@ -193,7 +212,17 @@ async function sendAdminLoginAlert(loginData) {
       .replace(/{{location}}/g, location || 'Unknown')
       .replace(/{{isp}}/g, isp || 'Unknown')
       .replace(/{{userAgent}}/g, userAgent)
-      .replace(/{{timestamp}}/g, new Date().toLocaleString());
+      .replace(/{{timestamp}}/g, new Date().toLocaleString())
+      .replace(/{{loginDate}}/g, new Date().toLocaleString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      }))
+      .replace(/{{currentYear}}/g, new Date().getFullYear());
   } catch (err) {
     console.error('❌ Error reading admin alert template:', err);
     // Fallback

@@ -60,7 +60,17 @@ const registrationValidation = [
   body('branch')
     .trim()
     .notEmpty().withMessage('Branch is required')
-    .isIn(ALLOWED_BRANCHES).withMessage('Invalid branch selected')
+    .isIn(ALLOWED_BRANCHES).withMessage('Invalid branch selected'),
+  
+  body('gender')
+    .trim()
+    .notEmpty().withMessage('Gender is required')
+    .isIn(['Male', 'Female', 'Other']).withMessage('Invalid gender selected'),
+  
+  body('year')
+    .trim()
+    .notEmpty().withMessage('Year is required')
+    .isIn(['1st', '2nd', '3rd', '4th']).withMessage('Invalid year selected')
 ];
 
 // POST /api/registration/register
@@ -77,7 +87,7 @@ router.post('/register', registrationValidation, async (req, res) => {
       });
     }
 
-    const { name, email, phone, rollNumber, branch } = req.body;
+    const { name, email, phone, rollNumber, branch, gender, year } = req.body;
 
     // Check if email already exists
     const [existingEmail] = await db.query(
@@ -123,12 +133,12 @@ router.post('/register', registrationValidation, async (req, res) => {
 
     // Insert new registration
     const [result] = await db.query(
-      'INSERT INTO registrations (name, email, phone, roll_number, branch) VALUES (?, ?, ?, ?, ?)',
-      [name, email, phone, rollNumber, branch]
+      'INSERT INTO registrations (name, email, phone, roll_number, branch, gender, year) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [name, email, phone, rollNumber, branch, gender, year]
     );
 
     // Send confirmation email (async, don't wait for it)
-    sendRegistrationEmail({ name, email, rollNumber, branch })
+    sendRegistrationEmail({ name, email, rollNumber, branch, gender, year })
       .then(emailResult => {
         if (emailResult.success) {
           console.log(`✅ Confirmation email sent to ${email}`);
@@ -150,7 +160,9 @@ router.post('/register', registrationValidation, async (req, res) => {
         email,
         phone,
         rollNumber,
-        branch
+        branch,
+        gender,
+        year
       }
     });
 

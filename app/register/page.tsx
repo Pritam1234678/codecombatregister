@@ -34,12 +34,19 @@ export default function RegisterPage() {
     }, []);
 
     const ALLOWED_BRANCHES = [
-        "Civil Engineering",
-        "Construction Technology",
-        "Mechanical Engineering",
-        "Mechanical Engineering(Automobile)",
-        "Aerospace Engineering",
-        "Mechatronics Engineering",
+     
+        "Computer Science & Engineering",
+        "Information Technology",
+        "Computer Science & Communication Engineering",
+        "Computer Science & Systems Engineering",
+        "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+        "Computer Science and Engineering with specialization Artificial Intelligence",
+        "Computer Science and Engineering with specialization Cyber Security",
+        "Computer Science and Engineering with specialization Data Science",
+        "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+        "Computer Science and Engineering with specialization Internet of Things",
+        
+        
         "Electrical Engineering",
         "Electrical and Computer Engineering",
         "Electronics & Tele-Communication Engineering",
@@ -47,17 +54,13 @@ export default function RegisterPage() {
         "Electronics and Computer Science Engineering",
         "Electronics Engineering VLSI Design and Technology",
         "Electronics and Instrumentation",
-        "Computer Science & Engineering",
-        "Computer Science & Communication Engineering",
-        "Computer Science and Engineering with specialization Artificial Intelligence",
-        "Computer Science and Engineering with specialization Cyber Security",
-        "Computer Science and Engineering with specialization Data Science",
-        "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
-        "Computer Science and Engineering with specialization Internet of Things",
-        "Computer Science & Systems Engineering",
-        "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
-        "Information Technology",
         "Chemical Engineering",
+        "Civil Engineering",
+        "Construction Technology",
+        "Mechanical Engineering",
+        "Mechanical Engineering(Automobile)",
+        "Aerospace Engineering",
+        "Mechatronics Engineering",
         "Other"
     ];
 

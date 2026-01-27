@@ -69,7 +69,7 @@ const cards: Card[] = [
         highlights: [
             "Champion Prize worth ₹5k",
             "Runner Up Prize worth ₹3k",
-            "Second Runner Up Prize worth ₹1.5k"
+            "Second Runner Up Prize worth ₹2k"
         ]
     },
     {

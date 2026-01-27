@@ -20,31 +20,35 @@ interface User {
 }
 
 const ALLOWED_BRANCHES = [
-    "Civil Engineering",
-    "Construction Technology",
-    "Mechanical Engineering",
-    "Mechanical Engineering(Automobile)",
-    "Aerospace Engineering",
-    "Mechatronics Engineering",
-    "Electrical Engineering",
-    "Electrical and Computer Engineering",
-    "Electronics & Tele-Communication Engineering",
-    "Electronics & Electrical Engineering",
-    "Electronics and Computer Science Engineering",
-    "Electronics Engineering VLSI Design and Technology",
-    "Electronics and Instrumentation",
     "Computer Science & Engineering",
-    "Computer Science & Communication Engineering",
-    "Computer Science and Engineering with specialization Artificial Intelligence",
-    "Computer Science and Engineering with specialization Cyber Security",
-    "Computer Science and Engineering with specialization Data Science",
-    "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
-    "Computer Science and Engineering with specialization Internet of Things",
-    "Computer Science & Systems Engineering",
-    "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
-    "Information Technology",
-    "Chemical Engineering",
-    "Other"
+        "Information Technology",
+        "Computer Science & Communication Engineering",
+        "Computer Science & Systems Engineering",
+        "Computer Science and Engineering with specialization Artificial Intelligence and Machine Learning",
+        "Computer Science and Engineering with specialization Artificial Intelligence",
+        "Computer Science and Engineering with specialization Cyber Security",
+        "Computer Science and Engineering with specialization Data Science",
+        "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
+        "Computer Science and Engineering with specialization Internet of Things",
+        
+        
+        "Electrical Engineering",
+        "Electrical and Computer Engineering",
+        "Electronics & Tele-Communication Engineering",
+        "Electronics & Electrical Engineering",
+        "Electronics and Computer Science Engineering",
+        "Electronics Engineering VLSI Design and Technology",
+        "Electronics and Instrumentation",
+
+
+        "Chemical Engineering",
+        "Civil Engineering",
+        "Construction Technology",
+        "Mechanical Engineering",
+        "Mechanical Engineering(Automobile)",
+        "Aerospace Engineering",
+        "Mechatronics Engineering",
+        "Other"
 ];
 
 export default function AdminDashboard() {
@@ -58,6 +62,8 @@ export default function AdminDashboard() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showGenderStats, setShowGenderStats] = useState(false);
     const [showYearStats, setShowYearStats] = useState(false);
+    const [genderFilter, setGenderFilter] = useState<string | null>(null);
+    const [yearFilter, setYearFilter] = useState<string | null>(null);
     const { showToast } = useToast();
 
     // Fetch Users
@@ -718,59 +724,86 @@ export default function AdminDashboard() {
                                 </div>
 
                                 {/* Male Count */}
-                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-5 hover:bg-white/[0.05] transition-all">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">Male</span>
-                                        <span className="text-4xl font-bold text-white">{maleCount}</span>
+                                        <span className="text-white/60 text-xs uppercase tracking-wider font-mono">Male</span>
+                                        <span className="text-3xl font-bold text-white">{maleCount}</span>
                                     </div>
-                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                    <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-3">
                                         <div 
                                             className="h-full bg-white transition-all duration-500" 
                                             style={{ width: `${totalCount > 0 ? (maleCount / totalCount) * 100 : 0}%` }}
                                         />
                                     </div>
-                                    <div className="mt-2 text-right">
+                                    <div className="flex items-center justify-between">
                                         <span className="text-xs text-white/40 font-mono">
                                             {totalCount > 0 ? ((maleCount / totalCount) * 100).toFixed(1) : 0}%
                                         </span>
+                                        <button
+                                            onClick={() => {
+                                                setGenderFilter('Male');
+                                                setShowGenderStats(false);
+                                            }}
+                                            className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs uppercase tracking-wider transition-all duration-300"
+                                        >
+                                            View Details
+                                        </button>
                                     </div>
                                 </div>
 
                                 {/* Female Count */}
-                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-5 hover:bg-white/[0.05] transition-all">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">Female</span>
-                                        <span className="text-4xl font-bold text-white">{femaleCount}</span>
+                                        <span className="text-white/60 text-xs uppercase tracking-wider font-mono">Female</span>
+                                        <span className="text-3xl font-bold text-white">{femaleCount}</span>
                                     </div>
-                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                    <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-3">
                                         <div 
                                             className="h-full bg-white transition-all duration-500" 
                                             style={{ width: `${totalCount > 0 ? (femaleCount / totalCount) * 100 : 0}%` }}
                                         />
                                     </div>
-                                    <div className="mt-2 text-right">
+                                    <div className="flex items-center justify-between">
                                         <span className="text-xs text-white/40 font-mono">
                                             {totalCount > 0 ? ((femaleCount / totalCount) * 100).toFixed(1) : 0}%
                                         </span>
+                                        <button
+                                            onClick={() => {
+                                                setGenderFilter('Female');
+                                                setShowGenderStats(false);
+                                            }}
+                                            className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs uppercase tracking-wider transition-all duration-300"
+                                        >
+                                            View Details
+                                        </button>
                                     </div>
                                 </div>
 
                                 {/* Other Count */}
-                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-5 hover:bg-white/[0.05] transition-all">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">Other</span>
-                                        <span className="text-4xl font-bold text-white">{otherCount}</span>
+                                        <span className="text-white/60 text-xs uppercase tracking-wider font-mono">Other</span>
+                                        <span className="text-3xl font-bold text-white">{otherCount}</span>
                                     </div>
-                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                    <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-3">
                                         <div 
                                             className="h-full bg-white transition-all duration-500" 
                                             style={{ width: `${totalCount > 0 ? (otherCount / totalCount) * 100 : 0}%` }}
                                         />
                                     </div>
-                                    <div className="mt-2 text-right">
+                                    <div className="flex items-center justify-between">
                                         <span className="text-xs text-white/40 font-mono">
                                             {totalCount > 0 ? ((otherCount / totalCount) * 100).toFixed(1) : 0}%
                                         </span>
+                                        <button
+                                            onClick={() => {
+                                                setGenderFilter('Other');
+                                                setShowGenderStats(false);
+                                            }}
+                                            className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs uppercase tracking-wider transition-all duration-300"
+                                        >
+                                            View Details
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -819,78 +852,114 @@ export default function AdminDashboard() {
                                 </div>
 
                                 {/* 1st Year */}
-                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-5 hover:bg-white/[0.05] transition-all">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">1st Year</span>
-                                        <span className="text-4xl font-bold text-white">{firstYearCount}</span>
+                                        <span className="text-white/60 text-xs uppercase tracking-wider font-mono">1st Year</span>
+                                        <span className="text-3xl font-bold text-white">{firstYearCount}</span>
                                     </div>
-                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                    <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-3">
                                         <div 
                                             className="h-full bg-white transition-all duration-500" 
                                             style={{ width: `${totalCount > 0 ? (firstYearCount / totalCount) * 100 : 0}%` }}
                                         />
                                     </div>
-                                    <div className="mt-2 text-right">
+                                    <div className="flex items-center justify-between">
                                         <span className="text-xs text-white/40 font-mono">
                                             {totalCount > 0 ? ((firstYearCount / totalCount) * 100).toFixed(1) : 0}%
                                         </span>
+                                        <button
+                                            onClick={() => {
+                                                setYearFilter('1st');
+                                                setShowYearStats(false);
+                                            }}
+                                            className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs uppercase tracking-wider transition-all duration-300"
+                                        >
+                                            View Details
+                                        </button>
                                     </div>
                                 </div>
 
                                 {/* 2nd Year */}
-                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-5 hover:bg-white/[0.05] transition-all">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">2nd Year</span>
-                                        <span className="text-4xl font-bold text-white">{secondYearCount}</span>
+                                        <span className="text-white/60 text-xs uppercase tracking-wider font-mono">2nd Year</span>
+                                        <span className="text-3xl font-bold text-white">{secondYearCount}</span>
                                     </div>
-                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                    <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-3">
                                         <div 
                                             className="h-full bg-white transition-all duration-500" 
                                             style={{ width: `${totalCount > 0 ? (secondYearCount / totalCount) * 100 : 0}%` }}
                                         />
                                     </div>
-                                    <div className="mt-2 text-right">
+                                    <div className="flex items-center justify-between">
                                         <span className="text-xs text-white/40 font-mono">
                                             {totalCount > 0 ? ((secondYearCount / totalCount) * 100).toFixed(1) : 0}%
                                         </span>
+                                        <button
+                                            onClick={() => {
+                                                setYearFilter('2nd');
+                                                setShowYearStats(false);
+                                            }}
+                                            className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs uppercase tracking-wider transition-all duration-300"
+                                        >
+                                            View Details
+                                        </button>
                                     </div>
                                 </div>
 
                                 {/* 3rd Year */}
-                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-5 hover:bg-white/[0.05] transition-all">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">3rd Year</span>
-                                        <span className="text-4xl font-bold text-white">{thirdYearCount}</span>
+                                        <span className="text-white/60 text-xs uppercase tracking-wider font-mono">3rd Year</span>
+                                        <span className="text-3xl font-bold text-white">{thirdYearCount}</span>
                                     </div>
-                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                    <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-3">
                                         <div 
                                             className="h-full bg-white transition-all duration-500" 
                                             style={{ width: `${totalCount > 0 ? (thirdYearCount / totalCount) * 100 : 0}%` }}
                                         />
                                     </div>
-                                    <div className="mt-2 text-right">
+                                    <div className="flex items-center justify-between">
                                         <span className="text-xs text-white/40 font-mono">
                                             {totalCount > 0 ? ((thirdYearCount / totalCount) * 100).toFixed(1) : 0}%
                                         </span>
+                                        <button
+                                            onClick={() => {
+                                                setYearFilter('3rd');
+                                                setShowYearStats(false);
+                                            }}
+                                            className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs uppercase tracking-wider transition-all duration-300"
+                                        >
+                                            View Details
+                                        </button>
                                     </div>
                                 </div>
 
                                 {/* 4th Year */}
-                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-5 hover:bg-white/[0.05] transition-all">
                                     <div className="flex justify-between items-center mb-3">
-                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">4th Year</span>
-                                        <span className="text-4xl font-bold text-white">{fourthYearCount}</span>
+                                        <span className="text-white/60 text-xs uppercase tracking-wider font-mono">4th Year</span>
+                                        <span className="text-3xl font-bold text-white">{fourthYearCount}</span>
                                     </div>
-                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                    <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mb-3">
                                         <div 
                                             className="h-full bg-white transition-all duration-500" 
                                             style={{ width: `${totalCount > 0 ? (fourthYearCount / totalCount) * 100 : 0}%` }}
                                         />
                                     </div>
-                                    <div className="mt-2 text-right">
+                                    <div className="flex items-center justify-between">
                                         <span className="text-xs text-white/40 font-mono">
                                             {totalCount > 0 ? ((fourthYearCount / totalCount) * 100).toFixed(1) : 0}%
                                         </span>
+                                        <button
+                                            onClick={() => {
+                                                setYearFilter('4th');
+                                                setShowYearStats(false);
+                                            }}
+                                            className="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white/60 hover:text-white text-xs uppercase tracking-wider transition-all duration-300"
+                                        >
+                                            View Details
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -902,6 +971,168 @@ export default function AdminDashboard() {
                                 >
                                     Close
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })()}
+
+            {/* Gender Filter Details Modal */}
+            {genderFilter && (() => {
+                const filteredByGender = users.filter(u => u.gender === genderFilter);
+                
+                return (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+                        <div className="w-full max-w-4xl bg-[#090909] border border-white/[0.08] shadow-2xl max-h-[90vh] overflow-y-auto">
+                            {/* Header */}
+                            <div className="sticky top-0 bg-[#090909] border-b border-white/[0.08] p-6 md:p-8 z-10">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h3 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-2">{genderFilter} Participants</h3>
+                                        <p className="text-white/40 text-xs md:text-sm font-mono">{filteredByGender.length} {filteredByGender.length === 1 ? 'Registration' : 'Registrations'}</p>
+                                    </div>
+                                    <button onClick={() => setGenderFilter(null)} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
+                                        &times;
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* User List */}
+                            <div className="p-6 md:p-8 space-y-3">
+                                {filteredByGender.length > 0 ? (
+                                    filteredByGender.map((user, index) => (
+                                        <div key={user.id} className="bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] p-5 transition-all duration-300 group">
+                                            <div className="flex items-start justify-between gap-4">
+                                                <div className="flex-1">
+                                                    <div className="flex items-center gap-3 mb-3">
+                                                        <span className="text-xs font-mono text-white/30">#{user.id.toString().padStart(3, '0')}</span>
+                                                        <div className="h-3 w-px bg-white/10"></div>
+                                                        <h4 className="text-lg font-medium text-white group-hover:text-white/80 transition-colors">{user.name}</h4>
+                                                    </div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Email:</span>
+                                                            <span className="text-white/70">{user.email}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Phone:</span>
+                                                            <span className="text-white/70 font-mono">{user.phone}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Roll:</span>
+                                                            <span className="text-white/70 font-mono">{user.roll_number}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Year:</span>
+                                                            <span className="text-white/70">{user.year}</span>
+                                                        </div>
+                                                        <div className="col-span-1 md:col-span-2 flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Branch:</span>
+                                                            <span className="text-white/70 text-xs">{user.branch}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="py-20 text-center">
+                                        <p className="text-white/20 text-lg font-light">No participants found in this category.</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Footer */}
+                            <div className="sticky bottom-0 bg-[#090909] border-t border-white/[0.08] p-6 md:p-8">
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={() => setGenderFilter(null)}
+                                        className="px-8 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-colors"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })()}
+
+            {/* Year Filter Details Modal */}
+            {yearFilter && (() => {
+                const filteredByYear = users.filter(u => u.year === yearFilter || u.year === `${yearFilter} Year`);
+                
+                return (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+                        <div className="w-full max-w-4xl bg-[#090909] border border-white/[0.08] shadow-2xl max-h-[90vh] overflow-y-auto">
+                            {/* Header */}
+                            <div className="sticky top-0 bg-[#090909] border-b border-white/[0.08] p-6 md:p-8 z-10">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h3 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-2">{yearFilter} Year Participants</h3>
+                                        <p className="text-white/40 text-xs md:text-sm font-mono">{filteredByYear.length} {filteredByYear.length === 1 ? 'Registration' : 'Registrations'}</p>
+                                    </div>
+                                    <button onClick={() => setYearFilter(null)} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
+                                        &times;
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* User List */}
+                            <div className="p-6 md:p-8 space-y-3">
+                                {filteredByYear.length > 0 ? (
+                                    filteredByYear.map((user, index) => (
+                                        <div key={user.id} className="bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] p-5 transition-all duration-300 group">
+                                            <div className="flex items-start justify-between gap-4">
+                                                <div className="flex-1">
+                                                    <div className="flex items-center gap-3 mb-3">
+                                                        <span className="text-xs font-mono text-white/30">#{user.id.toString().padStart(3, '0')}</span>
+                                                        <div className="h-3 w-px bg-white/10"></div>
+                                                        <h4 className="text-lg font-medium text-white group-hover:text-white/80 transition-colors">{user.name}</h4>
+                                                    </div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Email:</span>
+                                                            <span className="text-white/70">{user.email}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Phone:</span>
+                                                            <span className="text-white/70 font-mono">{user.phone}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Roll:</span>
+                                                            <span className="text-white/70 font-mono">{user.roll_number}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Gender:</span>
+                                                            <span className="text-white/70">{user.gender}</span>
+                                                        </div>
+                                                        <div className="col-span-1 md:col-span-2 flex items-center gap-2">
+                                                            <span className="text-white/40 text-xs uppercase tracking-wider">Branch:</span>
+                                                            <span className="text-white/70 text-xs">{user.branch}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="py-20 text-center">
+                                        <p className="text-white/20 text-lg font-light">No participants found in this category.</p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Footer */}
+                            <div className="sticky bottom-0 bg-[#090909] border-t border-white/[0.08] p-6 md:p-8">
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={() => setYearFilter(null)}
+                                        className="px-8 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-colors"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

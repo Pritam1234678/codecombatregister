@@ -46,7 +46,7 @@ const eventSections = [
     highlights: [
       "Goodies worth ₹5k for Champion ",
       "Goodies worth ₹3k for Runner Up",
-      "Goodies worth ₹1.5k for Second Runner Up"
+      "Goodies worth ₹2k for Second Runner Up"
     ]
   },
   {

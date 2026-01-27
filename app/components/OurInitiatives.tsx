@@ -93,7 +93,7 @@ const cards: Card[] = [
         buttonColor: "border-pink-500 bg-pink-500/10 text-pink-500",
         glowColor: "shadow-[0_0_50px_rgba(236,72,153,0.4)]",
         highlightColor: "bg-pink-500/10 border-pink-500/30 text-pink-400",
-        content: "Campus 25, KIIT University • Feb 15, 2026 at 11:00 AM. Check-in opens at 10:00 AM. Bring your laptop, charger, and warrior spirit!",
+        content: "Campus 25, KIIT University • Feb 15, 2026 at 10:00 AM. Check-in opens at 9:30 AM. Bring your laptop, charger, and warrior spirit!",
         highlights: [
             "Solo Warriors Welcome",
             "Any Programming Language",
@@ -108,7 +108,7 @@ export default function OurInitiatives() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % cards.length);
-        }, 3500);
+        }, 5000);
 
         return () => clearInterval(interval);
     }, []);

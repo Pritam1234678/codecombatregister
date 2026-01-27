@@ -248,7 +248,7 @@ export default function RegisterPage() {
                                                 value={formData.email}
                                                 onChange={handleChange}
                                                 className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.email ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
-                                                placeholder="your.email@example.com"
+                                                placeholder="your_roll@kiit.ac.in"
                                             />
                                             {errors.email && <p className="text-red-500 text-xs mt-1 font-mono">{errors.email}</p>}
                                         </div>

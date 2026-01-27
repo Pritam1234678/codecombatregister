@@ -377,7 +377,7 @@ export default function Home() {
                                 <p className="text-sm font-mono text-orange-500/60 uppercase tracking-widest">Bronze Tier</p>
                             </div>
                             <div className="text-xl font-heading font-semibold text-orange-400 text-right">
-                                Goodies worth<br/>₹1,500
+                                Goodies worth<br/>₹2,000
                             </div>
                         </div>
                     </div>

@@ -64,6 +64,8 @@ export default function AdminDashboard() {
     const [showYearStats, setShowYearStats] = useState(false);
     const [genderFilter, setGenderFilter] = useState<string | null>(null);
     const [yearFilter, setYearFilter] = useState<string | null>(null);
+    const [genderFilterSearch, setGenderFilterSearch] = useState('');
+    const [yearFilterSearch, setYearFilterSearch] = useState('');
     const { showToast } = useToast();
 
     // Fetch Users
@@ -981,26 +983,53 @@ export default function AdminDashboard() {
             {genderFilter && (() => {
                 const filteredByGender = users.filter(u => u.gender === genderFilter);
                 
+                // Apply search filter
+                const searchFilteredUsers = filteredByGender.filter(user => {
+                    const searchLower = genderFilterSearch.toLowerCase();
+                    return user.name.toLowerCase().includes(searchLower) ||
+                           user.email.toLowerCase().includes(searchLower) ||
+                           user.phone.includes(searchLower) ||
+                           user.roll_number.toLowerCase().includes(searchLower);
+                });
+                
                 return (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
                         <div className="w-full max-w-4xl bg-[#090909] border border-white/[0.08] shadow-2xl max-h-[90vh] overflow-y-auto">
                             {/* Header */}
                             <div className="sticky top-0 bg-[#090909] border-b border-white/[0.08] p-6 md:p-8 z-10">
-                                <div className="flex justify-between items-start">
+                                <div className="flex justify-between items-start mb-6">
                                     <div>
                                         <h3 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-2">{genderFilter} Participants</h3>
-                                        <p className="text-white/40 text-xs md:text-sm font-mono">{filteredByGender.length} {filteredByGender.length === 1 ? 'Registration' : 'Registrations'}</p>
+                                        <p className="text-white/40 text-xs md:text-sm font-mono">{searchFilteredUsers.length} {searchFilteredUsers.length === 1 ? 'Registration' : 'Registrations'}</p>
                                     </div>
-                                    <button onClick={() => setGenderFilter(null)} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
+                                    <button onClick={() => { setGenderFilter(null); setGenderFilterSearch(''); }} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
                                         &times;
                                     </button>
+                                </div>
+                                {/* Search Input */}
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Search by name, email, phone, or roll number..."
+                                        value={genderFilterSearch}
+                                        onChange={(e) => setGenderFilterSearch(e.target.value)}
+                                        className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-white/20 transition-colors text-sm"
+                                    />
+                                    {genderFilterSearch && (
+                                        <button
+                                            onClick={() => setGenderFilterSearch('')}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
 
                             {/* User List */}
                             <div className="p-6 md:p-8 space-y-3">
-                                {filteredByGender.length > 0 ? (
-                                    filteredByGender.map((user, index) => (
+                                {searchFilteredUsers.length > 0 ? (
+                                    searchFilteredUsers.map((user, index) => (
                                         <div key={user.id} className="bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] p-5 transition-all duration-300 group">
                                             <div className="flex items-start justify-between gap-4">
                                                 <div className="flex-1">
@@ -1037,7 +1066,9 @@ export default function AdminDashboard() {
                                     ))
                                 ) : (
                                     <div className="py-20 text-center">
-                                        <p className="text-white/20 text-lg font-light">No participants found in this category.</p>
+                                        <p className="text-white/20 text-lg font-light">
+                                            {genderFilterSearch ? 'No participants match your search.' : 'No participants found in this category.'}
+                                        </p>
                                     </div>
                                 )}
                             </div>
@@ -1046,7 +1077,7 @@ export default function AdminDashboard() {
                             <div className="sticky bottom-0 bg-[#090909] border-t border-white/[0.08] p-6 md:p-8">
                                 <div className="flex justify-end">
                                     <button
-                                        onClick={() => setGenderFilter(null)}
+                                        onClick={() => { setGenderFilter(null); setGenderFilterSearch(''); }}
                                         className="px-8 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-colors"
                                     >
                                         Close
@@ -1062,26 +1093,53 @@ export default function AdminDashboard() {
             {yearFilter && (() => {
                 const filteredByYear = users.filter(u => u.year === yearFilter || u.year === `${yearFilter} Year`);
                 
+                // Apply search filter
+                const searchFilteredUsers = filteredByYear.filter(user => {
+                    const searchLower = yearFilterSearch.toLowerCase();
+                    return user.name.toLowerCase().includes(searchLower) ||
+                           user.email.toLowerCase().includes(searchLower) ||
+                           user.phone.includes(searchLower) ||
+                           user.roll_number.toLowerCase().includes(searchLower);
+                });
+                
                 return (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
                         <div className="w-full max-w-4xl bg-[#090909] border border-white/[0.08] shadow-2xl max-h-[90vh] overflow-y-auto">
                             {/* Header */}
                             <div className="sticky top-0 bg-[#090909] border-b border-white/[0.08] p-6 md:p-8 z-10">
-                                <div className="flex justify-between items-start">
+                                <div className="flex justify-between items-start mb-6">
                                     <div>
                                         <h3 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-2">{yearFilter} Year Participants</h3>
-                                        <p className="text-white/40 text-xs md:text-sm font-mono">{filteredByYear.length} {filteredByYear.length === 1 ? 'Registration' : 'Registrations'}</p>
+                                        <p className="text-white/40 text-xs md:text-sm font-mono">{searchFilteredUsers.length} {searchFilteredUsers.length === 1 ? 'Registration' : 'Registrations'}</p>
                                     </div>
-                                    <button onClick={() => setYearFilter(null)} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
+                                    <button onClick={() => { setYearFilter(null); setYearFilterSearch(''); }} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
                                         &times;
                                     </button>
+                                </div>
+                                {/* Search Input */}
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Search by name, email, phone, or roll number..."
+                                        value={yearFilterSearch}
+                                        onChange={(e) => setYearFilterSearch(e.target.value)}
+                                        className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-white/20 transition-colors text-sm"
+                                    />
+                                    {yearFilterSearch && (
+                                        <button
+                                            onClick={() => setYearFilterSearch('')}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
 
                             {/* User List */}
                             <div className="p-6 md:p-8 space-y-3">
-                                {filteredByYear.length > 0 ? (
-                                    filteredByYear.map((user, index) => (
+                                {searchFilteredUsers.length > 0 ? (
+                                    searchFilteredUsers.map((user, index) => (
                                         <div key={user.id} className="bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] p-5 transition-all duration-300 group">
                                             <div className="flex items-start justify-between gap-4">
                                                 <div className="flex-1">
@@ -1118,7 +1176,9 @@ export default function AdminDashboard() {
                                     ))
                                 ) : (
                                     <div className="py-20 text-center">
-                                        <p className="text-white/20 text-lg font-light">No participants found in this category.</p>
+                                        <p className="text-white/20 text-lg font-light">
+                                            {yearFilterSearch ? 'No participants match your search.' : 'No participants found in this category.'}
+                                        </p>
                                     </div>
                                 )}
                             </div>
@@ -1127,7 +1187,7 @@ export default function AdminDashboard() {
                             <div className="sticky bottom-0 bg-[#090909] border-t border-white/[0.08] p-6 md:p-8">
                                 <div className="flex justify-end">
                                     <button
-                                        onClick={() => setYearFilter(null)}
+                                        onClick={() => { setYearFilter(null); setYearFilterSearch(''); }}
                                         className="px-8 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-colors"
                                     >
                                         Close

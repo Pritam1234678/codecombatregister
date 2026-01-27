@@ -56,6 +56,8 @@ export default function AdminDashboard() {
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [deletingUserId, setDeletingUserId] = useState<number | null>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [showGenderStats, setShowGenderStats] = useState(false);
+    const [showYearStats, setShowYearStats] = useState(false);
     const { showToast } = useToast();
 
     // Fetch Users
@@ -408,6 +410,22 @@ export default function AdminDashboard() {
 
                     <div className="flex flex-col md:flex-row items-stretch md:items-end gap-4 w-full md:w-auto">
                         <button
+                            onClick={() => setShowGenderStats(true)}
+                            className="group relative overflow-hidden bg-white/[0.03] border border-white/[0.08] px-6 py-3 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-3"
+                        >
+                            <Users className="w-5 h-5" />
+                            <span className="text-sm font-medium">Gender Stats</span>
+                        </button>
+                        
+                        <button
+                            onClick={() => setShowYearStats(true)}
+                            className="group relative overflow-hidden bg-white/[0.03] border border-white/[0.08] px-6 py-3 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-3"
+                        >
+                            <ClipboardList className="w-5 h-5" />
+                            <span className="text-sm font-medium">Year Stats</span>
+                        </button>
+                        
+                        <button
                             onClick={handleExportCSV}
                             className="group relative overflow-hidden bg-white/[0.03] border border-white/[0.08] px-6 py-3 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-3"
                         >
@@ -669,6 +687,226 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             )}
+
+            {/* Gender Statistics Modal */}
+            {showGenderStats && (() => {
+                const maleCount = users.filter(u => u.gender === 'Male').length;
+                const femaleCount = users.filter(u => u.gender === 'Female').length;
+                const otherCount = users.filter(u => u.gender === 'Other').length;
+                const totalCount = users.length;
+                
+                return (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+                        <div className="w-full max-w-2xl bg-[#090909] border border-white/[0.08] p-6 md:p-10 shadow-2xl max-h-[90vh] overflow-y-auto">
+                            <div className="flex justify-between items-start mb-8 md:mb-12">
+                                <div>
+                                    <h3 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-2">Gender Statistics</h3>
+                                    <p className="text-white/40 text-xs md:text-sm font-mono">Distribution Overview</p>
+                                </div>
+                                <button onClick={() => setShowGenderStats(false)} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
+                                    &times;
+                                </button>
+                            </div>
+
+                            <div className="space-y-6">
+                                {/* Total Count */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider">Total Registrations</span>
+                                        <span className="text-4xl font-bold text-white">{totalCount}</span>
+                                    </div>
+                                </div>
+
+                                {/* Male Count */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">Male</span>
+                                        <span className="text-4xl font-bold text-white">{maleCount}</span>
+                                    </div>
+                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-white transition-all duration-500" 
+                                            style={{ width: `${totalCount > 0 ? (maleCount / totalCount) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                    <div className="mt-2 text-right">
+                                        <span className="text-xs text-white/40 font-mono">
+                                            {totalCount > 0 ? ((maleCount / totalCount) * 100).toFixed(1) : 0}%
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Female Count */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">Female</span>
+                                        <span className="text-4xl font-bold text-white">{femaleCount}</span>
+                                    </div>
+                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-white transition-all duration-500" 
+                                            style={{ width: `${totalCount > 0 ? (femaleCount / totalCount) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                    <div className="mt-2 text-right">
+                                        <span className="text-xs text-white/40 font-mono">
+                                            {totalCount > 0 ? ((femaleCount / totalCount) * 100).toFixed(1) : 0}%
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Other Count */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">Other</span>
+                                        <span className="text-4xl font-bold text-white">{otherCount}</span>
+                                    </div>
+                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-white transition-all duration-500" 
+                                            style={{ width: `${totalCount > 0 ? (otherCount / totalCount) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                    <div className="mt-2 text-right">
+                                        <span className="text-xs text-white/40 font-mono">
+                                            {totalCount > 0 ? ((otherCount / totalCount) * 100).toFixed(1) : 0}%
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end mt-8 pt-6 border-t border-white/[0.08]">
+                                <button
+                                    onClick={() => setShowGenderStats(false)}
+                                    className="px-8 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-colors"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })()}
+
+            {/* Year Statistics Modal */}
+            {showYearStats && (() => {
+                const firstYearCount = users.filter(u => u.year === '1st' || u.year === '1st Year').length;
+                const secondYearCount = users.filter(u => u.year === '2nd' || u.year === '2nd Year').length;
+                const thirdYearCount = users.filter(u => u.year === '3rd' || u.year === '3rd Year').length;
+                const fourthYearCount = users.filter(u => u.year === '4th' || u.year === '4th Year').length;
+                const totalCount = users.length;
+                
+                return (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+                        <div className="w-full max-w-2xl bg-[#090909] border border-white/[0.08] p-6 md:p-10 shadow-2xl max-h-[90vh] overflow-y-auto">
+                            <div className="flex justify-between items-start mb-8 md:mb-12">
+                                <div>
+                                    <h3 className="text-2xl md:text-3xl font-light tracking-tight text-white mb-2">Year-wise Statistics</h3>
+                                    <p className="text-white/40 text-xs md:text-sm font-mono">Academic Year Distribution</p>
+                                </div>
+                                <button onClick={() => setShowYearStats(false)} className="text-white/40 hover:text-white transition-colors text-3xl leading-none px-2">
+                                    &times;
+                                </button>
+                            </div>
+
+                            <div className="space-y-6">
+                                {/* Total Count */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider">Total Registrations</span>
+                                        <span className="text-4xl font-bold text-white">{totalCount}</span>
+                                    </div>
+                                </div>
+
+                                {/* 1st Year */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">1st Year</span>
+                                        <span className="text-4xl font-bold text-white">{firstYearCount}</span>
+                                    </div>
+                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-white transition-all duration-500" 
+                                            style={{ width: `${totalCount > 0 ? (firstYearCount / totalCount) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                    <div className="mt-2 text-right">
+                                        <span className="text-xs text-white/40 font-mono">
+                                            {totalCount > 0 ? ((firstYearCount / totalCount) * 100).toFixed(1) : 0}%
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* 2nd Year */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">2nd Year</span>
+                                        <span className="text-4xl font-bold text-white">{secondYearCount}</span>
+                                    </div>
+                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-white transition-all duration-500" 
+                                            style={{ width: `${totalCount > 0 ? (secondYearCount / totalCount) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                    <div className="mt-2 text-right">
+                                        <span className="text-xs text-white/40 font-mono">
+                                            {totalCount > 0 ? ((secondYearCount / totalCount) * 100).toFixed(1) : 0}%
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* 3rd Year */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">3rd Year</span>
+                                        <span className="text-4xl font-bold text-white">{thirdYearCount}</span>
+                                    </div>
+                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-white transition-all duration-500" 
+                                            style={{ width: `${totalCount > 0 ? (thirdYearCount / totalCount) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                    <div className="mt-2 text-right">
+                                        <span className="text-xs text-white/40 font-mono">
+                                            {totalCount > 0 ? ((thirdYearCount / totalCount) * 100).toFixed(1) : 0}%
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* 4th Year */}
+                                <div className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <span className="text-white/60 text-sm uppercase tracking-wider font-mono">4th Year</span>
+                                        <span className="text-4xl font-bold text-white">{fourthYearCount}</span>
+                                    </div>
+                                    <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-white transition-all duration-500" 
+                                            style={{ width: `${totalCount > 0 ? (fourthYearCount / totalCount) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                    <div className="mt-2 text-right">
+                                        <span className="text-xs text-white/40 font-mono">
+                                            {totalCount > 0 ? ((fourthYearCount / totalCount) * 100).toFixed(1) : 0}%
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end mt-8 pt-6 border-t border-white/[0.08]">
+                                <button
+                                    onClick={() => setShowYearStats(false)}
+                                    className="px-8 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-colors"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })()}
 
             {/* Minimalist Delete Modal */}
             {deletingUserId && (

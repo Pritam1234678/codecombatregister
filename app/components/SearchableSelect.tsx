@@ -34,13 +34,13 @@ export default function SearchableSelect({ options, value, onChange, placeholder
     return (
         <div className={`relative ${className}`} ref={wrapperRef}>
             <div
-                className="w-full px-4 py-3 bg-black/50 border border-white/10 text-white cursor-pointer flex items-center justify-between focus:border-red-500 transition-colors"
+                className="w-full px-4 py-3 sm:px-5 sm:py-4 pr-14 sm:pr-16 bg-black/60 border border-white/10 text-white cursor-pointer flex items-center justify-between focus:border-red-500 transition-colors"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <span className={value ? "text-white" : "text-white/30 truncate pr-4"}>
+                <span className={value ? "text-white" : "text-white/30 truncate pr-2"}>
                     {value || placeholder}
                 </span>
-                <ChevronDown className={`w-4 h-4 text-white/50 transition-transform shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-white/50 transition-transform shrink-0 absolute right-4 sm:right-5 ${isOpen ? 'rotate-180' : ''}`} />
             </div>
 
 

@@ -54,6 +54,8 @@ export default function RegisterPage() {
         "Electronics and Computer Science Engineering",
         "Electronics Engineering VLSI Design and Technology",
         "Electronics and Instrumentation",
+
+
         "Chemical Engineering",
         "Civil Engineering",
         "Construction Technology",
@@ -270,24 +272,26 @@ export default function RegisterPage() {
                                         </div>
 
                                         {/* Gender & Year Row */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
                                             {/* Gender */}
                                             <div className="group">
                                                 <label htmlFor="gender" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-3 group-focus-within:text-red-400 transition-colors">
                                                     Gender
                                                 </label>
-                                                <select
-                                                    id="gender"
-                                                    name="gender"
-                                                    value={formData.gender}
-                                                    onChange={handleChange}
-                                                    className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.gender ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
-                                                >
-                                                    <option value="" className="bg-black">Select Gender</option>
-                                                    <option value="Male" className="bg-black">Male</option>
-                                                    <option value="Female" className="bg-black">Female</option>
-                                                    <option value="Other" className="bg-black">Other</option>
-                                                </select>
+
+                                                <div className="relative">
+                                                    <SearchableSelect
+                                                        options={['Male', 'Female', 'Other']}
+                                                        value={formData.gender}
+                                                        onChange={(value) => {
+                                                            setFormData(prev => ({ ...prev, gender: value }));
+                                                            if (errors.gender) setErrors(prev => ({ ...prev, gender: '' }));
+                                                        }}
+                                                        placeholder="Select Gender"
+                                                        className="w-full text-base sm:text-lg"
+                                                        searchable={false}
+                                                    />
+                                                </div>
                                                 {errors.gender && <p className="text-red-500 text-xs mt-1 font-mono">{errors.gender}</p>}
                                             </div>
 
@@ -296,19 +300,20 @@ export default function RegisterPage() {
                                                 <label htmlFor="year" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-3 group-focus-within:text-red-400 transition-colors">
                                                     Year
                                                 </label>
-                                                <select
-                                                    id="year"
-                                                    name="year"
-                                                    value={formData.year}
-                                                    onChange={handleChange}
-                                                    className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.year ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
-                                                >
-                                                    <option value="" className="bg-black">Select Year</option>
-                                                    <option value="1st" className="bg-black">1st Year</option>
-                                                    <option value="2nd" className="bg-black">2nd Year</option>
-                                                    <option value="3rd" className="bg-black">3rd Year</option>
-                                                    <option value="4th" className="bg-black">4th Year</option>
-                                                </select>
+
+                                                <div className="relative">
+                                                    <SearchableSelect
+                                                        options={['1st Year', '2nd Year', '3rd Year', '4th Year']}
+                                                        value={formData.year}
+                                                        onChange={(value) => {
+                                                            setFormData(prev => ({ ...prev, year: value }));
+                                                            if (errors.year) setErrors(prev => ({ ...prev, year: '' }));
+                                                        }}
+                                                        placeholder="Select Year"
+                                                        className="w-full text-base sm:text-lg"
+                                                        searchable={false}
+                                                    />
+                                                </div>
                                                 {errors.year && <p className="text-red-500 text-xs mt-1 font-mono">{errors.year}</p>}
                                             </div>
                                         </div>

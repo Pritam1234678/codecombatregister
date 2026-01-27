@@ -208,13 +208,13 @@ export default function Home() {
                     <div className="mt-12 flex items-center justify-center gap-6">
                         <div className="h-[1px] w-12 md:w-24 bg-gradient-to-r from-transparent to-red-500/50" />
                         <p className="text-white/60 text-base md:text-lg font-sans tracking-[0.2em] uppercase">
-                            Total Prizepool <span className="text-white font-medium ml-2">₹1,0000</span>
+                            Total Prizepool <span className="text-white font-medium ml-2">₹10,000</span>
                         </p>
                         <div className="h-[1px] w-12 md:w-24 bg-gradient-to-l from-transparent to-red-500/50" />
                     </div>
                 </motion.div>
 
-                <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl items-end px-4 relative z-10 mb-8">
+                <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl items-end px-4 relative z-10 mb-8">
 
                     {/* 2nd Place - Smooth Spring Entry */}
                     <div className="prize-card-left order-2 md:order-1 relative group md:mb-24">

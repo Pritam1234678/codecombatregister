@@ -74,20 +74,41 @@ export default function SupportPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setSubmitStatus('idle');
 
-        // Simulating API call for demo purposes since backend might not be running
-        setTimeout(() => {
-            setIsSubmitting(false);
-            setSubmitStatus('success');
-            setFormData({ name: '', email: '', subject: 'general', message: '' });
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/support/contact`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                setSubmitStatus('success');
+                setFormData({ name: '', email: '', subject: 'general', message: '' });
+                setTimeout(() => setSubmitStatus('idle'), 5000);
+            } else {
+                setSubmitStatus('error');
+                console.error('Support form error:', data);
+                setTimeout(() => setSubmitStatus('idle'), 5000);
+            }
+        } catch (error) {
+            console.error('Support form submission error:', error);
+            setSubmitStatus('error');
             setTimeout(() => setSubmitStatus('idle'), 5000);
-        }, 1500);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const faqs = [
         {
             question: "EVENT_TIMELINE_QUERY",
-            answer: "CLASSIFIED DATA: Event dates will be transmitted via secure email channels to all registered operatives. Maintain communication silence until further notice."
+            answer: "CLASSIFIED DATA: Event dates are on Feb 15, 2026 and will be transmitted via secure email channels to all registered operatives. Maintain communication silence until further notice."
         },
         {
             question: "ELIGIBILITY_PROTOCOLS",
@@ -103,7 +124,7 @@ export default function SupportPage() {
         },
         {
             question: "SQUAD_CONFIGURATION",
-            answer: "Mission structure (Solo vs Squad) is currently pending declassification. Await updates via the command frequency (email)."
+            answer: "No alliances permitted. Each operative must engage in solo combat without external assistance or team formations."
         },
         {
             question: "MISSING_CONFIRMATION_PACKET",

@@ -14,7 +14,9 @@ export default function RegisterPage() {
         email: '',
         phone: '',
         rollNumber: '',
-        branch: ''
+        branch: '',
+        gender: '',
+        year: ''
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -89,6 +91,8 @@ export default function RegisterPage() {
 
         if (!formData.rollNumber.trim()) newErrors.rollNumber = "Roll Number is required";
         if (!formData.branch) newErrors.branch = "Please select a branch";
+        if (!formData.gender) newErrors.gender = "Please select a gender";
+        if (!formData.year) newErrors.year = "Please select a year";
 
         setErrors(newErrors);
 
@@ -260,6 +264,50 @@ export default function RegisterPage() {
                                                 maxLength={10}
                                             />
                                             {errors.phone && <p className="text-red-500 text-xs mt-1 font-mono">{errors.phone}</p>}
+                                        </div>
+
+                                        {/* Gender & Year Row */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            {/* Gender */}
+                                            <div className="group">
+                                                <label htmlFor="gender" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-3 group-focus-within:text-red-400 transition-colors">
+                                                    Gender
+                                                </label>
+                                                <select
+                                                    id="gender"
+                                                    name="gender"
+                                                    value={formData.gender}
+                                                    onChange={handleChange}
+                                                    className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.gender ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
+                                                >
+                                                    <option value="" className="bg-black">Select Gender</option>
+                                                    <option value="Male" className="bg-black">Male</option>
+                                                    <option value="Female" className="bg-black">Female</option>
+                                                    <option value="Other" className="bg-black">Other</option>
+                                                </select>
+                                                {errors.gender && <p className="text-red-500 text-xs mt-1 font-mono">{errors.gender}</p>}
+                                            </div>
+
+                                            {/* Year */}
+                                            <div className="group">
+                                                <label htmlFor="year" className="block text-sm font-heading uppercase tracking-widest text-red-500 mb-3 group-focus-within:text-red-400 transition-colors">
+                                                    Year
+                                                </label>
+                                                <select
+                                                    id="year"
+                                                    name="year"
+                                                    value={formData.year}
+                                                    onChange={handleChange}
+                                                    className={`w-full px-4 py-3 sm:px-5 sm:py-4 bg-black/60 border ${errors.year ? 'border-red-500' : 'border-white/10'} text-white placeholder-white/30 focus:border-red-500 focus:bg-black/80 focus:outline-none transition-colors duration-200 text-base sm:text-lg will-change-contents`}
+                                                >
+                                                    <option value="" className="bg-black">Select Year</option>
+                                                    <option value="1st" className="bg-black">1st Year</option>
+                                                    <option value="2nd" className="bg-black">2nd Year</option>
+                                                    <option value="3rd" className="bg-black">3rd Year</option>
+                                                    <option value="4th" className="bg-black">4th Year</option>
+                                                </select>
+                                                {errors.year && <p className="text-red-500 text-xs mt-1 font-mono">{errors.year}</p>}
+                                            </div>
                                         </div>
 
                                         {/* Roll Number & Branch Row */}

@@ -82,7 +82,7 @@ export default function Navbar() {
       {/* Left Branding */}
       <div className="nav-item z-50">
         <Link href="/" className="text-sm font-light tracking-[0.2em] uppercase opacity-80 font-sans">
-          IEEE CTSoc
+          IEEE CTS<span className=' lowercase'>oc</span>
         </Link>
       </div>
 

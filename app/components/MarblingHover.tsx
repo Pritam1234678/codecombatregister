@@ -65,6 +65,23 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
 
       varying vec2 v_uv;
 
+      // Object-cover UV calculation
+      vec2 coverUV(vec2 uv, vec2 textureSize, vec2 canvasSize) {
+        vec2 textureAspect = textureSize / textureSize.y;
+        vec2 canvasAspect = canvasSize / canvasSize.y;
+        
+        vec2 scale = vec2(
+          canvasAspect.x / textureAspect.x,
+          canvasAspect.y / textureAspect.y
+        );
+        
+        float scaleToUse = max(scale.x, scale.y);
+        vec2 scaledSize = textureAspect * scaleToUse;
+        vec2 offset = (canvasAspect - scaledSize) * 0.5;
+        
+        return (uv * canvasAspect - offset) / scaledSize;
+      }
+
       vec3 hash33(vec3 p) {
         p = fract(p * vec3(443.8975, 397.2973, 491.1871));
         p += dot(p.zxy, p.yxz + 19.27);
@@ -126,7 +143,10 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
 
       void main() {
         vec2 uv = v_uv;
-        vec4 frontColor = texture2D(u_frontTexture, uv);
+        
+        // Use object-cover for front texture
+        vec2 frontUV = coverUV(uv, vec2(1.0, 1.0), u_resolution / max(u_resolution.x, u_resolution.y));
+        vec4 frontColor = texture2D(u_frontTexture, frontUV);
         vec4 backColor = texture2D(u_backTexture, uv);
         
         float screenAspect = u_resolution.x / u_resolution.y;
@@ -309,7 +329,7 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
 
     if (!isDesktop) {
         return (
-            <div className={`relative w-full ${className}`}>
+            <div className="relative w-full h-full">
                 <Image
                     src={frontImage}
                     alt={alt}
@@ -323,7 +343,7 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
     }
 
     return (
-        <div ref={containerRef} className={`relative w-full ${className}`}>
+        <div ref={containerRef} className="relative w-full h-full">
             <canvas ref={canvasRef} className="w-full h-full" />
         </div>
     );

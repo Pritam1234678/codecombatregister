@@ -14,6 +14,8 @@ interface User {
     phone: string;
     roll_number: string;
     branch: string;
+    gender: string;
+    year: string;
     created_at: string;
 }
 
@@ -107,7 +109,7 @@ export default function AdminDashboard() {
     // Export to CSV
     const handleExportCSV = () => {
         // CSV Headers
-        const headers = ['ID', 'Name', 'Email', 'Phone', 'Roll Number', 'Branch', 'Registered At'];
+        const headers = ['ID', 'Name', 'Email', 'Phone', 'Roll Number', 'Branch', 'Gender', 'Year', 'Registered At'];
         
         // CSV Rows
         const rows = filteredUsers.map(user => [
@@ -117,6 +119,8 @@ export default function AdminDashboard() {
             user.phone,
             user.roll_number,
             user.branch,
+            user.gender,
+            user.year,
             new Date(user.created_at).toLocaleString()
         ]);
 
@@ -217,6 +221,18 @@ export default function AdminDashboard() {
             return;
         }
 
+        // Gender: non-empty
+        if (!editingUser.gender.trim()) {
+            showToast('Gender is required', 'error');
+            return;
+        }
+
+        // Year: non-empty
+        if (!editingUser.year.trim()) {
+            showToast('Year is required', 'error');
+            return;
+        }
+
         const token = localStorage.getItem('adminToken');
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/admin/users/${editingUser.id}`, {
@@ -230,7 +246,9 @@ export default function AdminDashboard() {
                     email: editingUser.email,
                     phone: editingUser.phone,
                     rollNumber: editingUser.roll_number, // Backend expects rollNumber
-                    branch: editingUser.branch
+                    branch: editingUser.branch,
+                    gender: editingUser.gender,
+                    year: editingUser.year
                 })
             });
 
@@ -410,8 +428,8 @@ export default function AdminDashboard() {
                     </div>
                 </div>
 
-                {/* Minimalist Data Table */}
-                <div className="overflow-x-auto">
+                {/* Desktop Table View - Hidden on Mobile */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="border-b border-white/[0.08]">
@@ -440,6 +458,7 @@ export default function AdminDashboard() {
                                     <td className="py-6 px-4">
                                         <div className="text-white/80">{user.branch}</div>
                                         <div className="text-white/30 text-sm font-mono mt-1">{user.roll_number}</div>
+                                        <div className="text-white/30 text-xs font-mono mt-1">{user.gender} • {user.year}</div>
                                     </td>
                                     <td className="py-6 px-4 text-right">
                                         <div className="flex justify-end gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -465,6 +484,69 @@ export default function AdminDashboard() {
                     {filteredUsers.length === 0 && (
                         <div className="py-32 text-center">
                             <p className="text-white/20 text-xl font-light">No records found matching your search.</p>
+                        </div>
+                    )}
+                </div>
+
+                {/* Mobile Card View - Visible on Mobile Only */}
+                <div className="md:hidden space-y-4">
+                    {filteredUsers.map((user) => (
+                        <div key={user.id} className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
+                            {/* Header with ID and Controls */}
+                            <div className="flex justify-between items-start mb-4 pb-4 border-b border-white/[0.08]">
+                                <span className="font-mono text-white/40 text-xs">#{user.id.toString().padStart(3, '0')}</span>
+                                <div className="flex gap-4">
+                                    <button
+                                        onClick={() => setEditingUser(user)}
+                                        className="text-xs text-white/60 hover:text-white transition-colors uppercase tracking-wider"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => confirmDelete(user.id)}
+                                        className="text-xs text-red-500/60 hover:text-red-500 transition-colors uppercase tracking-wider"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Participant Info */}
+                            <h3 className="text-xl font-medium text-white mb-4">{user.name}</h3>
+                            
+                            {/* Details Grid */}
+                            <div className="space-y-3 text-sm">
+                                <div className="flex justify-between py-2 border-b border-white/[0.04]">
+                                    <span className="text-white/40 uppercase text-xs tracking-wider">Email</span>
+                                    <span className="text-white/80 text-right break-all pl-4">{user.email}</span>
+                                </div>
+                                <div className="flex justify-between py-2 border-b border-white/[0.04]">
+                                    <span className="text-white/40 uppercase text-xs tracking-wider">Phone</span>
+                                    <span className="text-white/80 font-mono">{user.phone}</span>
+                                </div>
+                                <div className="flex justify-between py-2 border-b border-white/[0.04]">
+                                    <span className="text-white/40 uppercase text-xs tracking-wider">Roll No</span>
+                                    <span className="text-white/80 font-mono">{user.roll_number}</span>
+                                </div>
+                                <div className="flex justify-between py-2 border-b border-white/[0.04]">
+                                    <span className="text-white/40 uppercase text-xs tracking-wider">Branch</span>
+                                    <span className="text-white/80 text-right pl-4">{user.branch}</span>
+                                </div>
+                                <div className="flex justify-between py-2 border-b border-white/[0.04]">
+                                    <span className="text-white/40 uppercase text-xs tracking-wider">Gender</span>
+                                    <span className="text-white/80">{user.gender}</span>
+                                </div>
+                                <div className="flex justify-between py-2">
+                                    <span className="text-white/40 uppercase text-xs tracking-wider">Year</span>
+                                    <span className="text-white/80">{user.year}</span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+
+                    {filteredUsers.length === 0 && (
+                        <div className="py-32 text-center">
+                            <p className="text-white/20 text-lg font-light">No records found matching your search.</p>
                         </div>
                     )}
                 </div>
@@ -535,6 +617,36 @@ export default function AdminDashboard() {
                                         placeholder="Select Branch"
                                         className="w-full"
                                     />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                                <div className="space-y-3">
+                                    <label className="block text-xs font-mono uppercase tracking-widest text-white/40">Gender</label>
+                                    <select
+                                        value={editingUser.gender}
+                                        onChange={(e) => setEditingUser({ ...editingUser, gender: e.target.value })}
+                                        className="w-full bg-transparent border-b border-white/20 py-2 text-white focus:outline-none focus:border-white transition-colors text-lg"
+                                    >
+                                        <option value="" className="bg-[#090909]">Select Gender</option>
+                                        <option value="Male" className="bg-[#090909]">Male</option>
+                                        <option value="Female" className="bg-[#090909]">Female</option>
+                                        <option value="Other" className="bg-[#090909]">Other</option>
+                                    </select>
+                                </div>
+                                <div className="space-y-3">
+                                    <label className="block text-xs font-mono uppercase tracking-widest text-white/40">Year</label>
+                                    <select
+                                        value={editingUser.year}
+                                        onChange={(e) => setEditingUser({ ...editingUser, year: e.target.value })}
+                                        className="w-full bg-transparent border-b border-white/20 py-2 text-white focus:outline-none focus:border-white transition-colors text-lg"
+                                    >
+                                        <option value="" className="bg-[#090909]">Select Year</option>
+                                        <option value="1st" className="bg-[#090909]">1st Year</option>
+                                        <option value="2nd" className="bg-[#090909]">2nd Year</option>
+                                        <option value="3rd" className="bg-[#090909]">3rd Year</option>
+                                        <option value="4th" className="bg-[#090909]">4th Year</option>
+                                    </select>
                                 </div>
                             </div>
 

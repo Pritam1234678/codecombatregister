@@ -44,9 +44,9 @@ const eventSections = [
     title: "Glory & Rewards",
     content: "Champions don't just win — they claim legendary rewards. Battle through tiers, earn glory points, and secure your place in the hall of fame.",
     highlights: [
-      "₹5k worth Goodies for Champion ",
-      "₹3k worth Goodies for Runner Up",
-      "₹1.5k worth Goodies for Second Runner Up"
+      "Goodies worth ₹5k for Champion ",
+      "Goodies worth ₹3k for Runner Up",
+      "Goodies worth ₹1.5k for Second Runner Up"
     ]
   },
   {
@@ -62,7 +62,7 @@ const eventSections = [
   {
     id: 6,
     title: "Event Details",
-    content: "Campus 25, KIIT University • Feb 15, 2026 at 11:00 AM. Check-in opens at 10:00 AM. Bring your laptop, charger, and warrior spirit!",
+    content: "Campus 25, KIIT University • Feb 15, 2026 at 10:00 AM. Check-in opens at 9:30 AM. Bring your laptop, charger, and warrior spirit!",
     highlights: [
       "Solo Warriors Welcome",
       "Any Programming Language",

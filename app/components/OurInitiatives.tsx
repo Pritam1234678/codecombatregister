@@ -67,9 +67,9 @@ const cards: Card[] = [
         highlightColor: "bg-purple-500/10 border-purple-500/30 text-purple-400",
         content: "Champions don't just win — they claim legendary rewards. Battle through tiers, earn glory points, and secure your place in the hall of fame.",
         highlights: [
-            "₹5k Champion Prize",
-            "₹3k Runner Up",
-            "₹1.5k Second Runner Up"
+            "Champion Prize worth ₹5k",
+            "Runner Up Prize worth ₹3k",
+            "Second Runner Up Prize worth ₹1.5k"
         ]
     },
     {

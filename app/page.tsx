@@ -33,11 +33,11 @@ export default function Home() {
             {/* Preload All Images */}
             <div className="hidden">
                 <Image src="/hero.png" alt="preload" width={100} height={100} priority quality={100} />
-                <Image src="/runner.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/runner.jpg" alt="preload" width={100} height={100} priority quality={100} />
                 <Image src="/2nd.png" alt="preload" width={100} height={100} priority quality={100} />
-                <Image src="/champion.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/champion.jpg" alt="preload" width={100} height={100} priority quality={100} />
                 <Image src="/1st.png" alt="preload" width={100} height={100} priority quality={100} />
-                <Image src="/bronze.png" alt="preload" width={100} height={100} priority quality={100} />
+                <Image src="/bronze.jpg" alt="preload" width={100} height={100} priority quality={100} />
                 <Image src="/3rd.png" alt="preload" width={100} height={100} priority quality={100} />
             </div>
 
@@ -70,7 +70,7 @@ export default function Home() {
                             ease: [0.25, 0.1, 0.25, 1]
                         }}
                     >
-                        IEEE CTSoc presents
+                        IEEE CTS<span className=' lowercase'>oc</span> presents
                     </motion.p>
 
                     <h1 ref={titleRef} className="text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-sans font-bold tracking-tight text-white leading-none uppercase flex flex-col sm:flex-row items-center justify-center min-h-[1.2em] relative z-30">
@@ -208,7 +208,7 @@ export default function Home() {
                     <div className="mt-12 flex items-center justify-center gap-6">
                         <div className="h-[1px] w-12 md:w-24 bg-gradient-to-r from-transparent to-red-500/50" />
                         <p className="text-white/60 text-base md:text-lg font-sans tracking-[0.2em] uppercase">
-                            Total Prizepool <span className="text-white font-medium ml-2">₹21,500</span>
+                            Total Prizepool <span className="text-white font-medium ml-2">₹1,0000</span>
                         </p>
                         <div className="h-[1px] w-12 md:w-24 bg-gradient-to-l from-transparent to-red-500/50" />
                     </div>
@@ -234,7 +234,7 @@ export default function Home() {
                                 {/* Image Area - EDGE TO EDGE & CONTAIN */}
                                 <div className="relative w-full aspect-[3/4] mb-0 border-b border-white/10 shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                     <MarblingHover
-                                        frontImage="/runner.png"
+                                        frontImage="/runner.jpg"
                                         backImage="/2nd.png"
                                         alt="Runner Up"
                                         className="w-full h-full object-contain"
@@ -245,10 +245,10 @@ export default function Home() {
 
                                 {/* Details - Padded Separate Container */}
                                 <div className="relative z-10 flex flex-col items-center p-4">
-                                    <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-md mb-2">
-                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-white/40">Silver Tier</span>
+                                    <div className="px-3 py-1 bg-gray-400/10 rounded-full border border-gray-400/20 backdrop-blur-md mb-2">
+                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-gray-400">Silver Tier</span>
                                     </div>
-                                    <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">Runner Up</h3>
+                                    <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1 group-hover:text-gray-300  transition-colors duration-300">Runner Up</h3>
 
                                 </div>
                             </div>
@@ -279,7 +279,7 @@ export default function Home() {
                                 {/* Image Area - Heroic Scale */}
                                 <div className="relative w-full aspect-[3/4] mb-0 border-b border-yellow-500/20 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] z-10 group-hover:scale-[1.03] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                     <MarblingHover
-                                        frontImage="/champion.png"
+                                        frontImage="/champion.jpg"
                                         backImage="/1st.png"
                                         alt="Champion"
                                         className="w-full h-full object-contain"
@@ -316,9 +316,9 @@ export default function Home() {
                                 {/* Image Area */}
                                 <div className="relative w-full aspect-[3/4] mb-0 border-b border-white/10 shadow-2xl z-10 group-hover:scale-[1.02] transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                     <MarblingHover
-                                        frontImage="/bronze.png"
+                                        frontImage="/bronze.jpg"
                                         backImage="/3rd.png"
-                                        alt="2nd Runner Up"
+                                        alt="Third Place"
                                         className="w-full h-full object-contain"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -326,10 +326,10 @@ export default function Home() {
 
                                 {/* Details */}
                                 <div className="relative z-10 flex flex-col items-center p-4">
-                                    <div className="px-3 py-1 bg-white/5 rounded-full border border-white/5 backdrop-blur-md mb-2">
-                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-white/40">Bronze Tier</span>
+                                    <div className="px-3 py-1 bg-orange-600/10 rounded-full border border-orange-600/20 backdrop-blur-md mb-2">
+                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-orange-600">Bronze Tier</span>
                                     </div>
-                                    <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1">2nd Runner Up</h3>
+                                    <h3 className="text-white font-heading uppercase tracking-widest text-lg mb-1 group-hover:text-orange-600 transition-colors duration-300">2nd Runner up</h3>
 
                                 </div>
                             </div>
@@ -340,6 +340,7 @@ export default function Home() {
 
                 {/* --- COMPACT MOBILE PRIZE SECTION --- */}
                 <div className="flex md:hidden flex-col gap-4 w-full px-2 relative z-10 mb-0">
+                    {/* Champion - Gold Tier */}
                     <div className="relative bg-gradient-to-b from-yellow-500/10 to-transparent border border-yellow-500/20 p-6 rounded-xl overflow-hidden">
                         <div className="absolute right-0 top-0 text-7xl font-heading font-black text-yellow-500/10 leading-none">1</div>
                         <div className="relative z-10 flex justify-between items-end">
@@ -347,34 +348,36 @@ export default function Home() {
                                 <h3 className="text-xl font-heading font-bold text-yellow-500 uppercase tracking-wider mb-1">Champion</h3>
                                 <p className="text-sm font-mono text-yellow-500/60 uppercase tracking-widest">Gold Tier</p>
                             </div>
-                            <div className="text-2xl font-heading font-bold text-white text-right">
-                                ₹5,000
+                            <div className="text-xl font-heading font-semibold text-yellow-400 text-right">
+                                Goodies worth<br/>₹5,000
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative bg-white/5 border border-white/10 p-6 rounded-xl overflow-hidden">
-                        <div className="absolute right-0 top-0 text-7xl font-heading font-black text-white/5 leading-none">2</div>
+                    {/* Runner Up - Silver Tier */}
+                    <div className="relative bg-gradient-to-b from-gray-400/10 to-transparent border border-gray-400/20 p-6 rounded-xl overflow-hidden">
+                        <div className="absolute right-0 top-0 text-7xl font-heading font-black text-gray-400/10 leading-none">2</div>
                         <div className="relative z-10 flex justify-between items-end">
                             <div className="text-left">
-                                <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wider mb-1">Runner Up</h3>
-                                <p className="text-sm font-mono text-white/40 uppercase tracking-widest">Silver Tier</p>
+                                <h3 className="text-xl font-heading font-bold text-gray-300 uppercase tracking-wider mb-1">Runner Up</h3>
+                                <p className="text-sm font-mono text-gray-400/60 uppercase tracking-widest">Silver Tier</p>
                             </div>
-                            <div className="text-xl font-heading font-bold text-white/90 text-right">
-                                ₹3,000
+                            <div className="text-xl font-heading font-semibold text-gray-300 text-right">
+                                Goodies worth<br/>₹3,000
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative bg-white/5 border border-white/10 p-6 rounded-xl overflow-hidden">
-                        <div className="absolute right-0 top-0 text-7xl font-heading font-black text-white/5 leading-none">3</div>
+                    {/* 2nd Runner Up - Bronze Tier */}
+                    <div className="relative bg-gradient-to-b from-orange-700/10 to-transparent border border-orange-700/20 p-6 rounded-xl overflow-hidden">
+                        <div className="absolute right-0 top-0 text-7xl font-heading font-black text-orange-700/10 leading-none">3</div>
                         <div className="relative z-10 flex justify-between items-end">
                             <div className="text-left">
-                                <h3 className="text-xl font-heading font-bold text-white uppercase tracking-wider mb-1">2nd Runner Up</h3>
-                                <p className="text-sm font-mono text-white/40 uppercase tracking-widest">Bronze Tier</p>
+                                <h3 className="text-xl font-heading font-bold text-orange-400 uppercase tracking-wider mb-1">Third Place</h3>
+                                <p className="text-sm font-mono text-orange-500/60 uppercase tracking-widest">Bronze Tier</p>
                             </div>
-                            <div className="text-xl font-heading font-bold text-white/80 text-right">
-                                ₹1,500
+                            <div className="text-xl font-heading font-semibold text-orange-400 text-right">
+                                Goodies worth<br/>₹1,500
                             </div>
                         </div>
                     </div>

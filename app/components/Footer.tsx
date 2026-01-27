@@ -39,11 +39,7 @@ export default function Footer() {
                                     Support
                                 </a>
                             </li>
-                            <li>
-                                <a href="/register" className="text-white/60 hover:text-white transition-colors duration-300 text-sm">
-                                    Register
-                                </a>
-                            </li>
+                          
                         </ul>
                     </div>
 
@@ -53,10 +49,19 @@ export default function Footer() {
                         <ul className="space-y-2 text-sm text-white/60">
                             <li>
                                 <a href="mailto:support@codecombat.ieee" className="hover:text-white transition-colors">
-                                    support@codecombat.ieee
+                                   Email
                                 </a>
                             </li>
-                            <li>Coordinator</li>
+                            <li>
+                                <a href="https://www.instagram.com/ieee_ctsoc_kiit?igsh=MTE5b2s5cWZzbXFwdQ==" className="hover:text-white transition-colors">
+                                    Instagram
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://ctsoc.ieee.org/" className="hover:text-white transition-colors">
+                                    IEEE CTSoc
+                                </a>
+                            </li>
 
                         </ul>
                     </div>

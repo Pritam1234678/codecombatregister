@@ -66,6 +66,11 @@ export default function AdminDashboard() {
     const [yearFilter, setYearFilter] = useState<string | null>(null);
     const [genderFilterSearch, setGenderFilterSearch] = useState('');
     const [yearFilterSearch, setYearFilterSearch] = useState('');
+    
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    
     const { showToast } = useToast();
 
     // Fetch Users
@@ -108,7 +113,18 @@ export default function AdminDashboard() {
             user.roll_number.toLowerCase().includes(lowerTerm)
         );
         setFilteredUsers(filtered);
+        setCurrentPage(1); // Reset to first page on search
     }, [searchTerm, users]);
+
+    // Pagination Logic
+    const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
+
+    const goToPage = (page: number) => {
+        setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+    };
 
     // Logout
     const handleLogout = () => {
@@ -467,7 +483,7 @@ export default function AdminDashboard() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredUsers.map((user) => (
+                            {paginatedUsers.map((user) => (
                                 <tr key={user.id} className="border-b border-white/[0.04] group hover:bg-white/[0.02] transition-colors">
                                     <td className="py-6 px-4 font-mono text-white/30 text-sm">
                                         #{user.id.toString().padStart(3, '0')}
@@ -512,11 +528,90 @@ export default function AdminDashboard() {
                             <p className="text-white/20 text-xl font-light">No records found matching your search.</p>
                         </div>
                     )}
+
+                    {/* Desktop Pagination */}
+                    {filteredUsers.length > 0 && totalPages > 1 && (
+                        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 py-6 border-t border-white/[0.08]">
+                            {/* Page Info */}
+                            <div className="text-white/40 text-sm font-mono">
+                                Showing {startIndex + 1} - {Math.min(endIndex, filteredUsers.length)} of {filteredUsers.length}
+                            </div>
+
+                            {/* Pagination Controls */}
+                            <div className="flex items-center gap-2">
+                                {/* Previous Button */}
+                                <button
+                                    onClick={() => goToPage(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                    className="px-4 py-2 border border-white/10 hover:border-white/20 hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:border-white/10 text-white/60 hover:text-white text-sm transition-all duration-300"
+                                >
+                                    Previous
+                                </button>
+
+                                {/* Page Numbers */}
+                                <div className="flex gap-1">
+                                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                                        let pageNum;
+                                        if (totalPages <= 5) {
+                                            pageNum = i + 1;
+                                        } else if (currentPage <= 3) {
+                                            pageNum = i + 1;
+                                        } else if (currentPage >= totalPages - 2) {
+                                            pageNum = totalPages - 4 + i;
+                                        } else {
+                                            pageNum = currentPage - 2 + i;
+                                        }
+
+                                        return (
+                                            <button
+                                                key={pageNum}
+                                                onClick={() => goToPage(pageNum)}
+                                                className={`w-10 h-10 border transition-all duration-300 ${
+                                                    currentPage === pageNum
+                                                        ? 'bg-white text-black border-white'
+                                                        : 'border-white/10 hover:border-white/20 hover:bg-white/5 text-white/60 hover:text-white'
+                                                }`}
+                                            >
+                                                {pageNum}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                {/* Next Button */}
+                                <button
+                                    onClick={() => goToPage(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 border border-white/10 hover:border-white/20 hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:border-white/10 text-white/60 hover:text-white text-sm transition-all duration-300"
+                                >
+                                    Next
+                                </button>
+                            </div>
+
+                            {/* Items Per Page */}
+                            <div className="flex items-center gap-2">
+                                <span className="text-white/40 text-sm">Per page:</span>
+                                <select
+                                    value={itemsPerPage}
+                                    onChange={(e) => {
+                                        setItemsPerPage(Number(e.target.value));
+                                        setCurrentPage(1);
+                                    }}
+                                    className="bg-black/60 border border-white/10 text-white px-3 py-1.5 text-sm focus:outline-none focus:border-white/20"
+                                >
+                                    <option value={5}>5</option>
+                                    <option value={10}>10</option>
+                                    <option value={20}>20</option>
+                                    <option value={50}>50</option>
+                                </select>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Mobile Card View - Visible on Mobile Only */}
                 <div className="md:hidden space-y-4">
-                    {filteredUsers.map((user) => (
+                    {paginatedUsers.map((user) => (
                         <div key={user.id} className="bg-white/[0.03] border border-white/[0.08] p-6 hover:bg-white/[0.05] transition-all">
                             {/* Header with ID and Controls */}
                             <div className="flex justify-between items-start mb-4 pb-4 border-b border-white/[0.08]">
@@ -573,6 +668,84 @@ export default function AdminDashboard() {
                     {filteredUsers.length === 0 && (
                         <div className="py-32 text-center">
                             <p className="text-white/20 text-lg font-light">No records found matching your search.</p>
+                        </div>
+                    )}
+
+                    {/* Mobile Pagination */}
+                    {filteredUsers.length > 0 && totalPages > 1 && (
+                        <div className="mt-6 space-y-4">
+                            {/* Page Info */}
+                            <div className="text-center text-white/40 text-sm font-mono">
+                                Page {currentPage} of {totalPages} • {filteredUsers.length} total
+                            </div>
+
+                            {/* Pagination Controls */}
+                            <div className="flex items-center justify-center gap-2">
+                                {/* Previous Button */}
+                                <button
+                                    onClick={() => goToPage(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                    className="px-4 py-2 border border-white/10 hover:border-white/20 hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed text-white/60 hover:text-white text-sm transition-all"
+                                >
+                                    Prev
+                                </button>
+
+                                {/* Page Numbers - Mobile */}
+                                <div className="flex gap-1">
+                                    {Array.from({ length: Math.min(3, totalPages) }, (_, i) => {
+                                        let pageNum;
+                                        if (totalPages <= 3) {
+                                            pageNum = i + 1;
+                                        } else if (currentPage === 1) {
+                                            pageNum = i + 1;
+                                        } else if (currentPage === totalPages) {
+                                            pageNum = totalPages - 2 + i;
+                                        } else {
+                                            pageNum = currentPage - 1 + i;
+                                        }
+
+                                        return (
+                                            <button
+                                                key={pageNum}
+                                                onClick={() => goToPage(pageNum)}
+                                                className={`w-10 h-10 border text-sm transition-all ${
+                                                    currentPage === pageNum
+                                                        ? 'bg-white text-black border-white'
+                                                        : 'border-white/10 hover:border-white/20 hover:bg-white/5 text-white/60'
+                                                }`}
+                                            >
+                                                {pageNum}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                {/* Next Button */}
+                                <button
+                                    onClick={() => goToPage(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 border border-white/10 hover:border-white/20 hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed text-white/60 hover:text-white text-sm transition-all"
+                                >
+                                    Next
+                                </button>
+                            </div>
+
+                            {/* Items Per Page - Mobile */}
+                            <div className="flex items-center justify-center gap-2">
+                                <span className="text-white/40 text-sm">Show:</span>
+                                <select
+                                    value={itemsPerPage}
+                                    onChange={(e) => {
+                                        setItemsPerPage(Number(e.target.value));
+                                        setCurrentPage(1);
+                                    }}
+                                    className="bg-black/60 border border-white/10 text-white px-3 py-1.5 text-sm focus:outline-none"
+                                >
+                                    <option value={5}>5</option>
+                                    <option value={10}>10</option>
+                                    <option value={20}>20</option>
+                                </select>
+                            </div>
                         </div>
                     )}
                 </div>

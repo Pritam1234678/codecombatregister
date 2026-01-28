@@ -33,6 +33,19 @@ export default function RegisterPage() {
         return () => clearTimeout(timer);
     }, []);
 
+    // Block scroll when success popup is shown
+    useEffect(() => {
+        if (submitted) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [submitted]);
+
     const ALLOWED_BRANCHES = [
      
         "Computer Science & Engineering",
@@ -140,12 +153,10 @@ export default function RegisterPage() {
             // Smooth scroll to top to show success message
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            showToast('Registration successful! Redirecting...', 'success');
+            
 
             // Redirect to home after 3 seconds
-            setTimeout(() => {
-                router.push('/');
-            }, 5000);
+        
 
         } catch (error) {
             console.error('Registration error:', error);
@@ -178,19 +189,120 @@ export default function RegisterPage() {
                     <div className="w-full max-w-3xl">
 
                         {submitted ? (
-                            // Success State
-                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
-                                <div className="text-center py-20 px-6 animate-scale-in">
-                                    <div className="w-24 h-24 mx-auto mb-8 border-4 border-red-500 rounded-full flex items-center justify-center">
-                                        <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                        </svg>
+                            // Success State - Modern Award-Winning Design
+                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-zinc-950 to-black backdrop-blur-2xl animate-fade-in p-4 sm:p-6">
+                                <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl mx-auto">
+                                    {/* Ambient Glow Effects */}
+                                    <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-red-600/20 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
+                                    
+                                    {/* Main Card */}
+                                    <div className="relative bg-gradient-to-b from-zinc-900/90 to-black/90 backdrop-blur-xl border border-zinc-800/50 shadow-2xl shadow-red-950/50 animate-scale-in overflow-hidden">
+                                        {/* Top Accent Line */}
+                                        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-red-500 to-transparent" />
+                                        
+                                        <div className="p-6 sm:p-8 md:p-10 lg:p-12 text-center">
+                                            {/* Success Icon - Elegant Minimal Design */}
+                                            <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-6 sm:mb-8">
+                                                {/* Outer Ring Glow */}
+                                                <div className="absolute inset-0 rounded-full bg-red-500/10 blur-lg sm:blur-xl" />
+                                                {/* Main Circle */}
+                                                <div className="relative w-full h-full rounded-full border-2 border-zinc-800 bg-gradient-to-b from-zinc-900 to-black flex items-center justify-center">
+                                                    {/* Inner Glow Ring */}
+                                                    <div className="absolute inset-2 rounded-full border border-red-500/30" />
+                                                    {/* Checkmark */}
+                                                    <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-red-500 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5">
+                                                        <path d="M20 6L9 17l-5-5" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+
+                                            {/* Heading */}
+                                            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-bold uppercase tracking-tight bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent mb-2 sm:mb-3">
+                                                Registration Complete
+                                            </h2>
+                                            
+                                            <p className="text-zinc-400 text-xs sm:text-sm md:text-base font-light tracking-wide mb-6 sm:mb-8 md:mb-10">
+                                                Welcome to the arena, warrior
+                                            </p>
+
+                                            {/* Information Cards */}
+                                            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 md:mb-10 text-left">
+                                                {/* Email Check Card */}
+                                                <div className="group relative bg-gradient-to-br from-zinc-900/50 to-black/50 border border-zinc-800/50 p-4 sm:p-5 hover:border-zinc-700/50 transition-all duration-300">
+                                                    <div className="flex gap-3 sm:gap-4">
+                                                        {/* Icon Container */}
+                                                        <div className="flex-shrink-0">
+                                                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
+                                                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                                                    <polyline points="22,6 12,13 2,6" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        {/* Content */}
+                                                        <div className="flex-1 min-w-0">
+                                                            <h3 className="text-white font-medium text-sm sm:text-base mb-1 sm:mb-1.5">
+                                                                Check Your Email
+                                                            </h3>
+                                                            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed">
+                                                                Confirmation and event details have been sent to your registered email address
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Support Card */}
+                                                <div className="group relative bg-gradient-to-br from-zinc-900/50 to-black/50 border border-zinc-800/50 p-4 sm:p-5 hover:border-zinc-700/50 transition-all duration-300">
+                                                    <div className="flex gap-3 sm:gap-4">
+                                                        {/* Icon Container */}
+                                                        <div className="flex-shrink-0">
+                                                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
+                                                                    <circle cx="12" cy="12" r="10" />
+                                                                    <line x1="12" y1="8" x2="12" y2="12" />
+                                                                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        {/* Content */}
+                                                        <div className="flex-1 min-w-0">
+                                                            <h3 className="text-white font-medium text-sm sm:text-base mb-1 sm:mb-1.5">
+                                                                Need Help?
+                                                            </h3>
+                                                            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed">
+                                                                If you don't receive the email, visit our{' '}
+                                                                <a 
+                                                                    href="/support" 
+                                                                    className="text-red-400 hover:text-red-300 font-medium transition-colors underline decoration-red-500/30 underline-offset-2 hover:decoration-red-400/50"
+                                                                >
+                                                                    Support Page
+                                                                </a>
+                                                                {' '}to raise a ticket
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* CTA Button */}
+                                            <button
+                                                onClick={() => router.push('/')}
+                                                className="group relative w-full sm:w-auto min-w-[200px] px-6 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-medium text-xs sm:text-sm tracking-wide transition-all duration-300 overflow-hidden cursor-pointer"
+                                            >
+                                                <span className="relative z-10 flex items-center justify-center gap-2">
+                                                    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
+                                                        <line x1="19" y1="12" x2="5" y2="12" />
+                                                        <polyline points="12 19 5 12 12 5" />
+                                                    </svg>
+                                                    BACK TO HOME
+                                                </span>
+                                                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            </button>
+                                        </div>
+                                        
+                                        {/* Bottom Accent Line */}
+                                        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent" />
                                     </div>
-                                    <h2 className="text-4xl md:text-5xl font-heading font-bold uppercase tracking-tighter text-white mb-4">
-                                        Welcome to the Arena!
-                                    </h2>
-                                    <p className="text-white/60 text-lg mb-2">Registration successful, warrior.</p>
-                                    <p className="text-white/40 text-sm">Redirecting you back...</p>
                                 </div>
                             </div>
                         ) : (

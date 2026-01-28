@@ -580,7 +580,7 @@ export default function AdminDashboard() {
 
             {/* Premium Edit Modal */}
             {editingUser && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
                     <div className="w-full max-w-xl bg-[#090909] border border-white/[0.08] p-6 md:p-10 shadow-2xl max-h-[90vh] overflow-y-auto">
                         <div className="flex justify-between items-start mb-8 md:mb-12">
                             <div>
@@ -1061,6 +1061,23 @@ export default function AdminDashboard() {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {/* Action Buttons */}
+                                                <div className="flex flex-col gap-2 mt-4 md:mt-0">
+                                                    <button
+                                                        onClick={() => setEditingUser(user)}
+                                                        className="p-2 border border-white/10 hover:border-white/20 hover:bg-white/5 text-white/60 hover:text-white transition-all duration-300 group/btn"
+                                                        title="Edit User"
+                                                    >
+                                                        <Edit2 className="w-4 h-4" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setDeletingUserId(user.id)}
+                                                        className="p-2 border border-red-500/20 hover:border-red-500/40 hover:bg-red-500/10 text-red-500/60 hover:text-red-500 transition-all duration-300 group/btn"
+                                                        title="Delete User"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     ))
@@ -1171,6 +1188,23 @@ export default function AdminDashboard() {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {/* Action Buttons */}
+                                                <div className="flex flex-col gap-2 mt-4 md:mt-0">
+                                                    <button
+                                                        onClick={() => setEditingUser(user)}
+                                                        className="p-2 border border-white/10 hover:border-white/20 hover:bg-white/5 text-white/60 hover:text-white transition-all duration-300 group/btn"
+                                                        title="Edit User"
+                                                    >
+                                                        <Edit2 className="w-4 h-4" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setDeletingUserId(user.id)}
+                                                        className="p-2 border border-red-500/20 hover:border-red-500/40 hover:bg-red-500/10 text-red-500/60 hover:text-red-500 transition-all duration-300 group/btn"
+                                                        title="Delete User"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     ))
@@ -1201,7 +1235,7 @@ export default function AdminDashboard() {
 
             {/* Minimalist Delete Modal */}
             {deletingUserId && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-sm animate-fade-in">
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-sm animate-fade-in">
                     <div className="w-full max-w-sm bg-[#090909] border border-white/[0.1] p-8 md:p-10 text-center">
                         <div className="w-2 h-2 bg-red-500 mx-auto mb-6 rounded-full"></div>
                         <h3 className="text-xl font-light text-white mb-2">Delete Record?</h3>

@@ -85,6 +85,7 @@ export default class Output {
      * # Render the final output scene
      */
     private render() {
+        if (!this.common.renderer) return;
         if (this.uniforms) {
             this.uniforms.uTime.value = this.common.time;
         }

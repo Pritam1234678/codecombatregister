@@ -55,6 +55,7 @@ export default class ThreeApp {
      * # Setup before starting rendering
      */
     setup() {
+        if (!this.common.renderer) return;
         this.wrapper.appendChild(this.common.renderer.domElement);
         this.resize();
         this.common.clock.start();
@@ -64,6 +65,7 @@ export default class ThreeApp {
      * # Rendering process
      */
     render() {
+        if (!this.common.renderer) return;
         requestAnimationFrame(this.render);
 
         this.common.update();

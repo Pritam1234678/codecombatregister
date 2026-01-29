@@ -13,6 +13,7 @@ interface MarblingHoverProps {
 
 export default function MarblingHover({ frontImage, backImage, alt, className = '' }: MarblingHoverProps) {
     const [isDesktop, setIsDesktop] = useState(false);
+    const [webGLAvailable, setWebGLAvailable] = useState(true);
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const sceneRef = useRef<{
@@ -38,6 +39,23 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
     useEffect(() => {
         if (!isDesktop) return; // Skip Three.js on mobile
         if (!containerRef.current || !canvasRef.current) return;
+
+        // Check WebGL availability first
+        const checkWebGL = () => {
+            try {
+                const testCanvas = document.createElement('canvas');
+                const gl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
+                return !!gl;
+            } catch (e) {
+                return false;
+            }
+        };
+
+        if (!checkWebGL()) {
+            console.warn('WebGL not available, falling back to static image');
+            setWebGLAvailable(false);
+            return;
+        }
 
         const container = containerRef.current;
         const canvas = canvasRef.current;
@@ -193,53 +211,58 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
         });
 
         function setupScene() {
-            const scene = new THREE.Scene();
-            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            try {
+                const scene = new THREE.Scene();
+                const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-            const width = container.clientWidth;
-            const height = container.clientHeight;
+                const width = container.clientWidth;
+                const height = container.clientHeight;
 
-            const uniforms = {
-                u_frontTexture: { value: frontTexture },
-                u_backTexture: { value: backTexture },
-                u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
-                u_time: { value: 0.0 },
-                u_resolution: { value: new THREE.Vector2(width, height) },
-                u_radius: { value: 0.0 },
-                u_turbulence: { value: 0.225 }
-            };
+                const uniforms = {
+                    u_frontTexture: { value: frontTexture },
+                    u_backTexture: { value: backTexture },
+                    u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
+                    u_time: { value: 0.0 },
+                    u_resolution: { value: new THREE.Vector2(width, height) },
+                    u_radius: { value: 0.0 },
+                    u_turbulence: { value: 0.225 }
+                };
 
-            const geometry = new THREE.PlaneGeometry(2, 2);
-            const material = new THREE.ShaderMaterial({
-                uniforms,
-                vertexShader,
-                fragmentShader,
-                depthTest: false,
-                depthWrite: false
-            });
+                const geometry = new THREE.PlaneGeometry(2, 2);
+                const material = new THREE.ShaderMaterial({
+                    uniforms,
+                    vertexShader,
+                    fragmentShader,
+                    depthTest: false,
+                    depthWrite: false
+                });
 
-            const mesh = new THREE.Mesh(geometry, material);
-            scene.add(mesh);
+                const mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
 
-            const renderer = new THREE.WebGLRenderer({
-                canvas: canvas,
-                antialias: false,
-                alpha: false
-            });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.setSize(width, height);
+                const renderer = new THREE.WebGLRenderer({
+                    canvas: canvas,
+                    antialias: false,
+                    alpha: false
+                });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.setSize(width, height);
 
-            sceneRef.current = {
-                scene,
-                camera,
-                renderer,
-                uniforms,
-                isMouseInside: false,
-                targetMouse: new THREE.Vector2(0.5, 0.5),
-                lerpedMouse: new THREE.Vector2(0.5, 0.5)
-            };
+                sceneRef.current = {
+                    scene,
+                    camera,
+                    renderer,
+                    uniforms,
+                    isMouseInside: false,
+                    targetMouse: new THREE.Vector2(0.5, 0.5),
+                    lerpedMouse: new THREE.Vector2(0.5, 0.5)
+                };
 
-            animate();
+                animate();
+            } catch (error) {
+                console.warn('Failed to initialize WebGL scene:', error);
+                setWebGLAvailable(false);
+            }
         }
 
         function animate() {
@@ -327,7 +350,7 @@ export default function MarblingHover({ frontImage, backImage, alt, className = 
         };
     }, [frontImage, backImage, isDesktop]);
 
-    if (!isDesktop) {
+    if (!isDesktop || !webGLAvailable) {
         return (
             <div className="relative w-full h-full">
                 <Image

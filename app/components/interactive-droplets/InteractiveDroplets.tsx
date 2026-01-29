@@ -10,21 +10,34 @@ export default function InteractiveDroplets() {
     useEffect(() => {
         if (!containerRef.current) return;
 
-        // Initialize ThreeApp
-        const app = new ThreeApp(containerRef.current);
-        app.init();
-        app.setup();
-        app.render();
+        // Check WebGL availability first
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        
+        if (!gl) {
+            console.warn('WebGL not available, skipping interactive droplets');
+            return;
+        }
 
-        appRef.current = app;
+        try {
+            // Initialize ThreeApp
+            const app = new ThreeApp(containerRef.current);
+            app.init();
+            app.setup();
+            app.render();
 
-        // Cleanup on unmount
-        return () => {
-            // Remove event listeners and cleanup
-            if (appRef.current) {
-                window.removeEventListener('resize', (appRef.current as any).resize);
-            }
-        };
+            appRef.current = app;
+
+            // Cleanup on unmount
+            return () => {
+                // Remove event listeners and cleanup
+                if (appRef.current) {
+                    window.removeEventListener('resize', (appRef.current as any).resize);
+                }
+            };
+        } catch (error) {
+            console.warn('Failed to initialize interactive droplets:', error);
+        }
     }, []);
 
     return (

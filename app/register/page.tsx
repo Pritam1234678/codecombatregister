@@ -40,14 +40,14 @@ export default function RegisterPage() {
         } else {
             document.body.style.overflow = 'unset';
         }
-        
+
         return () => {
             document.body.style.overflow = 'unset';
         };
     }, [submitted]);
 
     const ALLOWED_BRANCHES = [
-     
+
         "Computer Science & Engineering",
         "Information Technology",
         "Computer Science & Communication Engineering",
@@ -58,8 +58,8 @@ export default function RegisterPage() {
         "Computer Science and Engineering with specialization Data Science",
         "Computer Science and Engineering with specialization Internet of Things and Cyber Security Including Block Chain Technology",
         "Computer Science and Engineering with specialization Internet of Things",
-        
-        
+
+
         "Electrical Engineering",
         "Electrical and Computer Engineering",
         "Electronics & Tele-Communication Engineering",
@@ -149,14 +149,14 @@ export default function RegisterPage() {
             // Success
             setIsSubmitting(false);
             setSubmitted(true);
-            
+
             // Smooth scroll to top to show success message
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            
+
+
 
             // Redirect to home after 3 seconds
-        
+
 
         } catch (error) {
             console.error('Registration error:', error);
@@ -190,19 +190,18 @@ export default function RegisterPage() {
 
                         {submitted ? (
                             // Success State - Modern Award-Winning Design
-                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-zinc-950 to-black backdrop-blur-2xl animate-fade-in p-4 sm:p-6">
-                                <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl mx-auto">
+                            <div className="fixed inset-0 z-[100] flex justify-center overflow-y-auto bg-gradient-to-br from-black via-zinc-950 to-black backdrop-blur-2xl animate-fade-in">
+                                <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl mx-auto my-auto p-4 sm:p-6 pt-32 sm:pt-32 pb-12">
                                     {/* Ambient Glow Effects */}
-                                    <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-red-600/20 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
-                                    
+                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-red-600/20 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
+
                                     {/* Main Card */}
-                                    <div className="relative bg-gradient-to-b from-zinc-900/90 to-black/90 backdrop-blur-xl border border-zinc-800/50 shadow-2xl shadow-red-950/50 animate-scale-in overflow-hidden">
+                                    <div className="relative bg-linear-to-b from-zinc-900/90 to-black/90 backdrop-blur-xl border border-zinc-800/50 shadow-2xl shadow-red-950/50 animate-scale-in overflow-hidden rounded-2xl">
                                         {/* Top Accent Line */}
                                         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-red-500 to-transparent" />
-                                        
-                                        <div className="p-6 sm:p-8 md:p-10 lg:p-12 text-center">
-                                            {/* Success Icon - Elegant Minimal Design */}
-                                            <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-6 sm:mb-8">
+
+                                        <div className="p-5 sm:p-6 md:p-8 lg:p-10 text-center">
+                                            <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-4 sm:mb-6">
                                                 {/* Outer Ring Glow */}
                                                 <div className="absolute inset-0 rounded-full bg-red-500/10 blur-lg sm:blur-xl" />
                                                 {/* Main Circle */}
@@ -217,22 +216,23 @@ export default function RegisterPage() {
                                             </div>
 
                                             {/* Heading */}
-                                            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-bold uppercase tracking-tight bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent mb-2 sm:mb-3">
+                                            {/* Heading */}
+                                            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-bold uppercase tracking-tight bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent mb-1 sm:mb-2">
                                                 Registration Complete
                                             </h2>
-                                            
-                                            <p className="text-zinc-400 text-xs sm:text-sm md:text-base font-light tracking-wide mb-6 sm:mb-8 md:mb-10">
+
+                                            <p className="text-zinc-400 text-xs sm:text-sm md:text-base font-light tracking-wide mb-4 sm:mb-6 md:mb-8">
                                                 Welcome to the arena, warrior
                                             </p>
 
                                             {/* Information Cards */}
-                                            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 md:mb-10 text-left">
+                                            <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 md:mb-8 text-left">
                                                 {/* Email Check Card */}
-                                                <div className="group relative bg-gradient-to-br from-zinc-900/50 to-black/50 border border-zinc-800/50 p-4 sm:p-5 hover:border-zinc-700/50 transition-all duration-300">
+                                                <div className="group relative bg-linear-to-br from-zinc-900/50 to-black/50 border border-zinc-800/50 p-3 sm:p-4 hover:border-zinc-700/50 transition-all duration-300">
                                                     <div className="flex gap-3 sm:gap-4">
                                                         {/* Icon Container */}
-                                                        <div className="flex-shrink-0">
-                                                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                                        <div className="shrink-0">
+                                                            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
                                                                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
                                                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                                                                     <polyline points="22,6 12,13 2,6" />
@@ -252,11 +252,11 @@ export default function RegisterPage() {
                                                 </div>
 
                                                 {/* Support Card */}
-                                                <div className="group relative bg-gradient-to-br from-zinc-900/50 to-black/50 border border-zinc-800/50 p-4 sm:p-5 hover:border-zinc-700/50 transition-all duration-300">
+                                                <div className="group relative bg-linear-to-br from-zinc-900/50 to-black/50 border border-zinc-800/50 p-3 sm:p-4 hover:border-zinc-700/50 transition-all duration-300">
                                                     <div className="flex gap-3 sm:gap-4">
                                                         {/* Icon Container */}
-                                                        <div className="flex-shrink-0">
-                                                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                                        <div className="shrink-0">
+                                                            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
                                                                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
                                                                     <circle cx="12" cy="12" r="10" />
                                                                     <line x1="12" y1="8" x2="12" y2="12" />
@@ -271,13 +271,45 @@ export default function RegisterPage() {
                                                             </h3>
                                                             <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed">
                                                                 If you don't receive the email, visit our{' '}
-                                                                <a 
-                                                                    href="/support" 
+                                                                <a
+                                                                    href="/support"
                                                                     className="text-red-400 hover:text-red-300 font-medium transition-colors underline decoration-red-500/30 underline-offset-2 hover:decoration-red-400/50"
                                                                 >
                                                                     Support Page
                                                                 </a>
                                                                 {' '}to raise a ticket
+                                                            </p>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                {/* WhatsApp Group Card */}
+                                                <div className="group relative bg-linear-to-br from-zinc-900/50 to-black/50 border border-zinc-800/50 p-3 sm:p-4 hover:border-zinc-700/50 transition-all duration-300">
+                                                    <div className="flex gap-3 sm:gap-4">
+                                                        {/* Icon Container */}
+                                                        <div className="shrink-0">
+                                                            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                                                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        {/* Content */}
+                                                        <div className="flex-1 min-w-0">
+                                                            <h3 className="text-white font-medium text-sm sm:text-base mb-1 sm:mb-1.5">
+                                                                Join WhatsApp
+                                                            </h3>
+                                                            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed">
+                                                                Join our official WhatsApp group for updates: {' '}
+                                                                <a
+                                                                    href="https://chat.whatsapp.com/EZHiSHJATdQ2NcCGuogZTx?mode=gi_t"
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="text-red-400 hover:text-red-300 font-medium transition-colors underline decoration-red-500/30 underline-offset-2 hover:decoration-red-400/50 whitespace-nowrap"
+                                                                >
+                                                                    Join Now
+                                                                </a>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -299,7 +331,7 @@ export default function RegisterPage() {
                                                 <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity" />
                                             </button>
                                         </div>
-                                        
+
                                         {/* Bottom Accent Line */}
                                         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent" />
                                     </div>
